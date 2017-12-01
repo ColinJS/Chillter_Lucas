@@ -1,0 +1,76 @@
+resolve-expenses {
+  .toolbar-title-ios {
+    font-size: 2.2rem;
+    color: $chillter-col;
+  }
+
+  ion-header {
+    .subtitle {
+      text-align: center;
+      font-size: 1.7rem;
+      color: grey;
+    }
+  }
+
+  .res-list {
+    list-style: none;
+    padding: 0px;
+    margin: 20px 1.5rem;
+
+    .res-li div {
+      display: inline-block;
+    }
+
+    .res-li {
+      margin: 1rem 0px;
+
+      .res-chiller {
+        color: $chillter-col;
+        font-size: 1.8rem;
+        font-weight: bold;
+
+        ion-icon {
+          vertical-align: middle;
+          color: #4c4c4c;
+          font-weight: bold;
+          font-size: 2.3rem;
+        }
+
+        .from {
+          margin-right: 0.7rem;
+          text-transform: capitalize;
+        }
+
+        .to {
+          margin-left: 0.7rem;
+          text-transform: capitalize;
+        }
+      }
+
+      .res-pay {
+        float: right;
+        color: rgba(0, 0, 0, 0.7);
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+    }
+  }
+  .back-button {
+    border: 0;
+    background: transparent;
+    ion-icon.back-button-icon {
+      font-size: 0;
+      &:before {
+        content: '';
+        display: block;
+        width: 25px;
+        height: 40px;
+        background-image: url("../assets/images/back-arrow.svg");
+        background-size: 22px auto;
+        background-repeat: no-repeat;
+        top: 3px;
+        position: relative;
+      }
+    }
+  }
+}

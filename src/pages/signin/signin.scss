@@ -1,0 +1,79 @@
+signin {
+  .toolbar-title-ios {
+    font-size: 2.2rem;
+    color: $chillter-col;
+  }
+
+  .avatar {
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .avatar img-picker-logo img {
+    background-size: 150px 150px;
+    box-sizing: content-box;
+    border: 2px solid $chillter-col;
+    border-radius: 100%;
+    display: inline-block;
+    height: 150px;
+    width: 150px;
+  }
+
+  .subtitle-avatar {
+    margin-top: 1%;
+    margin-bottom: 2%;
+    text-align: center;
+    color: $chillter-col;
+    font-size: 1.8rem;
+  }
+
+  ion-item.input-has-focus ion-input,
+  ion-item.input-has-focus ion-input[required] {
+    border: none;
+  }
+  ion-input.ng-valid[required] {
+    border-bottom: 1px solid green;
+  }
+
+  ion-input.ng-valid {
+    border-bottom: 1px solid green;
+  }
+
+  ion-input.ng-invalid {
+    border-bottom: 1px solid red;
+  }
+
+  ion-input.ng-pristine {
+    border: none;
+  }
+
+  /* Remove the last border-bottom */
+  .list-ios>.item-block:last-child,
+  .list-ios>.item-wrapper:last-child .item-block {
+    border-bottom: 0;
+  }
+
+  /* Rewrite padding rules for the ion-list */
+  .list-ios {
+    margin-top: -15px;
+  }
+
+  .back-button {
+    border: 0;
+    background: transparent;
+    ion-icon.back-button-icon {
+      font-size: 0;
+      &:before {
+        content: '';
+        display: block;
+        width: 25px;
+        height: 40px;
+        background-image: url("../assets/images/back-arrow.svg");
+        background-size: 22px auto;
+        background-repeat: no-repeat;
+        top: 3px;
+        position: relative;
+      }
+    }
+  }
+}

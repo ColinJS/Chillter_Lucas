@@ -1,0 +1,102 @@
+ask-friends {
+  /* Rewrite some rules about navbar */
+  .toolbar-title-ios {
+    font-size: 2.2rem;
+    color: $chillter-col;
+    margin-top: -20px;
+  }
+
+  .back-button.show-back-button {
+    margin-top: -5px;
+  }
+
+  ion-navbar {
+    min-height: 70px !important;
+  }
+
+  .scroll-content {
+    margin-top: 70px !important;
+  }
+
+  /* End of navbar rewrite */
+  .floating-close-button {
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    width: auto;
+    z-index: 200;
+    min-height: 3.2rem;
+    line-height: 1.7;
+    margin-left: 5px;
+    &:before {
+      content: '';
+      display: block;
+      width: 25px;
+      height: 40px;
+      background-image: url("../assets/images/back-arrow.svg");
+      background-size: 22px auto;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .orange-border {
+    border: 1px solid $chillter-col;
+    border-radius: 100%;
+    min-width: unset;
+    min-height: unset;
+    width: 53px;
+    height: 53px;
+    img {
+      padding: 1px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  /* Remove the last bottom border */
+  .list-ios>.item-block:last-child,
+  .list-ios>.item-wrapper:last-child .item-block {
+    border-bottom: 0;
+  }
+  /* Remove the first top border */
+  .list-ios>.item-block:first-child {
+    border-top: 0;
+  }
+
+  ion-label {
+    color: #4c4c4c;
+  }
+
+  .in-bold {
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .checkbox-ios {
+    .checkbox-checked {
+      background-color: #5eb63b;
+      border-color: #5eb63b;
+      width: 30px;
+      height: 30px;
+      .checkbox-inner {
+        width: 10px;
+        height: 15px;
+        left: 9px;
+      }
+    }
+    .checkbox-icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+#ok {
+  color: #ff862a;
+  font-size: 1.7rem;
+  float: right;
+  background: white;
+  padding: 15px;
+  font-weight: bold;
+  margin-top: -7px;
+}

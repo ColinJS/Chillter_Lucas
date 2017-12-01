@@ -1,0 +1,21 @@
+<svg width="2009.9999999999998" height="1986.0000000000002" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient y2="1.000001" x2="0.5" y1="0" x1="0.5" id="a">
+   <stop stop-color="#F5F6F6" offset="0"/>
+   <stop stop-color="#EDEDED" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="1988" width="2012" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_1">
+   <circle id="svg_2" r="970" cy="995.346163" cx="998.038443" fill="#fff"/>
+   <ellipse id="svg_3" fill="none" ry="969.4" rx="969" cy="995.346163" cx="998.038443" stroke-miterlimit="10" stroke-width="35" stroke="#D2D3D3"/>
+   <circle id="svg_4" r="897.200012" cy="995.346163" cx="998.038443" fill="url(#a)"/>
+  </g>
+  <path id="svg_5" d="m1370.338443,936.546163l-312.1,0l0,-331.8l-118.2,0l0,331.8l-318.2,0l0,118.2l318.2,0l0,331.8l118.2,0l0,-331.8l312.1,0l0,-118.2z" fill="#D2D3D3"/>
+ </g>
+</svg>

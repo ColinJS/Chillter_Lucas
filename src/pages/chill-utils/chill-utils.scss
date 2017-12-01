@@ -1,0 +1,336 @@
+chill-utils {
+  .fix-nav {
+    margin-top: -90px;
+  }
+
+  .floating-close-button {
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    width: auto;
+    z-index: 200;
+    min-height: 3.2rem;
+    line-height: 1.7;
+    margin-left: 5px;
+    &:before {
+      content: '';
+      display: block;
+      width: 25px;
+      height: 40px;
+      background-image: url("../assets/images/back-arrow.svg");
+      background-size: 22px auto;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .bottom-button {
+    position: absolute;
+    bottom: 0px;
+    padding: 2rem;
+    width: 100%;
+    background-color: white;
+    color: $chillter-col;
+  }
+
+  .toolbar-title-ios {
+    color: $chillter-col;
+    font-size: 2.2rem;
+    font-weight: bold;
+  }
+
+  .slide-car {
+    margin-top: 0;
+
+    .subtitle-car {
+      font-size: 1.7rem;
+      color: grey; //position: fixed;
+    }
+
+    h1 {
+      font-weight: bold;
+    }
+
+    .car-class {
+      position: relative;
+      background-color: white;
+      color: $chillter-col;
+
+      .suppr-car {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        height: 2rem;
+      }
+    }
+  }
+
+  .seats-left {
+    color: grey;
+    font-size: 1.5rem;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .slide-list {
+    margin-top: 0;
+
+    .subtitle-list {
+      font-size: 1.7rem;
+      color: grey;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0px;
+      margin: 3rem 1rem;
+
+      .element-list {
+        text-align: left;
+        margin: 1rem 3rem;
+
+        .list-suppr {
+          display: inline-block;
+          height: 1.5rem;
+          width: 1.5rem;
+          margin-right: 1rem;
+        }
+
+        .list-bullet {
+          display: inline-block;
+          background-color: #A1A1A1;
+          height: 1.2rem;
+          width: 1.2rem;
+          margin-right: 1rem;
+          border-radius: 50%;
+        }
+
+        .element {
+          display: inline;
+          text-align: left;
+          font-size: 2rem;
+        }
+
+        .no-taker {
+          float: right;
+          color: #A1A1A1;
+          display: inline-block;
+          font-size: 2rem;
+          font-style: italic;
+        }
+
+        .taker {
+          float: right;
+          color: $chillter-col;
+          display: inline-block;
+          margin-right: 3rem;
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+
+  .slide-expense {
+    margin-top: 0;
+
+    .subtitle-expense {
+      font-size: 1.7rem;
+      color: grey;
+    }
+
+    .expense {
+      text-align: left;
+      margin: 2rem 3rem;
+
+      .exps-title div,
+      .exp div {
+        display: inline-block;
+      }
+
+      .exps-name,
+      .exp-title {
+        color: $chillter-col;
+      }
+
+      .exps-name {
+        //margin-left: -1.5rem;
+      }
+
+      .exp {
+        font-size: 1.7rem;
+        display: flex;
+        align-items: center;
+        margin-top: 4%;
+
+        .exp-suppr {
+          height: 1.5rem;
+          width: 1.5rem;
+          margin: 0 1rem 0 -2rem;
+        }
+
+        .exp-title {
+          font-size: 1.5rem;
+          width: 60%;
+        }
+
+        .exp-price {
+          font-size: 1.5rem;
+          margin-left: 1.2rem;
+        }
+      }
+
+      .exps-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+      }
+
+      .exps-details {
+        margin-left: 30%;
+        border-top: 1px solid $chillter-col;
+
+        .exps-list {
+          list-style: none;
+          padding: 0px;
+        }
+      }
+
+      .exps-sum,
+      .exp-price {
+        float: right;
+        color: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    .resolve-div {
+      margin: 5rem;
+      text-align: right;
+      font-size: 3rem;
+      color: $chillter-col;
+    } // Rewrite back button style
+    .bar-button-default-ios,
+    .bar-button-default.bar-button-ios-default,
+    .bar-button-clear-ios-default {
+      height: 20px;
+    }
+  }
+
+  .slide-car,
+  .slide-list,
+  .slide-expense {
+    .slide-zoom {
+      height: 100%;
+    }
+    .wrapper-list {
+      -webkit-overflow-scrolling: touch;
+      overflow-y: scroll;
+      height: -moz-calc(100% - 120px);
+      height: -webkit-calc(100% - 120px);
+      height: calc(100% - 120px);
+      top: 0;
+      align-items: flex-start;
+      padding-top: 90px;
+      padding-top: 90px;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      display: block;
+    }
+    &.slide-full {
+      .wrapper-list {
+        height: 100%;
+      }
+    }
+  }
+
+  .car-class {
+    display: flex;
+    flex-wrap: wrap;
+    width: 360px;
+    height: 180px;
+    margin: 0 auto 15px;
+    padding: 15px;
+    >img {
+      width: 100%;
+      max-width: unset;
+      height: unset;
+      max-height: unset;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    >div.passangers-block {
+      width: 25%;
+      align-self: center;
+      &:nth-of-type(1) {
+        order: 4;
+      }
+      &:nth-of-type(2) {
+        order: 8;
+      }
+      &:nth-of-type(3) {
+        order: 3;
+      }
+      &:nth-of-type(4) {
+        order: 7;
+      }
+      &:nth-of-type(5) {
+        order: 2;
+      }
+      &:nth-of-type(6) {
+        order: 6;
+      }
+      &:nth-of-type(7) {
+        order: 1;
+      }
+      &:nth-of-type(8) {
+        order: 5;
+      }
+    }
+  }
+  .place-av-driver,
+  .place-av-passenger,
+  .place-ar-one,
+  .place-ar-two,
+  .place-ar-three,
+  .place-ar-four,
+  .place-ar-five,
+  .place-ar-six {
+    border: 1px solid #dfdfdf;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      padding: 2px;
+    }
+  }
+
+  @media(max-width: 400px) {
+    .car-class {
+      width: 300px;
+      height: 150px;
+      .place-av-driver,
+      .place-av-passenger,
+      .place-ar-one,
+      .place-ar-two,
+      .place-ar-three,
+      .place-ar-four,
+      .place-ar-five,
+      .place-ar-six {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  .swiper-wrapper {
+    -webkit-transform: none;
+    transform: none;
+    .swiper-slide {
+      -webkit-transform: none;
+      transform: none;
+    }
+  }
+}
