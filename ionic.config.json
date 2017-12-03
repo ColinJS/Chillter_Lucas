@@ -9,6 +9,10 @@
     {
       "path": "/api-dev",
       "proxyUrl": "http://chillter-app.publish-it.fr"
+    },
+    {
+      "path": "/api",
+      "proxyUrl": "http://chillter.fr"
     }
   ],
   "integrations": {

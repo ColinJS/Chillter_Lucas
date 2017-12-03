@@ -189,6 +189,8 @@
     "remove": "Supprimer",
     "send": "Envoyer",
     "save": "Sauvegarder",
+    "update": "Sauvegarder",
+    "updateSend": "Sauvegarder et envoyer",
     "not-sended": "Le Chill doit être envoyé avant !",
     "more-friends": "plus",
     "punchline-title": "Punchline !",

@@ -27,13 +27,16 @@ declare var google: any;
 })
 export class EditChills {
   private custom: boolean = false;
+  editCustom: boolean = false;
   private transaltions: any;
 
   // Handle swipe
   transformLeftPan: string;
   transformRightPan: string;
+  transformTopPan: string;
   overlayTextSend: string;
   overlayTextDelete: string;
+  overlayTextMaybe: string;
 
   swiping: boolean = false;
 
@@ -141,6 +144,7 @@ export class EditChills {
     this.getChillerInfo();
     this.getChill();
 
+    this.editCustom = this.navParams.get("edit");
 
     let myFriends = this.navParams.get("friends");
     if (myFriends) {
@@ -572,6 +576,99 @@ export class EditChills {
     }
   }
 
+  updateCustomChill(){
+
+    let customId = this.navParams.get("chill").id
+
+    let chillersId: any = [];
+      let body = {
+        name: this.name,
+        address: this.geoSpec,
+        place: this.geo,
+        comment: this.comment,
+        take_logo: false
+      };
+      let bodyImg = {
+        image: null
+      };
+
+      this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner()
+
+      if (this.imgPickerService.getFirstImgSrcLogo == this.imgPickerService.getFirstImgSrcLogo && this.logo != "assets/images/default-profil.svg") {
+        body.take_logo = true;
+      }
+
+      for (let f of this.friends) {
+        f.id != this.creatorId ? chillersId.push(f.id) : null;
+      }
+
+      body.name == "" ? body.name = "Chill" : null;
+
+      this.sync.status ? null : this.showToast(1);
+
+      this.api.updateCustomChill(customId,body).subscribe(
+        data => {
+
+          if (this.cars) {
+            let body = {
+              seats: this.cars
+            };
+
+            this.api.addCarCustomChill(customId.id, body).subscribe();
+          }
+
+          if (this.elements.length > 0) {
+            let body;
+
+            for (let element of this.elements) {
+              body = {
+                element: element
+              };
+
+              this.api.addElementCustomChill(customId.id, body).subscribe();
+            }
+          }
+
+          if (this.expenses != undefined) {
+            if (this.expenses.length > 0) {
+              let body;
+
+              for (let expense of this.apiExpenses[0].expenses) {
+                body = {
+                  name: expense.element,
+                  inheritors: expense.inheriters,
+                  price: expense.price
+                };
+
+                this.api.addExpenseCustomChill(customId.id, body).subscribe();
+              }
+            }
+          }
+
+          if (chillersId.length > 0) {
+            let body;
+
+            for (let chillerId of chillersId) {
+              body = chillerId;
+
+              this.api.addParticipantToCustomChill(customId.id, body).subscribe();
+            }
+          }
+
+          if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() || this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()) {
+            if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo() && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
+              bodyImg.image = this.imgPickerService.getImgResultLogo();
+              this.api.sendCustomChillLogo(customId.id, bodyImg).subscribe();
+            }
+
+            if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() && this.imgPickerService.getImgResultBanner()) {
+              bodyImg.image = this.imgPickerService.getImgResultBanner();
+              this.api.sendCustomChillBanner(customId.id, bodyImg).subscribe();
+            }
+          }
+        });
+  }
+
   uploadEventLogoBanner(eventId, body) {
     let bodyImg = {
       image: null
@@ -811,11 +908,20 @@ export class EditChills {
   animateTo(obj: any) {
     if (obj == "accept" || obj == 1) {
       this.transformLeftPan = "anim-left-pan";
+      this.updateCustomChill();
       this.sendInvitation();
       setTimeout(() => {
         this.viewCtrl.dismiss();
       }, 800);
     }
+
+    if (obj == "maybe" || obj == 2) {
+        this.transformTopPan = "anim-top-pan";
+        this.updateCustomChill();
+        setTimeout(() => {
+          this.viewCtrl.dismiss(2);
+        }, 800);
+      }
 
     if (obj == "refuse" || obj == 0) {
       this.transformRightPan = "anim-right-pan";

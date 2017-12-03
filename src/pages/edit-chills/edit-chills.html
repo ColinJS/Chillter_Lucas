@@ -1,0 +1,93 @@
+<ion-content class="edit-chills" scroll="false">
+
+  <div class="floating-close-button" (tap)="close(2)"></div>
+  <div class="overlay left-pan-accept hide-left-pan {{transformLeftPan}}">
+    <p class="overlay-text">{{overlayTextSend}}</p>
+  </div>
+  <div class="overlay right-pan-refuse hide-right-pan {{transformRightPan}}">
+    <p class="overlay-text">{{overlayTextDelete}}</p>
+  </div>
+  <div class="overlay-chill-detail top-pan-maybe hide-top-pan {{transformTopPan}}">
+    <p class="overlay-text">{{overlayTextMaybe}}</p>
+  </div>
+
+  <div class="chills-header">
+    <div class="ch-background">
+      <img-picker-banner id="background" [src]="banner"></img-picker-banner>
+    </div>
+    <div class="ch-logo">
+      <img-picker-logo id="logo" [src]="logo"></img-picker-logo>
+    </div>
+  </div>
+  <div class="invite" (swipe)="swipeEvent($event)">
+    <div class="invite-header flex-first">
+      <h1><input type="text" placeholder="Chill" class="title" [(ngModel)]="name" /></h1>
+      <h2> {{ 'edit-chills.invited-by' | translate }} <i class="creator" [style.color]="'#'+color">{{firstName}} {{lastName}}</i></h2>
+    </div>
+
+    <div class="flex-second">
+      <div class="invite-geo" [style.color]="'#'+color">
+        <input class="h1" type="text" placeholder="{{ 'edit-chills.place' | translate }}" [(ngModel)]="geo" />
+        <input class="h2" type="text" placeholder="{{ 'edit-chills.address' | translate }}" [(ngModel)]="geoSpec" (input)="autoAddress($event.target.value)" />
+      </div>
+
+      <ion-icon *ngIf="autocompleteAddress != ''" style="margin-top: 2%;" (tap)="clearAutocomplete()" name="close-circle"></ion-icon>
+      <ion-item [style.color]="'#'+color" style="font-size: 14px;" *ngFor="let address of autocompleteAddress" (click)="chooseAddress(address)">
+        {{ address.description }}
+      </ion-item>
+
+      <div class="invite-time" [style.color]="'#'+color" (tap)="showDatePicker()">
+        <div class="invite-time-left">
+          <i class="invite-day">{{stringDay}}</i>
+          <i class="invite-day-number">{{numberDay}}</i>
+          <i class="invite-day-number">{{stringMonth}}</i>
+          <i class="invite-hours">{{hours}}</i>
+          <i class="exp">h</i><i class="invite-minutes">{{min}}</i></div>
+        </div>
+      </div>
+      <div class="flex-third">
+        <div class="invite-com" text-justify (tap)="openChat()">
+          <ion-scroll scrollY="true" [style.color]="'#'+color">
+            <div *ngIf="!comment">
+              Conversation
+            </div>
+            <div *ngIf="comment">
+              {{comment}}
+            </div>
+          </ion-scroll>
+        </div>
+        <div class="invite-utils">
+          <img src="assets/images/tool-car-outline.svg" (tap)="showUtils(0)" image-cache/>
+          <img src="assets/images/tool-list-outline.svg" (tap)="showUtils(1)" image-cache/>
+          <img src="assets/images/tool-pig-outline.svg" (tap)="showUtils(2)" image-cache/>
+        </div>
+      </div>
+      <div class="flex-fourth">
+        <div class="friends-number">{{friends.length}} {{ 'edit-chills.invited-number' | translate }}</div>
+        <div class="invite-friends">
+          <img src="assets/images/chill-plus.svg" (tap)="showFriends()" image-cache/>
+            <div class="friend-contener" *ngFor="let friend of shownFriends">
+              <img class="friend-picture" src="{{friend.picture}}" image-cache/>
+              <div class="delete-friend" (tap)="deleteFriend(friend.id)"><img src="assets/images/close-outline.svg" image-cache/></div>
+            </div>
+            <div *ngIf="showMoreFriends" class="show-more-friends" (tap)="showMoreFriendsPage()">
+              {{ 'edit-chills.more-friends' | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="invite-sending" *ngIf="!custom  && !editCustom">
+        <div class="invite-sending-remove" (tap)="animateTo(0)"><span class="text-sending">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
+        <div class="invite-sending-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-sending">{{ 'edit-chills.send' | translate }}</span></div>
+      </div>
+      <div class="invite-sending-custom" *ngIf="custom && !editCustom">
+        <div class="invite-sending-remove" (tap)="animateTo(0)"><span class="text-sending">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
+        <div class="invite-sending-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-sending">{{ 'edit-chills.save' | translate }}</span></div>
+      </div>
+      <div class="invite-editing-custom" *ngIf="editCustom">
+        <div class="invite-editing-remove" (tap)="animateTo(0)"><span class="text-editing">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
+        <div class="invite-editing-save" (tap)="animateTo(2)"><span class="text-editing">{{ 'edit-chills.update' | translate }}</span></div>
+        <div class="invite-editing-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-editing">{{ 'edit-chills.updateSend' | translate }}</span></div>
+      </div>
+</ion-content>

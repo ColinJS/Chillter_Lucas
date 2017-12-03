@@ -64,6 +64,17 @@ edit-chills {
     background-position: center 40%;
     background-color: rgba(255, 255, 255, 0.7);
   }
+
+  .overlay-chill-detail {
+    z-index: 300;
+    position: fixed;
+    top: 0px;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    background-position: center 40%;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
   .floating-close-button {
     position: absolute;
     top: 20px;
@@ -396,6 +407,44 @@ edit-chills {
     .invite-sending-send {
       display: inline-block;
       float: right;
+      ion-icon {
+        color: #69cc34;
+        padding-right: 5px;
+      }
+    }
+  }
+  .invite-editing-custom {
+    border-top: 1px solid rgb(180, 180, 180);
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+    background: white;
+    .text-editing {
+      vertical-align: middle;
+      display: inline-block;
+      color: gray;
+    }
+    ion-icon {
+      font-weight: bold;
+      font-size: 2em;
+      vertical-align: middle;
+    }
+    .invite-editing-remove {
+      position: absolute;
+      left: 20px;
+      bottom: 3px;
+      ion-icon {
+        color: #ff7477;
+        padding-left: 5px;
+      }
+    }
+    .invite-editing-save {
+      display: inline-block;
+    }
+    .invite-editing-send {
+      position: absolute;
+      right: 20px;
+      bottom: 3px;
       ion-icon {
         color: #69cc34;
         padding-right: 5px;
