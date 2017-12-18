@@ -12,7 +12,7 @@
     },
     {
       "path": "/api",
-      "proxyUrl": "http://chillter.fr"
+      "proxyUrl": "http://chillter"
     }
   ],
   "integrations": {

@@ -12,7 +12,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list *ngIf="pendingFriends.length != 0">
+  <ion-list *ngIf="pendingFriends.length != 0 || sentInvitation.length != 0">
     <div class="friend-request-subtitle">{{ 'friend-list.request-subtitle' | translate}}</div>
     <ion-item *ngFor="let pfriend of pendingFriends">
       <ion-avatar item-left>

@@ -7,6 +7,10 @@ edit-chills {
     margin-left: 100%;
     visibility: hidden;
   }
+  .hide-top-pan {
+    margin-bottom: 100%;
+    visibility: hidden;
+  }
   @keyframes animLeftPan {
     0% {
       visibility: visible;
@@ -31,6 +35,18 @@ edit-chills {
       opacity: 50;
     }
   }
+  @keyframes animTopPan {
+    0% {
+      visibility: visible;
+      width: 100%;
+      height: 0;
+    }
+    100% {
+      visibility: visible;
+      width: 100%;
+      height: 100%;
+    }
+  }
   .anim-left-pan {
     animation-name: animLeftPan;
     animation-duration: .4s;
@@ -38,6 +54,11 @@ edit-chills {
   }
   .anim-right-pan {
     animation-name: animRightPan;
+    animation-duration: .4s;
+    animation-fill-mode: forwards;
+  }
+  .anim-top-pan {
+    animation-name: animTopPan;
     animation-duration: .4s;
     animation-fill-mode: forwards;
   }
@@ -53,6 +74,9 @@ edit-chills {
   .right-pan-refuse {
     background-image: url("../assets/images/pan-delete.svg");
   }
+  .top-pan-maybe {
+    background-image: url("../assets/images/pan-maybe.svg");
+  }
   .overlay {
     z-index: 300;
     position: fixed;
@@ -64,7 +88,6 @@ edit-chills {
     background-position: center 40%;
     background-color: rgba(255, 255, 255, 0.7);
   }
-
   .overlay-chill-detail {
     z-index: 300;
     position: fixed;
@@ -74,21 +97,25 @@ edit-chills {
     background-position: center 40%;
     background-color: rgba(255, 255, 255, 0.7);
   }
-
   .floating-close-button {
     position: absolute;
-    top: 20px;
+    top: 45%;
     left: 10px;
     width: auto;
     z-index: 200;
     min-height: 3.2rem;
     line-height: 1.7;
     margin-left: 5px;
+    -webkit-transform: translate(0,-50%);
+    -moz-transform: translate(0,-50%);
+    -ms-transform: translate(0,-50%);
+    -o-transform: translate(0,-50%);
+    transform: translate(0,-50%);
     &:before {
       content: '';
       display: block;
       width: 25px;
-      height: 40px;
+      height: 28px;
       background-image: url("../assets/images/back-arrow.svg");
       background-size: 22px auto;
       background-repeat: no-repeat;
@@ -158,7 +185,7 @@ edit-chills {
   }
   .invite input {
     margin: auto;
-    width: 100%;
+    width: 93%;
     border: none;
     text-align: center;
     text-transform: capitalize;
@@ -205,7 +232,7 @@ edit-chills {
   .invite-geo .h2 {
     font-size: 2.2rem;
     opacity: 0.6;
-    width: 98%;
+    width: 93%;
     font-family: MyBold !important;
   }
   .invite-time {
@@ -226,7 +253,59 @@ edit-chills {
   }
   .invite-time-left {
     position: relative;
-    padding: 10px 3px;
+    padding: 0px 3px;
+  }
+  .starting-date{
+    display: block;
+    height: initial!important;
+    .invite-day,
+    .invite-day-number {
+      font-size: 3.3rem;
+      font-family: MyBold;
+    }
+    .invite-day-number {
+      opacity: 0.7;
+    }
+    .invite-hours {
+      font-size: 38px;
+      font-family: MyBold !important;
+    }
+    .invite-minutes {
+      font-size: 38px;
+      font-family: MyBold !important;
+      opacity: 0.7;
+    }
+    .exp {
+      margin-left: 3px;
+      font-size: 1.2rem;
+      vertical-align: top;
+    }
+  }
+  .ending-date{
+    display: block;
+    height: initial!important;
+    .invite-day,
+    .invite-day-number {
+      font-size: 2rem;
+      font-family: MyBold;
+    }
+    .invite-day-number {
+      opacity: 0.7;
+    }
+    .invite-hours {
+      font-size: 20px;
+      font-family: MyBold !important;
+    }
+    .invite-minutes {
+      font-size: 20px;
+      font-family: MyBold !important;
+      opacity: 0.7;
+    }
+    .exp {
+      margin-left: 3px;
+      font-size: 0.8rem;
+      vertical-align: top;
+    }
   }
   .invite-time-right {
     float: right;
@@ -253,28 +332,7 @@ edit-chills {
     justify-content: center;
     align-items: center;
   }
-  .invite-day,
-  .invite-day-number {
-    font-size: 3.3rem;
-    font-family: MyBold;
-  }
-  .invite-day-number {
-    opacity: 0.7;
-  }
-  .invite-hours {
-    font-size: 38px;
-    font-family: MyBold !important;
-  }
-  .invite-minutes {
-    font-size: 38px;
-    font-family: MyBold !important;
-    opacity: 0.7;
-  }
-  .exp {
-    margin-left: 3px;
-    font-size: 1.2rem;
-    vertical-align: top;
-  }
+  
   .invite-com {
     border-top: 1px solid $chillter-col;
     border-bottom: 1px solid $chillter-col;
@@ -345,13 +403,14 @@ edit-chills {
   }
   .invite-sending {
     border-top: 1px solid rgb(180, 180, 180);
+    background-color: white;
     padding: 5px 20px;
     bottom: 0;
     width: 100%;
-    background: white;
     width: 100%;
     bottom: 0;
     position: fixed;
+    z-index: 99;
     .text-sending {
       vertical-align: middle;
       display: inline-block;
@@ -383,7 +442,7 @@ edit-chills {
     border-top: 1px solid rgb(180, 180, 180);
     padding: 5px 20px;
     position: fixed;
-    bottom: 50px;
+    bottom: 0px;
     width: 100%;
     background: white;
     .text-sending {

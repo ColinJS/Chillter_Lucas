@@ -21,7 +21,9 @@ export class ChillBox {
   viewEvents: any[] = [];
   searchWord: string = "";
   timeNow: Date = new Date();
+  timeTomorrow: Date = new Date();
   profileId: number;
+  firstLoad: boolean = true;
 
   slides: any[] = [];
   noEvent: boolean = false;
@@ -179,24 +181,31 @@ export class ChillBox {
 
   getEvents(ref: any = false) {
     this.timeNow = new Date();
-    this.noEvent = false;
-    this.noEventSoon = false;
 
-    this.api.getEvents().subscribe(
+    this.timeTomorrow = new Date();
+    this.timeTomorrow.setDate(this.timeNow.getDate() + 1);
+
+    let noEvent = false;
+    let noEventSoon = false;
+
+
+    let call = this.api.getEvents(this.firstLoad).subscribe(
       data => {
+        call.unsubscribe();
         if (data) {
-          this.events = data.filter((d) => {
+          let events = data.filter((d) => {
             let now = new Date();
-            let tmpDate = new Date(d.date);
+            // Could be simplified later when all events will have coherent ending_date
+            let tmpDate = new Date(d.ending_date) >= new Date(d.date) ? new Date(d.ending_date) : new Date(d.date);
             if (isNaN(tmpDate.getTime())) {
               return false;
             }
 
-            let time = tmpDate.getTime() + (12 * 3600 * 1000) - now.getTime();
+            let time = tmpDate.getTime() - now.getTime();
             return time > 0;
           });
 
-          this.events.forEach((index) => {
+          events.forEach((index) => {
             let now = new Date();
             let nowPlusOne = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24);
             let d = new Date(index.date);
@@ -210,22 +219,46 @@ export class ChillBox {
           })
 
           // If data (all events) && events (coming event) == 0, show "never had any events"
-          if (data.length == 0 && this.events.length == 0) {
-            this.noEvent = true;
+          if (data.length == 0 && events.length == 0) {
+            noEvent = true;
           }
-
+          
           // If data (all events) != 0 && events (coming event) == 0, show "no coming events"
-          if (data.length != 0 && this.events.length == 0) {
-            this.noEventSoon = true;
+          if (data.length != 0 && events.length == 0) {
+            noEventSoon = true;
           }
 
           // If data (all events) != 0 && events (coming event) != 0, reset var
-          if (data.length != 0 && this.events.length != 0) {
-            this.noEvent = false;
-            this.noEventSoon = false;
+          if (data.length != 0 && events.length != 0) {
+            noEvent = false;
+            noEventSoon = false;
           }
 
-          this.filterEvents();
+          let willChange: boolean = events.length != this.events.length ? true : false;
+
+          console.log(willChange)
+
+          if(!willChange){
+            compareEventLoop:{
+              for(let i = 0; i < events.length; i++){
+                if(JSON.stringify(events[i]) != JSON.stringify(this.events[i])){
+                  willChange = true;
+                  break compareEventLoop;
+                }
+              }
+            }
+          }
+
+          console.log(willChange)
+          if(willChange || this.firstLoad){
+            console.log("we change it");
+            this.events = events;
+            this.noEvent = noEvent;
+            this.noEventSoon = noEventSoon;
+            this.filterEvents();
+          }
+
+          this.firstLoad = false;
 
         } else {
           this.noEventSoon = true;

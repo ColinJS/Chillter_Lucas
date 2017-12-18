@@ -5,7 +5,7 @@ chill-utils {
 
   .floating-close-button {
     position: absolute;
-    top: 30px;
+    top: 18px;
     left: 10px;
     width: auto;
     z-index: 200;
@@ -50,6 +50,17 @@ chill-utils {
       font-weight: bold;
     }
 
+    ion-spinner {
+      width: 75px;
+      height: 75px;
+      display: block;
+      margin: 25% auto;
+    }
+
+    .spinner-crescent circle {
+      stroke-width: 1px;
+    }
+
     .car-class {
       position: relative;
       background-color: white;
@@ -59,7 +70,29 @@ chill-utils {
         position: absolute;
         top: 0px;
         right: 0px;
-        height: 2rem;
+        height: 2.2rem;
+
+        ion-spinner {
+          width: 20px;
+          height: 20px;
+          margin: 0% auto;
+        }
+
+        .spinner-crescent circle {
+          stroke-width: 4px;
+        }
+      }
+    }
+
+    .new-car-spinner {
+      ion-spinner {
+        width: 50px;
+        height: 50px;
+        margin: 10% auto;
+      }
+
+      .spinner-crescent circle {
+        stroke-width: 1px;
       }
     }
   }
@@ -69,10 +102,33 @@ chill-utils {
     font-size: 1.5rem;
     width: 100%;
     margin-bottom: 15px;
+
+    ion-spinner {
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0% 0 0 1%;
+    }
+
+    .spinner-crescent circle {
+      stroke-width: 2px;
+    }
   }
 
   .slide-list {
     margin-top: 0;
+
+    ion-spinner {
+      width: 75px;
+      height: 75px;
+      display: block;
+      margin: 25% auto;
+    }
+
+    .spinner-crescent circle {
+      stroke-width: 1px;
+    }
 
     .subtitle-list {
       font-size: 1.7rem;
@@ -125,6 +181,19 @@ chill-utils {
           margin-right: 3rem;
           font-size: 2rem;
         }
+
+        .spinner-list-actions {
+          ion-spinner {
+            width: 25px;
+            height: 25px;
+            display: inline-block;
+            margin: 0% auto;
+          }
+
+          .spinner-crescent circle {
+            stroke-width: 2px;
+          }
+        }
       }
     }
   }
@@ -132,9 +201,32 @@ chill-utils {
   .slide-expense {
     margin-top: 0;
 
+    ion-spinner {
+      width: 75px;
+      height: 75px;
+      display: block;
+      margin: 25% auto;
+    }
+
+    .spinner-crescent circle {
+      stroke-width: 1px;
+    }
+
     .subtitle-expense {
       font-size: 1.7rem;
       color: grey;
+
+      ion-spinner {
+        width: 25px;
+        height: 25px;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0% auto;
+      }
+
+      .spinner-crescent circle {
+        stroke-width: 3px;
+      }
     }
 
     .expense {
@@ -260,6 +352,7 @@ chill-utils {
     >div.passangers-block {
       width: 25%;
       align-self: center;
+      z-index: 999;
       &:nth-of-type(1) {
         order: 4;
       }

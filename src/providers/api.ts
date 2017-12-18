@@ -112,9 +112,15 @@ export class ApiService {
     )
     this.cache.setCache('CONTACTS_PERMISSION', false)
     this.cache.clearCache('SYNC');
+    this.cache.clearCache('home');
+    this.cache.clearCache('events');
+    this.cache.clearCache('friends');
+    this.cache.clearCache('pending_friends');
     this.storage.removeValue('id');
     this.storage.removeValue('token');
     this.notif.publish('nav:login');
+    this.notif.unsubscribe('notif:friends');
+    this.notif.unsubscribe('notif:update');
   }
 
   /**
@@ -398,7 +404,7 @@ export class ApiService {
   /**
    * Get all events, used in chill-box
    */
-  getEvents(): Observable<any> {
+  getEvents(takeCache: boolean = true): Observable<any> {
     const cacheKey: string = 'events';
 
     let cacheStream = this.cache.getCache(cacheKey);
@@ -414,8 +420,13 @@ export class ApiService {
         });
     });
 
-    return Observable.merge(cacheStream, webStream)
+    if(takeCache){
+      return Observable.merge(cacheStream, webStream)
       .filter(res => res);
+    }else{
+      return webStream.filter(res => res);
+    }
+    
   }
 
   /**
@@ -812,7 +823,7 @@ export class ApiService {
   /**
    * Get all chill in Homepage, used in home
    */
-  getHome(): Observable<any> {
+  getHome(homeAlreadyLoaded: boolean = false): Observable<any> {
     const cacheKey: string = 'home';
 
     let cacheStream = this.cache.getCache(cacheKey);
@@ -830,8 +841,13 @@ export class ApiService {
           });
       });
 
-    return Observable.merge(cacheStream, webStream)
+    if(homeAlreadyLoaded){
+      return webStream.filter(res => res);
+    }else{
+      return Observable.merge(cacheStream, webStream)
       .filter(res => res);
+    }
+    
   }
 
   /**

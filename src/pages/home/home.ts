@@ -73,10 +73,11 @@ export class Home {
 
   // Take the home chills (logo of event) from the dataBase
   getHome() {
-    this.api.getHome().subscribe(
+    let call = this.api.getHome(this.slides.length != 0).subscribe(
       data => {
         if (data) {
           this.changeSlides(data)
+          call.unsubscribe();
         }
         this.notif.publish("notif:update");
       }
@@ -95,26 +96,62 @@ export class Home {
     let chillCount = 0;
     let sortHome = [chillPlus];
 
-    this.slides = [[]];
-    this.idList = [];
+    let slides = [[]];
+    let idList = [];
+
+    let willChange = false;
 
     for (let h in home) {
       sortHome[home[h].position] = home[h];
-      this.idList.push(home[h].chill_id);
+      idList.push(home[h].chill_id);
     }
 
     for (let i = 0; i < sortHome.length; i++) {
       if (chillCount > 11) {
         chillCount = 0;
         pageCount++;
-        this.slides[pageCount] = [];
+        slides[pageCount] = [];
       }
 
       if (sortHome[i]) {
-        this.slides[pageCount][chillCount] = sortHome[i];
+        slides[pageCount][chillCount] = sortHome[i];
         chillCount++;
       }
     }
+
+    //let's compare actual slide with the new one like that if there is no difference we don't change the slide (no flick with the home page);
+    // start with comparing length of each and of inside each
+    willChange = slides.length == this.slides.length ? false : true;
+    if(!willChange){
+      checkSlideLengthLoop:{
+        for(let i = 0; i < slides.length; i++){
+        if(this.slides[i].length != slides[i].length){
+            willChange = true;
+            break checkSlideLengthLoop;
+          }
+        }
+      }
+    }
+
+    //now compare objects inside with Json.strigify (object are allways in same format)
+    if(!willChange){
+      compareChillLoop:{
+        for(let i = 0; i < slides.length; i++){
+          for(let j = 0; j < slides[i].length; j++){
+            if(JSON.stringify(slides[i][j]) != JSON.stringify(this.slides[i][j])){
+              willChange = true;
+              break compareChillLoop;
+            }
+          }
+        }
+      }
+    }
+
+    if(willChange){
+      this.slides = slides;
+      this.idList = idList;
+    }
+
   }
 
   deleteChill(chill: any) {
@@ -123,8 +160,6 @@ export class Home {
     }
 
     this.deleting = true;
-
-    this.sync.status ? null : this.showToast(1);
 
     this.api.deleteChill(chill.id).subscribe(
       response => {
@@ -201,7 +236,7 @@ export class Home {
   }
 
   pressDistrib(clicker: any) {
-    if (this.isTapping) { return false }
+    //if (this.isTapping) { return false }
 
     if (clicker.name === "plus") {
       this.shakingMode = false;

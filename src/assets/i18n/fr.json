@@ -129,7 +129,8 @@
       "new-password": "Nouveau mot de passe"
     },
     "error-password": "Impossible de changer le mot de passe",
-    "synchro-contacts": "Synchroniser les contacts"
+    "synchro-contacts": "Synchroniser les contacts",
+    "change-lang": "Changer la langue"
   },
   "chill-utils": {
     "me": "Moi",
@@ -182,6 +183,7 @@
     "address": "Adresse",
     "comment": "commentaire",
     "date": "à",
+    "addEndingDate": "Ajouter une date de fin",
     "invited-number": "invités",
     "swipe-toast": {
       "message": "Glisser pour envoyer votre Chill"
@@ -219,12 +221,12 @@
     "title": "Recadrer"
   },
   "chill-list": {
-    "customize-chill": "Chill personnalisable",
+    "customize-chill": "Créé ton propre Chill",
     "customized-chill": "Personnalisés"
   },
   "resolve-expense": {
     "title": "Résolution",
-    "subtitle": "Soldes des comptes"
+    "subtitle": "Résolutions des comptes"
   },
   "chill-chat": {
     "error-happen": "Une erreur est survenue",

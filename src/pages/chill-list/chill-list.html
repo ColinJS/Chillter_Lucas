@@ -54,7 +54,7 @@
       </div>
       <!-- End of fake data -->
 
-      <div *ngIf="chills">
+      <div *ngIf="chills.length">
         <ion-list *ngFor="let cat of chills">
           <ion-list-header>
             {{cat.name}}

@@ -8,6 +8,7 @@ import {
 } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import { ApiService } from '../../providers/api';
+import { StorageService } from '../../providers/storage';
 import { ChillerDetails } from '../chiller-details/chiller-details'
 import { SyncService } from '../../providers/sync';
 import { ResolveExpenses } from "../resolve-expenses/resolve-expenses";
@@ -27,20 +28,22 @@ export class ChillUtils {
   slidePager: boolean = false;
 
   cars: any[];
-
   seats: string = "";
   addCarBool: boolean = false;
+  isLoadingCar: boolean = true;
+  isLoadingAddCar: boolean = false;
 
   list: any[] = [];
-
+  isLoadingList: boolean = true;
   element: string = "";
 
   expsList: any[];
   exps: any[];
   expensesPage: boolean = false;
-
   expense: string = "";
   price: string = "";
+  isLoadingExp: boolean = true;
+  isLoadingExpAction: boolean = false;
 
   newMode: boolean = false;
   creator: any;
@@ -66,7 +69,8 @@ export class ChillUtils {
     private sync: SyncService,
     private navCtrl: NavController,
     private viewCtrl: ViewController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private storage: StorageService
   ) {
     translate.get(['chill-utils.global-title',
       'chill-utils.title-transport',
@@ -176,6 +180,7 @@ export class ChillUtils {
 
     this.api.getCar(evtId).subscribe(
       data => {
+        this.isLoadingCar = false;
         this.cars = [];
 
         if (data.length == 0) {
@@ -213,6 +218,7 @@ export class ChillUtils {
         }
       },
       res => {
+        this.isLoadingCar = false;
         if (res.status != undefined) {
           console.log("Http request error :" + res.status);
         }
@@ -225,6 +231,7 @@ export class ChillUtils {
 
     this.api.getList(evtId).subscribe(
       data => {
+        this.isLoadingList = false;
         if (data) {
           this.list = data;
         } else {
@@ -232,6 +239,7 @@ export class ChillUtils {
         }
       },
       res => {
+        this.isLoadingList = false;
         if (res.status != 200) {
           console.log("Http request error :" + res.status);
         }
@@ -244,6 +252,7 @@ export class ChillUtils {
 
     this.api.getExps(evtId).subscribe(
       data => {
+        this.isLoadingExp = false;
         if (data) {
           this.expsList = data;
           let tmpList: any[] = [];
@@ -296,6 +305,7 @@ export class ChillUtils {
         }
       },
       res => {
+        this.isLoadingExp = false;
         if (res.status != 200) {
           console.log("Http request error :" + res.status);
         }
@@ -324,17 +334,21 @@ export class ChillUtils {
 
     } else {
       let evtId = this.navParams.get("eventId");
+      this.isLoadingAddCar = true;
+
       let body = {
         seats: seats
       };
 
       this.api.addCar(evtId, body).subscribe(
         data => {
+          this.isLoadingAddCar = false;
           if (!data) {
             console.log("Error" + data);
           }
         },
         res => {
+          this.isLoadingAddCar = false;
           if (res.status != undefined) {
             console.log("Http request error :" + res.status);
           } else {
@@ -360,6 +374,12 @@ export class ChillUtils {
       return;
     } else {
       let evtId = this.navParams.get("eventId");
+
+      for (let car in this.cars) {
+        if (this.cars[car].id == carId) {
+          this.cars[car].isDeleteLoading = true;
+        }
+      }
 
       this.api.deleteCar(evtId, carId).subscribe(
         data => {
@@ -432,6 +452,12 @@ export class ChillUtils {
               } else {
                 let evtId = this.navParams.get("eventId");
 
+                for (let car in this.cars) {
+                  if (this.cars[car].id == carId) {
+                    this.cars[car].isGetOutLoading = true;
+                  }
+                }
+
                 this.api.deletePassenger(evtId, carId).subscribe(
                   data => {
                     this.cars = [];
@@ -448,6 +474,12 @@ export class ChillUtils {
               return;
             } else {
               let evtId = this.navParams.get("eventId");
+
+              for (let car in this.cars) {
+                if (this.cars[car].id == carId) {
+                  this.cars[car].isGetInLoading = true;
+                }
+              }
 
               this.api.addPassenger(evtId, carId).subscribe(
                 data => {
@@ -503,13 +535,28 @@ export class ChillUtils {
         element: element
       };
 
+      this.list.push({
+        assigned_to: {
+          "id": this.creatorId,
+          "firstname": this.creator.firstname
+        },
+        created_by: {
+          "id": this.creatorId,
+          "firstname": this.creator.firstname
+        },
+        "id": 0,
+        "content": element,
+        "state": true
+      });
+
       this.api.addElement(evtId, body).subscribe(
         data => {
-          this.getList();
+
         },
         res => {
           if (res.status != undefined) {
             console.log("Http request error :" + res.status);
+            this.getList();
           } else {
             this.getList();
           }
@@ -529,14 +576,18 @@ export class ChillUtils {
     } else {
       let evtId = this.navParams.get("eventId");
 
+      const toDelete = new Set([elemId]);
+      const updatedList = this.list.filter(obj => !toDelete.has(obj.id));
+
+      this.list = updatedList;
+
       this.api.deleteElement(evtId, elemId).subscribe(
         data => {
-          this.getList();
+
         },
         res => {
           if (res.status != null) {
             console.log("Http request error :" + res.status);
-          } else {
             this.getList();
           }
         }
@@ -578,6 +629,12 @@ export class ChillUtils {
     }
     let evtId = this.navParams.get("eventId");
 
+    for (let elem in this.list) {
+      if (this.list[elem].id == elemId) {
+        this.list[elem].assigned_to.state = true;
+      }
+    }
+
     this.api.takeElement(evtId, elemId).subscribe(
       data => {
         this.getList();
@@ -598,6 +655,12 @@ export class ChillUtils {
       return;
     }
     let evtId = this.navParams.get("eventId");
+
+    for (let elem in this.list) {
+      if (this.list[elem].id == elemId) {
+        this.list[elem].assigned_to.state = true;
+      }
+    }
 
     this.api.leaveElement(evtId, elemId).subscribe(
       data => {
@@ -894,6 +957,8 @@ export class ChillUtils {
     }
 
     if (!this.newMode) {
+      this.isLoadingExpAction = true;
+
       let evtId = this.navParams.get("eventId");
       let body = {
         expenses: [{
@@ -905,11 +970,13 @@ export class ChillUtils {
 
       this.api.addExpense(evtId, body).subscribe(
         data => {
+          this.isLoadingExpAction = false;
           if (!data) {
             return false;
           }
         },
         res => {
+          this.isLoadingExpAction = false;
           if (res.status != undefined) {
             console.log("Http request error :" + res.status);
           } else {
@@ -958,11 +1025,14 @@ export class ChillUtils {
     } else {
       let evtId = this.navParams.get("eventId");
 
+      this.isLoadingExpAction = true;
       this.api.deleteExpense(evtId, expId).subscribe(
         data => {
+          this.isLoadingExpAction = false;
           this.getExps();
         },
         res => {
+          this.isLoadingExpAction = false;
           if (res.status != null) {
             console.log("Http request error :" + res.status);
           } else {

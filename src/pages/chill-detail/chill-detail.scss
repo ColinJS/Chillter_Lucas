@@ -114,6 +114,7 @@ chill-detail {
     margin-right: 10px;
     width: 7%;
     height: 7%;
+    z-index: 999;
   }
   .invite-header .valide-icon {
     font-size: 30px;
@@ -201,18 +202,23 @@ chill-detail {
   }
   .floating-close-button {
     position: absolute;
-    top: 20px;
+    top: 45%;
     left: 10px;
     width: auto;
     z-index: 200;
     min-height: 3.2rem;
     line-height: 1.7;
     margin-left: 5px;
+    -webkit-transform: translate(0,-50%);
+    -moz-transform: translate(0,-50%);
+    -ms-transform: translate(0,-50%);
+    -o-transform: translate(0,-50%);
+    transform: translate(0,-50%);
     &:before {
       content: '';
       display: block;
       width: 25px;
-      height: 40px;
+      height: 28px;
       background-image: url("../assets/images/back-arrow.svg");
       background-size: 22px auto;
       background-repeat: no-repeat;
@@ -276,7 +282,7 @@ chill-detail {
   }
   .invite input {
     margin: auto;
-    width: 100%;
+    width: 93%;
     border: none;
     text-align: center;
     text-transform: capitalize;
@@ -286,9 +292,16 @@ chill-detail {
     font-size: 3rem;
     text-transform: capitalize;
     /*padding-top: 10px;*/
+    height: 36px;
   }
   .invite-header .title {
     font-family: LemonMilk;
+  }
+  .invite-header h1 {
+    input {
+      position: relative;
+      top: -1px;
+    }
   }
   .invite h2 {
     margin-bottom: 1vmax;
@@ -342,12 +355,96 @@ chill-detail {
   }
   .invite-time div {
     display: inline-block;
-    height: 100%;
   }
-  .invite-time-left {
-    position: relative;
-    padding: 10px 3px;
+
+  .no-ending-date{
+    .invite-time-left {
+      position: relative;
+      padding: 10px 3px;
+    }
+    .invite-day,
+    .invite-day-number {
+      font-size: 3.4rem;
+      font-family: MyBold;
+    }
+    .invite-day-number {
+      opacity: 0.7;
+    }
+    .invite-hours {
+      font-size: 40px;
+      font-family: MyBold !important;
+    }
+    .invite-minutes {
+      font-size: 40px;
+      font-family: MyBold !important;
+      opacity: 0.7;
+    }
+    .exp {
+      margin-left: -5px;
+      font-size: 1.2rem;
+      vertical-align: top;
+    }
   }
+
+  .with-ending-date{
+    .invite-time-left {
+      position: relative;
+      padding: 0px 3px;
+    }
+    .starting-date{
+      display: block;
+      height: initial!important;
+      .invite-day,
+      .invite-day-number {
+        font-size: 3.3rem;
+        font-family: MyBold;
+      }
+      .invite-day-number {
+        opacity: 0.7;
+      }
+      .invite-hours {
+        font-size: 38px;
+        font-family: MyBold !important;
+      }
+      .invite-minutes {
+        font-size: 38px;
+        font-family: MyBold !important;
+        opacity: 0.7;
+      }
+      .exp {
+        margin-left: -5px;
+        font-size: 1.2rem;
+        vertical-align: top;
+      }
+    }
+    .ending-date{
+      display: block;
+      height: initial!important;
+      .invite-day,
+      .invite-day-number {
+        font-size: 2rem;
+        font-family: MyBold;
+      }
+      .invite-day-number {
+        opacity: 0.7;
+      }
+      .invite-hours {
+        font-size: 20px;
+        font-family: MyBold !important;
+      }
+      .invite-minutes {
+        font-size: 20px;
+        font-family: MyBold !important;
+        opacity: 0.7;
+      }
+      .exp {
+        margin-left: -5px;
+        font-size: 0.8rem;
+        vertical-align: top;
+      }
+    }
+  }
+  
   .invite-time-right {
     float: right;
     background-color: rgba($chillter-col, 0.8);
@@ -373,28 +470,7 @@ chill-detail {
     justify-content: center;
     align-items: center;
   }
-  .invite-day,
-  .invite-day-number {
-    font-size: 3.4rem;
-    font-family: MyBold;
-  }
-  .invite-day-number {
-    opacity: 0.7;
-  }
-  .invite-hours {
-    font-size: 40px;
-    font-family: MyBold !important;
-  }
-  .invite-minutes {
-    font-size: 40px;
-    font-family: MyBold !important;
-    opacity: 0.7;
-  }
-  .exp {
-    margin-left: -5px;
-    font-size: 1.2rem;
-    vertical-align: top;
-  }
+    
   .invite-com {
     margin: 0px;
     padding: 3px 0px;
@@ -565,5 +641,47 @@ chill-detail {
 
   .scroll-content {
     padding-bottom: 40px;
+  }
+
+  /* override for 527 - 550 screen height */
+  @media screen and (min-height: 527px) and (max-height: 550px){
+    .ch-logo {
+      width: 115px;
+      height: 115px;
+      top: 10%;
+      left: calc((100% - 115px) / 2);
+    }
+    .chills-header {
+      height: 10rem;
+    }
+    .invite h1 {
+      font-size: 2.5rem;
+    }
+    .invite-header h2 {
+      font-size: 1.4rem;
+    }
+    .invite-geo, .invite-time {
+      height: 65px;
+      min-height: 65px;
+      h2 {
+        margin-bottom: 0;
+      }
+    }
+    .invite-day, .invite-day-number {
+      font-size: 3rem;
+    }
+    .invite-hours,
+    .invite-minutes {
+      font-size: 35px;
+    }
+    .invite-friends img,
+    .invite-friends .friend-picture,
+    .invite-friends .show-more-friends {
+      height: 5rem;
+      width: 5rem;
+    }
+    .invite-friends {
+      min-height: 60px;
+    }
   }
 }

@@ -159,7 +159,7 @@ export class ChillerDetails {
 
     modal.onDidDismiss((chill) => {
       if (chill) {
-        let chillObj = { "link": { "chills": chill.info.id } };
+        let chillObj = { "type": "chill", "chill_id": chill.info.id, "link": { "chills": chill.info.id } };
         let friendObj = { "id": this.navParams.get("friendId"), "firstname": this.firstName, "lastname": this.lastName, "picture": this.picture };
         let editModal = this.modal.create(EditChills, { "chill": chillObj, "friends": friendObj });
 

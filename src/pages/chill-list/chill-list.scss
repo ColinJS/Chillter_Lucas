@@ -7,6 +7,32 @@ chill-list {
     }
   }
 
+  .custom-chill-spinner {
+    ion-spinner {
+      width: 75px;
+      height: 75px;
+      display: block;
+      margin: 25% auto;
+    }
+
+    .spinner-crescent circle {
+      stroke-width: 1px;
+    }
+  }
+
+  .adding-chill-spinner {
+    ion-spinner {
+      width: 40px;
+      height: 40px;
+      display: block;
+      margin: 0% auto;
+    }
+
+    .spinner-crescent circle {
+      stroke-width: 1px;
+    }
+  }
+
   ion-label {
     flex: initial;
   }

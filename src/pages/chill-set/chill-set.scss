@@ -96,4 +96,23 @@ chill-set {
       margin-top: 6rem;
     }
   }
+
+  /* override for 527 - 550 screen height */
+  @media screen and (min-height: 527px) and (max-height: 550px){
+    ion-list, .list-ios {
+      margin-bottom: 0;
+    }
+    .chill-set .avatar {
+      width: 120px;
+    }
+    .chill-set .avatar img-picker-logo {
+      height: 115px;
+      width: 115px;
+    }
+    .chill-set .btn-disconnect-container .btn-disconnect {
+      font-size: 1.8rem;
+      height: 4rem;
+      line-height: 4rem;
+    }
+  }
 }

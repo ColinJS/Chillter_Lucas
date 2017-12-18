@@ -7,8 +7,8 @@ import {
   ViewController,
   ToastController,
   NavParams,
-  ModalController,
-  Events
+  Events,
+  ModalController
 } from 'ionic-angular';
 import { SyncService } from '../../providers/sync';
 import { EditChills } from '../edit-chills/edit-chills';
@@ -25,8 +25,10 @@ export class ChillList {
   placeholderLogo: string = "assets/images/default-profil.svg";
   fakeArray4: any = new Array(6); // Used for content placeholder
   fakeArray5: any = new Array(8); // Used for content placeholder
-  chillListDisplay: string = "chills"; // First segment selected
+  isLoadingCustoms: boolean = true;
+  isLoadingList: boolean = true;
 
+  chillListDisplay: string = "chills";
   private transaltions: any;
   private homeChills: any = [];
   private chills: any = [];
@@ -40,12 +42,12 @@ export class ChillList {
     private notif: Events,
     private viewCtrl: ViewController,
     private navParams: NavParams,
-    private modal: ModalController,
     private api: ApiService,
     private sync: SyncService,
     private toastCtrl: ToastController,
     private translate: TranslateService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private modalCtrl: ModalController
   ) {
     this.baseUrl = configService.getBaseUrl();
     translate.get(['offline.blocked',
@@ -135,7 +137,7 @@ export class ChillList {
     chill.chill_id = chill.id;
     chill.type = "custom";
 
-    let modal = this.modal.create(EditChills, { chill: chill, edit:true });
+    let modal = this.modalCtrl.create(EditChills, { chill: chill, edit:true });
 
     modal.onDidDismiss(() => {
       this.getAllChills();
@@ -201,7 +203,7 @@ export class ChillList {
       this.showToast(1);
       return;
     }
-    let modal = this.modal.create(EditChills, { chill: null });
+    let modal = this.modalCtrl.create(EditChills, { chill: null });
 
     modal.onDidDismiss(() => {
       this.getAllChills();

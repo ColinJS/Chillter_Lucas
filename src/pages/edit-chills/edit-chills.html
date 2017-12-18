@@ -1,6 +1,4 @@
 <ion-content class="edit-chills" scroll="false">
-
-  <div class="floating-close-button" (tap)="close(2)"></div>
   <div class="overlay left-pan-accept hide-left-pan {{transformLeftPan}}">
     <p class="overlay-text">{{overlayTextSend}}</p>
   </div>
@@ -12,6 +10,7 @@
   </div>
 
   <div class="chills-header">
+    <div class="floating-close-button" (tap)="close(2)"></div>
     <div class="ch-background">
       <img-picker-banner id="background" [src]="banner"></img-picker-banner>
     </div>
@@ -36,15 +35,31 @@
         {{ address.description }}
       </ion-item>
 
-      <div class="invite-time" [style.color]="'#'+color" (tap)="showDatePicker()">
+      <div class="invite-time" [style.color]="'#'+color">
         <div class="invite-time-left">
+          <div class="starting-date" (tap)="showDatePicker()">
           <i class="invite-day">{{stringDay}}</i>
           <i class="invite-day-number">{{numberDay}}</i>
           <i class="invite-day-number">{{stringMonth}}</i>
           <i class="invite-hours">{{hours}}</i>
-          <i class="exp">h</i><i class="invite-minutes">{{min}}</i></div>
+          <i class="exp">h</i><i class="invite-minutes">{{min}}</i>
+          </div>
+          <div class="add-ending-date" *ngIf="!haveEndingDate" (tap)="showDatePicker(false)">
+            {{ 'edit-chills.addEndingDate' | translate }}
+          </div>
+          <div class="ending-date" *ngIf="haveEndingDate" >
+          <ion-icon name="close" (tap)="removeEndingDate()"></ion-icon>
+          <span (tap)="showDatePicker(false)">
+            <i class="invite-day">{{stringEndingDay}}</i>
+            <i class="invite-day-number">{{numberEndingDay}}</i>
+            <i class="invite-day-number">{{stringEndingMonth}}</i>
+            <i class="invite-hours">{{endingHours}}</i>
+            <i class="exp">h</i><i class="invite-minutes">{{endingMin}}</i>
+          </span>
+          </div>
         </div>
       </div>
+    </div>
       <div class="flex-third">
         <div class="invite-com" text-justify (tap)="openChat()">
           <ion-scroll scrollY="true" [style.color]="'#'+color">
@@ -73,7 +88,6 @@
             <div *ngIf="showMoreFriends" class="show-more-friends" (tap)="showMoreFriendsPage()">
               {{ 'edit-chills.more-friends' | translate }}
             </div>
-          </div>
         </div>
       </div>
 
@@ -90,4 +104,5 @@
         <div class="invite-editing-save" (tap)="animateTo(2)"><span class="text-editing">{{ 'edit-chills.update' | translate }}</span></div>
         <div class="invite-editing-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-editing">{{ 'edit-chills.updateSend' | translate }}</span></div>
       </div>
+  </div>
 </ion-content>

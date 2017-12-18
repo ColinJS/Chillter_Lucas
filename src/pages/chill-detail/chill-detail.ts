@@ -22,6 +22,7 @@ import { WeatherService } from '../../providers/weather';
 import { Calendar } from 'ionic-native';
 import { ChillChatPage } from '../chill-chat/chill-chat';
 import { MoreFriendsPage } from '../more-friends/more-friends';
+import { CacheService } from '../../providers/cache';
 
 declare var google: any;
 
@@ -48,11 +49,17 @@ export class ChillDetail {
   banner: string;
 
   eventDate: Date;
+  endingDate: Date;
+  haveEndingDate: boolean = true;
   soonDate: Date;
   soonDateDisplay: boolean = false;
   day: string;
   hours: string;
   min: string;
+
+  endingDay: string;
+  endingHours: string;
+  endingMin: string;
 
   geo: string;
   geoSpec: string;
@@ -72,6 +79,9 @@ export class ChillDetail {
   stringDay: string = "";
   numberDay: string = "";
   stringMonth: string = "";
+  stringEndingDay: string = "";
+  numberEndingDay: string = "";
+  stringEndingMonth: string = "";
   eventId: any;
   isPastEvent: boolean = false;
 
@@ -108,8 +118,8 @@ export class ChillDetail {
   noEvent: boolean = false;
   dayNow: number = 0;
   noEventSoon: boolean = false;
-  idProfile: string;
-  chillCreatorId: string;
+  idProfile: string = undefined;
+  chillCreatorId: string = undefined;
   creator: any;
 
   viewEvents: any[] = [];
@@ -128,7 +138,8 @@ export class ChillDetail {
     private platform: Platform,
     public sanitizer: DomSanitizer,
     private notif: Events,
-    private imgPickerService: ImgPickerService
+    private imgPickerService: ImgPickerService,
+    private cache: CacheService
   ) {
     if (this.platform.is('ios')) {
       this.isIos = true;
@@ -254,6 +265,22 @@ export class ChillDetail {
       this.min = "0" + this.min
     }
 
+    if(this.haveEndingDate){
+      console.log("Super");
+      this.stringEndingDay = dayName[this.endingDate.getDay()];
+      this.numberEndingDay = (this.endingDate.getDate()).toString();
+      this.stringEndingMonth = monthName[this.endingDate.getMonth()];
+      this.endingHours = (this.endingDate.getHours()).toString();
+      if (this.endingHours.length == 1) {
+        this.endingHours = "0" + this.hours
+      }
+      this.endingMin = (this.endingDate.getMinutes()).toString();
+      if (this.endingMin.length == 1) {
+        this.endingMin = "0" + this.endingMin
+      }
+    }
+    
+
   }
 
   getEventDetail() {
@@ -279,6 +306,9 @@ export class ChillDetail {
           this.geo = data.place;
           this.geoSpec = data.address;
           this.eventDate = new Date(data.date);
+          this.endingDate = data.ending_date ? new Date(data.ending_date) : null ;
+          this.haveEndingDate = !(this.endingDate == null || this.endingDate <= this.eventDate);
+          console.log(this.haveEndingDate);
           this.formatDate();
           this.getNames();
           this.color = data.color;
@@ -532,20 +562,28 @@ export class ChillDetail {
         date: this.eventDate,
       },
     };
-    let bodyImg = {
+    let bodyImgLogo = {
+      image: null
+    };
+
+    let bodyImgBanner = {
       image: null
     };
 
     if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() || this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()) {
       if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()  && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
-        bodyImg.image = this.imgPickerService.getImgResultLogo();
-        bodyImg.image ? this.api.sendEventLogo(this.eventId, bodyImg).subscribe() : null;
+        bodyImgLogo.image = this.imgPickerService.getImgResultLogo();
+        this.cache.clearCache('event_' + this.eventId);
+        this.cache.clearCache('events');
+        bodyImgLogo.image ? this.api.sendEventLogo(this.eventId, bodyImgLogo).subscribe() : null;
         this.viewCtrl.dismiss(undefined, true);
       }
 
       if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() && this.imgPickerService.getImgResultBanner()) {
-        bodyImg.image = this.imgPickerService.getImgResultBanner();
-        this.api.sendEventBanner(this.eventId, bodyImg).subscribe();
+        bodyImgBanner.image = this.imgPickerService.getImgResultBanner();
+        this.cache.clearCache('event_' + this.eventId);
+        this.cache.clearCache('events');
+        this.api.sendEventBanner(this.eventId, bodyImgBanner).subscribe();
         this.viewCtrl.dismiss(undefined, true);
       }
     }

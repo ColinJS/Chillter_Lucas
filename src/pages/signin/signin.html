@@ -43,8 +43,15 @@
           <p ion-text color="danger">{{ 'signup.password-matching' | translate }}</p>
         </ion-item>
 
-        <ion-item>
-          <ion-input placeholder="{{ 'signup.phone' | translate }}" type="tel" formControlName="phone"></ion-input>
+        <ion-item class="phone">
+          <ion-select class="phone-prefix" formControlName="phonePrefix">
+            <ion-option *ngFor="let prefix of prefixs" value="{{prefix.dial_code}}">
+              {{prefix.name}} {{prefix.dial_code}}
+            </ion-option>
+            <!--<ion-option value="fr">+33</ion-option>
+            <ion-option value="us">+1</ion-option>-->
+          </ion-select>
+          <ion-input class="phone-value" placeholder="{{ 'signup.phone' | translate }}" type="tel" formControlName="phone"></ion-input>
         </ion-item>
 
         <ion-item *ngIf="!form.controls.phone.valid && (form.controls.phone.dirty || submitted)">

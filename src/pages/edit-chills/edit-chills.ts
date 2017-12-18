@@ -65,7 +65,16 @@ export class EditChills {
   min: string = "";
   soon: string = "";
 
+  stringEndingDay: string = "";
+  numberEndingDay: string = "";
+  stringEndingMonth: string = "";
+  endingHours: string = "";
+  endingMin: string = "";
+  endingSoon: string = "";
+
   eventDate: Date = new Date();
+  haveEndingDate: boolean = false;
+  endingDate: Date = new Date();
   soonDate: Date = new Date();
 
   comment: string = "";
@@ -140,6 +149,7 @@ export class EditChills {
     this.overlayTextDelete = this.transaltions['overlay.deleted'];
 
     this.formatDate();
+    this.formatDate(false);
 
     this.getChillerInfo();
     this.getChill();
@@ -149,10 +159,11 @@ export class EditChills {
     let myFriends = this.navParams.get("friends");
     if (myFriends) {
       this.friends.push(myFriends);
+      this.sliceFriends();
     }
   }
 
-  formatDate() {
+  formatDate(startDate: boolean = true) {
     let dayName = [this.transaltions['chill-detail.day-sun'],
     this.transaltions['chill-detail.day-mon'],
     this.transaltions['chill-detail.day-tues'],
@@ -174,19 +185,34 @@ export class EditChills {
     this.transaltions['chill-detail.month-nov'],
     this.transaltions['chill-detail.month-dec']];
 
-    this.soonDate = new Date(this.eventDate.getTime());
+    if(startDate){
+      this.soonDate = new Date(this.eventDate.getTime());
 
-    this.stringDay = dayName[this.eventDate.getDay()];
-    this.numberDay = (this.eventDate.getDate()).toString();
-    this.stringMonth = monthName[this.eventDate.getMonth()];
-    this.hours = (this.eventDate.getHours()).toString();
-    if (this.hours.length == 1) {
-      this.hours = "0" + this.hours
+      this.stringDay = dayName[this.eventDate.getDay()];
+      this.numberDay = (this.eventDate.getDate()).toString();
+      this.stringMonth = monthName[this.eventDate.getMonth()];
+      this.hours = (this.eventDate.getHours()).toString();
+      if (this.hours.length == 1) {
+        this.hours = "0" + this.hours
+      }
+      this.min = (this.eventDate.getMinutes()).toString();
+      if (this.min.length == 1) {
+        this.min = "0" + this.min
+      }
+    }else{
+      this.stringEndingDay = dayName[this.endingDate.getDay()];
+      this.numberEndingDay = (this.endingDate.getDate()).toString();
+      this.stringEndingMonth = monthName[this.endingDate.getMonth()];
+      this.endingHours = (this.endingDate.getHours()).toString();
+      if (this.endingHours.length == 1) {
+        this.endingHours = "0" + this.endingHours
+      }
+      this.endingMin = (this.endingDate.getMinutes()).toString();
+      if (this.endingMin.length == 1) {
+        this.endingMin = "0" + this.endingMin
+      }
     }
-    this.min = (this.eventDate.getMinutes()).toString();
-    if (this.min.length == 1) {
-      this.min = "0" + this.min
-    }
+    
   }
 
   getChill() {
@@ -203,7 +229,7 @@ export class EditChills {
               this.chillId = data.id;
               this.parentChill = data;
               this.name = data.name;
-              this.logo = ("http://www.chillter.fr/api/images/chill-" + data.logo + ".svg");
+              this.logo = ("http://www.chillter.fr/api/images/chills/" + data.logo + ".svg");
               this.banner = ("assets/images/banner-" + data.category + ".jpg");
               this.color = data.color;
               this.chillType = "chill";
@@ -391,9 +417,13 @@ export class EditChills {
         comment: this.comment,
         take_logo: false
       };
-      let bodyImg = {
+      let bodyImgLogo = {
         image: null
       };
+
+      let bodyImgBanner = {
+        image: null
+      }
 
       this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner()
 
@@ -461,13 +491,13 @@ export class EditChills {
 
           if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() || this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()) {
             if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo() && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
-              bodyImg.image = this.imgPickerService.getImgResultLogo();
-              this.api.sendCustomChillLogo(customChillId.id, bodyImg).subscribe();
+              bodyImgLogo.image = this.imgPickerService.getImgResultLogo();
+              this.api.sendCustomChillLogo(customChillId.id, bodyImgLogo).subscribe();
             }
 
             if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() && this.imgPickerService.getImgResultBanner()) {
-              bodyImg.image = this.imgPickerService.getImgResultBanner();
-              this.api.sendCustomChillBanner(customChillId.id, bodyImg).subscribe();
+              bodyImgBanner.image = this.imgPickerService.getImgResultBanner();
+              this.api.sendCustomChillBanner(customChillId.id, bodyImgBanner).subscribe();
             }
           }
         });
@@ -499,6 +529,7 @@ export class EditChills {
           },
           chillers: chillersId
         }
+        this.haveEndingDate ? body.event.endingDate = ("@" + (Math.round((this.endingDate.getTime()) / 1000)).toString()) : null;
       } else if (this.chillType == "custom") {
         body = {
           event: {
@@ -519,7 +550,7 @@ export class EditChills {
           },
           chillers: chillersId
         }
-
+        this.haveEndingDate ? body.event.endingDate = ("@" + (Math.round((this.endingDate.getTime()) / 1000)).toString()) : null;
         // Because it's custom chill, category is set to 2 to get orange layout
         // The banner is set to null because by default with custom chill banner is undefined and api use null, so using null
         !body.event.category ? body.event.category = 2 : null;
@@ -816,9 +847,15 @@ export class EditChills {
     }
   }
 
-  showDatePicker() {
+  removeEndingDate(){
+    this.haveEndingDate = false;
+  }
+
+  showDatePicker(startDate: boolean = true) {
+    let dateTo = startDate ? this.eventDate : this.endingDate;
+    
     DatePicker.show({
-      date: this.eventDate,
+      date: dateTo,
       mode: 'datetime',
       okText: this.transaltions['global.ok'],
       cancelText: this.transaltions['global.cancel'],
@@ -830,8 +867,15 @@ export class EditChills {
       locale: "fr_FR"
     }).then(
       date => {
-        this.eventDate = date;
-        this.formatDate();
+        if(startDate){
+          this.eventDate = date;
+        }else{
+          this.endingDate = date;
+        }
+        this.formatDate(startDate);
+        if(!startDate){
+          this.haveEndingDate = true;
+        }
       },
       err => console.log("Error occurred while getting date:", err)
       );
@@ -908,7 +952,7 @@ export class EditChills {
   animateTo(obj: any) {
     if (obj == "accept" || obj == 1) {
       this.transformLeftPan = "anim-left-pan";
-      this.updateCustomChill();
+      if(this.editCustom){ this.updateCustomChill(); }
       this.sendInvitation();
       setTimeout(() => {
         this.viewCtrl.dismiss();

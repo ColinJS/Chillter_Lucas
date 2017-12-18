@@ -12,6 +12,7 @@
       <div class="wrapper-list">
         <div *ngIf="fixNav" class="fix-nav"></div>
         <div class="subtitle-car">{{ 'chill-utils.transport-subtitle' | translate}}</div>
+        <ion-spinner class="loading-spinner-car" *ngIf="!newMode && isLoadingCar" name="crescent"></ion-spinner>
         <div *ngFor="let car of cars">
           <h1>{{ car.driver.firstname }}</h1>
           <div class="car-class">
@@ -26,13 +27,18 @@
               <img src="assets/images/close-filled.png" image-cache/>
             </div>
             <div class="suppr-car" *ngIf="!newMode && car.driver.id == profileId" (tap)="deleteCar(car.id)">
-              <img src="assets/images/close-filled.png" image-cache/>
+              <img *ngIf="!car.isDeleteLoading" src="assets/images/close-filled.png" image-cache/>
+              <ion-spinner *ngIf="car.isDeleteLoading" name="crescent"></ion-spinner>
             </div>
           </div>
           <div class="seats-left">
             <div *ngIf="newMode">{{ car.seats - 1 }} {{ 'chill-utils.seats-left' | translate }}</div>
-            <div *ngIf="!newMode">{{ car.seats_left }} {{ 'chill-utils.seats-left' | translate }}</div>
+            <div *ngIf="!newMode">{{ car.seats_left }} {{ 'chill-utils.seats-left' | translate }} <ion-spinner *ngIf="car.isGetOutLoading || car.isGetInLoading" name="crescent"></ion-spinner></div>
           </div>
+        </div>
+
+        <div class="new-car-spinner">
+          <ion-spinner *ngIf="!newMode && isLoadingAddCar" name="crescent"></ion-spinner>
         </div>
       </div>
 
@@ -48,21 +54,28 @@
       <div class="wrapper-list">
         <div *ngIf="fixNav" class="fix-nav"></div>
         <div class="subtitle-list">{{ 'chill-utils.list-subtitle' | translate}}</div>
+        <ion-spinner class="loading-spinner-list" *ngIf="!newMode && isLoadingList" name="crescent"></ion-spinner>
         <ul class="list">
           <li *ngFor="let element of list" class="element-list">
-            <div *ngIf="element.mine || element.created_by.id == profileId" class="list-suppr" (tap)="deleteElement(element.id)">
+            <div *ngIf="element.mine || element.created_by.id == profileId && !element.state" class="list-suppr" (tap)="deleteElement(element.id)">
               <img src="assets/images/close-filled.png" image-cache/>
             </div>
-            <div *ngIf="element.created_by.id != profileId && !newMode" class="list-bullet"></div>
-            <div class="element">{{element.content}}</div>
-            <div *ngIf="newMode" class="taker" (tap)="elementTap(element.id,element.firstname)">
+            <div *ngIf="!newMode && element.created_by.id != profileId && !element.state" class="list-bullet"></div>
+            <div *ngIf="!element.state" class="element">{{element.content}}</div>
+            <div *ngIf="newMode && !element.state" class="taker" (tap)="elementTap(element.id,element.firstname)">
                 {{ 'chill-utils.me' | translate }}
             </div>
-            <div *ngIf="!element.assigned_to.firstname && !newMode" class="no-taker" (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)">
+            <div *ngIf="!newMode && !element.assigned_to.firstname && !element.state && !element.assigned_to.state" class="no-taker" (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)">
                 {{ 'chill-utils.list-select-name' | translate }}
             </div>
-            <div *ngIf="!newMode" class="taker" (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)">
+            <div *ngIf="!newMode && !element.state && !element.assigned_to.state" class="taker" (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)">
                 {{element.assigned_to.firstname}}
+            </div>
+            <div *ngIf="!newMode && element.assigned_to.state" class="taker spinner-list-actions">
+              <ion-spinner name="crescent"></ion-spinner>
+            </div>
+            <div *ngIf="!newMode && element.state" class="spinner-list-actions">
+              <ion-spinner name="crescent"></ion-spinner>
             </div>
           </li>
         </ul>
@@ -79,7 +92,8 @@
     <ion-slide class="slide-expense" style="display:block;">
       <div class="wrapper-list">
         <div *ngIf="fixNav" class="fix-nav"></div>
-        <div class="subtitle-expense">{{ 'chill-utils.expense-subtitle' | translate}}</div>
+        <div class="subtitle-expense">{{ 'chill-utils.expense-subtitle' | translate}} <ion-spinner *ngIf="isLoadingExpAction" name="crescent"></ion-spinner></div>
+        <ion-spinner class="loading-spinner-exp" *ngIf="!newMode && isLoadingExp" name="crescent"></ion-spinner>
           <div *ngFor="let e of exps;let ind=index" class="expense">
             <div class="exps-title">
               <div class="exps-name">{{e.payer.firstname}}</div>
@@ -96,7 +110,7 @@
               </ul>
             </div>
           </div>
-        <div class="resolve-div" *ngIf="expensesPage && exps && exps.length > 0" (tap)="resolve()">
+        <div class="resolve-div" *ngIf="!newMode && expensesPage && exps && exps.length > 0" (tap)="resolve()">
           <ion-icon name="calculator"></ion-icon>
         </div>
       </div>

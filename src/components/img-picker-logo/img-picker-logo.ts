@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { ActionSheetController } from 'ionic-angular';
+import { ActionSheetController, ModalController } from 'ionic-angular';
 import { Camera, CameraOptions } from 'ionic-native';
 import { TranslateService } from 'ng2-translate';
 import { ImgPickerService } from '../../providers/img-picker'
+import { CroppiePage } from '../../pages/croppie/croppie';
 
 @Component({
   selector: 'img-picker-logo',
@@ -21,10 +22,10 @@ export class ImgPickerLogo {
     quality: 100,
     destinationType: Camera.DestinationType.DATA_URL,
     mediaType: Camera.MediaType.PICTURE,
-    allowEdit: true,
+    allowEdit: false,
     encodingType: Camera.EncodingType.JPEG,
-    targetWidth: 256,
-    targetHeight: 256,
+    targetWidth: 2200,
+    targetHeight: 2200,
     saveToPhotoAlbum: false,
     correctOrientation: true
   };
@@ -32,7 +33,8 @@ export class ImgPickerLogo {
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private translate: TranslateService,
-    private imgPickerService: ImgPickerService
+    private imgPickerService: ImgPickerService,
+    private modalCtrl: ModalController
   ) {
     translate.get(['img-loader.get-picture',
       'img-loader.take-picture',
@@ -95,10 +97,11 @@ export class ImgPickerLogo {
 
     Camera.getPicture(this.imageOptions).then(
       (imageData) => {
-        this.picture = 'data:image/jpeg;base64,' + imageData.replace(/(\r\n|\n|\r)/gm, "");
+        this.goCroppie('data:image/jpeg;base64,' + imageData.replace(/(\r\n|\n|\r)/gm, ""));
+        /*this.picture = 'data:image/jpeg;base64,' + imageData.replace(/(\r\n|\n|\r)/gm, "");
         this.imgChange.emit();
         this.imgPickerService.setFirstImgSrcLogo(this.firstSrc);
-        this.imgPickerService.setImgResultLogo(this.picture);
+        this.imgPickerService.setImgResultLogo(this.picture);*/
       },
       (err) => { console.error(err) });
   }
@@ -111,12 +114,28 @@ export class ImgPickerLogo {
 
     Camera.getPicture(this.imageOptions).then(
       (imageData) => {
-        this.picture = 'data:image/jpeg;base64,' + imageData.replace(/(\r\n|\n|\r)/gm, "");
+        this.goCroppie('data:image/jpeg;base64,' + imageData.replace(/(\r\n|\n|\r)/gm, ""));
+        /*this.picture = 'data:image/jpeg;base64,' + imageData.replace(/(\r\n|\n|\r)/gm, "");
+        this.imgChange.emit();
+        this.imgPickerService.setFirstImgSrcLogo(this.firstSrc);
+        this.imgPickerService.setImgResultLogo(this.picture);*/
+      },
+      (err) => { console.error(err) });
+  }
+
+  goCroppie(picture) {
+    let modal = this.modalCtrl.create(CroppiePage, { "picture": picture, "width": 256, "height": 256, "type": "circle" })
+
+    modal.onDidDismiss((data) => {
+      if (data) {
+        this.picture = data;
         this.imgChange.emit();
         this.imgPickerService.setFirstImgSrcLogo(this.firstSrc);
         this.imgPickerService.setImgResultLogo(this.picture);
-      },
-      (err) => { console.error(err) });
+      }
+    });
+
+    modal.present();
   }
 
 }

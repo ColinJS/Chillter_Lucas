@@ -27,6 +27,19 @@ signin {
     font-size: 1.8rem;
   }
 
+  .phone-prefix{
+    width: 20vmin;
+  }
+  .phone-value{
+    width: 70vmin;
+  }
+  //little tricks to get rid of the input-cover on the select input
+  .phone{
+    .input-cover{
+      left: calc(20vmin + 12px);
+    }
+  }
+
   ion-item.input-has-focus ion-input,
   ion-item.input-has-focus ion-input[required] {
     border: none;

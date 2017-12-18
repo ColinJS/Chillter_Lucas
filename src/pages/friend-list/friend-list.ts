@@ -147,9 +147,9 @@ export class FriendList {
 
   getSentInvitation(ref: any = false) {
     this.api.getSentInvitation().subscribe(
-      res => {
-        if (res) {
-          this.sentInvitation = res;
+      data => {
+        if (data) {
+          this.sentInvitation = data;
         } else {
           this.sentInvitation = [];
         }
@@ -404,14 +404,22 @@ export class FriendList {
     this.navCtrl.push(ChillerDetails, { "friendId": friendId, "firstname": firstname, "phone": phone, "have_chillter": have_chillter }, { animate: true, direction: 'back' });
   }
 
-  addFriend(notFriendId: any) {
+  addFriend(notFriendId: number) {
     if (!this.sync.status) {
       this.showOfflineToast(1);
       return;
     }
-    this.api.addFriend(notFriendId).subscribe();
-    this.getSentInvitation();
-    this.getNotFriends();
+
+    const toDelete = new Set([notFriendId]);
+    this.notFriends = this.notFriends.filter(obj => !toDelete.has(obj.id));
+    this.api.addFriend(notFriendId).subscribe(
+      data => {
+        if (data) {
+          this.getSentInvitation();
+          this.getNotFriends();
+        }
+      }
+    );
   }
 
   showOfflineToast(type) {

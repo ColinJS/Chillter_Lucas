@@ -13,6 +13,7 @@ export class AskFriends {
   filteredFriends: any = [];
   viewFriends: any = [];
   friendsList: any = [];
+  isLoadingFriends: boolean = true;
 
   constructor(
     private nav: NavController,
@@ -43,7 +44,7 @@ export class AskFriends {
   getFriends() {
     this.api.getFriends().subscribe(
       data => {
-
+        this.isLoadingFriends = false;
         if (data) {
           this.friends = data;
           if (this.friendsList.length > 0) {
@@ -71,6 +72,7 @@ export class AskFriends {
         }
       },
       res => {
+        this.isLoadingFriends = false;
         console.log(res.status)
         if (res.status != 200) {
           console.log("Http request error :" + res.status);

@@ -46,4 +46,14 @@ login {
   .forgot-password {
     color: $chillter-col;
   }
+
+  /* override for 527 - 550 screen height */
+  @media screen and (min-height: 527px) and (max-height: 550px){
+    .logo-sun {
+      width: 25vh;
+    }
+    .button-large-ios {
+      height: 2.3em;
+    }
+  }
 }

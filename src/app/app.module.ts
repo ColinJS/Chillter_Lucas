@@ -40,6 +40,8 @@ import { ChillChatPage } from '../pages/chill-chat/chill-chat';
 import { MoreFriendsPage } from '../pages/more-friends/more-friends';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 
+import { CroppiePage } from '../pages/croppie/croppie';
+
 import { ImgPickerLogo } from '../components/img-picker-logo/img-picker-logo';
 import { ImgPickerBanner } from '../components/img-picker-banner/img-picker-banner';
 import { StatusImg } from '../pipes/statusImg'
@@ -81,6 +83,7 @@ import {
     Home,
     LogIn,
     SignIn,
+    CroppiePage,
     ResolveExpenses,
     TabsPage,
     ChillChatPage,
@@ -124,6 +127,7 @@ import {
     ChillerDetails,
     EditChills,
     FriendList,
+    CroppiePage,
     History,
     Home,
     LogIn,

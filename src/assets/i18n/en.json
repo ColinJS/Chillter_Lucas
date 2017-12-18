@@ -47,14 +47,14 @@
   },
   "signup": {
     "create-account": "Create an account",
-    "add-picture": "Tap to add a photo",
+    "add-picture": "Tap to add a picture",
     "firstname": "Firstname",
     "lastname": "Lastname",
     "password": "Password",
     "password-confirm": "Confirm password",
     "loader-config": "Configuration, ",
     "loader-ready": "Ready !",
-    "phone": "Phone",
+    "phone": "Phone number",
     "email": "Email",
     "signup-button": "Sign Up",
     "firstname-empty": "First name cannot be empty",
@@ -129,7 +129,8 @@
       "new-password": "New password"
     },
     "error-password": "Cannot change password",
-    "synchro-contacts": "Synchronize contacts"
+    "synchro-contacts": "Synchronize contacts",
+    "change-lang": "Change language"
   },
   "chill-utils": {
     "me": "Me",
@@ -141,10 +142,10 @@
     "global-title": "Transport",
     "title-transport": "Transport",
     "transport-subtitle": "Organize your transport",
-    "list-subtitle": "Specify the items to bring",
+    "list-subtitle": "Items to bring",
     "expense-subtitle": "Provide your expenses",
     "list-select-name": "Select",
-    "seats-left": "seats left",
+    "seats-left": "seats available",
     "title-list": "List",
     "title-expense": "Expenses",
     "add-inheriter": "For who ?",
@@ -181,6 +182,7 @@
     "place": "Place",
     "address": "Address",
     "comment": "comment",
+    "addEndingDate": "Add end date",
     "date": "at",
     "invited-number": "invited",
     "swipe-toast": {
@@ -219,12 +221,12 @@
     "title": "Photo edit"
   },
   "chill-list": {
-    "customize-chill": "Customize Chill",
-    "customized-chill": "Customized"
+    "customize-chill": "Create your own",
+    "customized-chill": "Customized Chills"
   },
   "resolve-expense": {
-    "title": "Resolve",
-    "subtitle": "Account balancing"
+    "title": "Balance",
+    "subtitle": "Balance of expenses"
   },
   "chill-chat": {
     "error-happen": "An error happened",

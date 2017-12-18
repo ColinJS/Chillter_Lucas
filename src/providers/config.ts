@@ -5,10 +5,12 @@ export class ConfigService {
 
   devMode: boolean = false;
   localMode: boolean = true;
+  ourServerUrl: string = 'http://www.chillter.fr';
+  localUrl: string = 'http://chillter';
   masterUrl: string = 'http://chillter-app.publish-it.fr';
   constructor() {
     if (isDevMode()) { this.devMode = true; }
-    this.masterUrl = this.localMode ? 'http://chillter' : this.masterUrl;
+    this.masterUrl = this.ourServerUrl;
   }
 
   getBaseUrl(): string {

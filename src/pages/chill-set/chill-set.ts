@@ -13,6 +13,7 @@ import {
 import { TranslateService } from 'ng2-translate';
 import { ApiService } from '../../providers/api';
 import { SyncService } from '../../providers/sync';
+import { StorageService } from '../../providers/storage';
 import {
   FormBuilder,
   FormGroup,
@@ -33,6 +34,7 @@ export class ChillSet {
 
   picture: string = "";
   synchronizeFinished: boolean = false;
+  changingLang: boolean = false;
 
   constructor(
     private translate: TranslateService,
@@ -47,7 +49,8 @@ export class ChillSet {
     private contacts: ContactsService,
     private loadingCtrl: LoadingController,
     private cache: CacheService,
-    private imgPickerService: ImgPickerService
+    private imgPickerService: ImgPickerService,
+    private storage: StorageService
   ) {
     this.api.getMyProfile().subscribe(data => {
       this.picture = data.picture ? data.picture : null;
@@ -87,7 +90,6 @@ export class ChillSet {
 
     if (imgResult && imgResult != firstSrc) {
       body.image = imgResult;
-      console.log("SENDING PROFILEPICTURE")
       this.api.sendProfilePicture(body).subscribe();
     }
   }
@@ -155,7 +157,6 @@ export class ChillSet {
       this.showOfflineToast(1);
       return;
     }
-    console.log("HERE");
     // Use timeout to give time to the imgloader to set the picture
     setTimeout(() => {
       this.sendPicture();
@@ -163,7 +164,12 @@ export class ChillSet {
   }
 
   logout() {
+    let loading = this.loadingCtrl.create();
+    loading.present();
     this.api.logout();
+    setTimeout(() => {
+      loading.dismiss();
+    }, 3000)
   }
 
   synchronizeContacts() {
@@ -191,6 +197,16 @@ export class ChillSet {
         duration: 3000
       });
       toast.present();
+    }
+  }
+
+  setLanguageTo(lang?) {
+    if (lang) {
+      this.translate.use(lang);
+      this.storage.setValue('lang_used', lang);
+      this.changingLang = false;
+    } else {
+      this.changingLang = true;
     }
   }
 }

@@ -1,6 +1,4 @@
 <ion-content>
-
-  <div class="floating-close-button" (tap)="close()"></div>
   <div class="overlay left-pan-accept hide-left-pan {{transformLeftPan}}">
     <p class="overlay-text">{{overlayTextAccept}}</p>
   </div>
@@ -12,6 +10,7 @@
   </div>
 
   <div class="chills-header">
+    <div class="floating-close-button" (tap)="close()"></div>
     <div class="ch-background">
       <img id="background" [src]="banner" *ngIf="!isEdit" image-cache/>
       <img-picker-banner id="background" [src]="banner" *ngIf="isEdit"></img-picker-banner>
@@ -24,9 +23,9 @@
 
   <div class="invite" (swipe)="swipeEvent($event)">
     <div class="invite-header">
-      <div *ngIf="idProfile == chillCreatorId" class="edit-icon" (tap)="editInfo(isEdit)">
+      <div *ngIf="idProfile && chillCreatorId && idProfile == chillCreatorId" class="edit-icon" (tap)="editInfo(isEdit)">
         <img src="assets/images/edit.svg" *ngIf="!isEdit" image-cache/>
-        <ion-icon class="valide-icon" *ngIf="isEdit" name="checkmark-circle-outline"></ion-icon>
+        <img src="assets/images/edit-on.svg" *ngIf="isEdit" image-cache/>
       </div>
 
       <div>
@@ -80,10 +79,34 @@
       <ion-item [style.color]="'#'+color" style="font-size: 14px;" *ngFor="let address of autocompleteAddress" (click)="chooseAddress(address)">
         {{ address.description }}
       </ion-item>
-
+      
       <div class="invite-time" [style.color]="'#'+color" (tap)="showDatePicker(isEdit)">
-        <div class="invite-time-left"><i class="invite-day">{{stringDay}}</i> <i class="invite-day-number">{{numberDay}}</i> <i class="invite-day-number">{{stringMonth}}</i> <i class="invite-hours">{{hours}}</i>
-          <i class="exp">h</i><i class="invite-minutes">{{min}}</i>
+        <div class="no-ending-date" *ngIf="!haveEndingDate">
+          <div class="invite-time-left">
+            <i class="invite-day">{{stringDay}}</i>
+            <i class="invite-day-number">{{numberDay}}</i> 
+            <i class="invite-day-number">{{stringMonth}}</i> 
+            <i class="invite-hours">{{hours}}</i>
+            <i class="exp">h</i><i class="invite-minutes">{{min}}</i>
+          </div>
+        </div>
+        <div class="with-ending-date" *ngIf="haveEndingDate">
+          <div class="invite-time-left">
+            <div class="starting-date">
+              <i class="invite-day">{{stringDay}}</i> 
+              <i class="invite-day-number">{{numberDay}}</i> 
+              <i class="invite-day-number">{{stringMonth}}</i> 
+              <i class="invite-hours">{{hours}}</i>
+              <i class="exp">h</i><i class="invite-minutes">{{min}}</i>
+            </div>
+            <div class="ending-date">
+              <i class="invite-day">{{stringEndingDay}}</i> 
+              <i class="invite-day-number">{{numberEndingDay}}</i> 
+              <i class="invite-day-number">{{stringEndingMonth}}</i> 
+              <i class="invite-hours">{{endingHours}}</i>
+              <i class="exp">h</i><i class="invite-minutes">{{endingMin}}</i>
+            </div>
+          </div>
         </div>
         <div class="invite-time-right-text" *ngIf="soonDateDisplay && !weatherDisplay"><p>{{soonDate | toNow}}</p></div>
         <div class="invite-time-right" *ngIf="weatherDisplay"><ion-icon name="{{weatherIcon}}"></ion-icon><div class="text">{{ chillWeatherTemp }}°c</div></div>

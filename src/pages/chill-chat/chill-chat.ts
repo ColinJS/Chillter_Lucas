@@ -33,6 +33,7 @@ export class ChillChatPage {
 
   connClosed: boolean = false;
   reloadingChat: boolean = false;
+  closeOnce: boolean = false;
   eventName: string;
 
   constructor(
@@ -67,14 +68,14 @@ export class ChillChatPage {
 
     // Fix keyboard overlapping inputs
     if (plt.is('ios')) {
-      let 
+      let
         appEl = <HTMLElement>(document.getElementsByTagName('ION-APP')[0]),
         appElHeight = appEl.clientHeight;
-    
+
       window.addEventListener('native.keyboardshow', (e) => {
         appEl.style.height = (appElHeight - (<any>e).keyboardHeight) + 'px';
       });
-    
+
       window.addEventListener('native.keyboardhide', () => {
         appEl.style.height = '100%';
       });
@@ -105,8 +106,13 @@ export class ChillChatPage {
           that.conn = new WebSocket(url, encodeURIComponent("Bearer " + that.myToken));
 
           that.conn.onclose = function () {
-            that.reloadingChat = false;
-            that.connClosed = true;
+            if (!that.closeOnce) {
+              that.closeOnce = true;
+              that.ionViewDidEnter();
+            } else {
+              that.reloadingChat = false;
+              that.connClosed = true;
+            }
           };
 
           that.conn.onmessage = function (e) {

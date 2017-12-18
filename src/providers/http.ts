@@ -6,6 +6,7 @@ import {
   ResponseOptions,
   RequestOptionsArgs
 } from '@angular/http';
+import { TranslateService } from 'ng2-translate';
 import { StorageService } from './storage';
 import { SyncService } from './sync';
 import { Observable } from 'rxjs/Rx';
@@ -17,11 +18,16 @@ export class HttpService {
   constructor(
     private http: Http,
     private storage: StorageService,
-    private sync: SyncService
+    private sync: SyncService,
+    private translate: TranslateService
   ) {
     this.storage.getValue('token').subscribe(token => {
       this.headers.set('Content-Type', 'application/json');
       this.headers.set('X-Token', token);
+      this.storage.getValue('lang_used').subscribe(res => {
+        res ? this.headers.set('Accept-Language', res) : this.headers.set('Accept-Language', translate.getBrowserLang());
+      })
+
     });
   }
 
