@@ -25,7 +25,7 @@ export class TabsPage {
     private notif: Events,
     private api: ApiService
   ) {
-    this.getNotification();
+    this.getNotification(true);
     this.notif.subscribe("notif:update", () => {
       this.getNotification();
     });
@@ -34,9 +34,10 @@ export class TabsPage {
     });
   }
 
-  getNotification() {
-    this.api.getPendingFriends().subscribe(
+  getNotification(firstLoad: boolean = false) {
+    let call = this.api.getPendingFriends(firstLoad).subscribe(
       data => {
+        call.unsubscribe();
         if (data.length > 0) {
           this.friendBadge = data.length;
         } else {
@@ -51,9 +52,10 @@ export class TabsPage {
       () => console.log("Error")
     )
 
-    this.api.getEvents().subscribe(
+    call = this.api.getEvents(firstLoad).subscribe(
       data => {
         if (data) {
+          call.unsubscribe()
           this.eventBadge = null;
           for (let e in data) {
             if (data[e].participation_status == 3) {

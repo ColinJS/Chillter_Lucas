@@ -62,7 +62,7 @@ export class ChillList {
 
   ngOnInit(){
     this.getAllChills();
-    this.fromHomePage = this.navCtrl.getPrevious().name == "Home" ? true : false;
+    this.fromHomePage = (this.navCtrl.getPrevious() != undefined && this.navCtrl.getPrevious().name == "Home" ) ? true : false;
   }
 
   getAllChills() {

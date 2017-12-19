@@ -25,6 +25,8 @@ export class FriendList {
   noFriends: boolean = false;
   profileId: number;
 
+  firstLoad: boolean = true;
+
   noResultFriends: boolean = false;
   noResultNotFriends: boolean = false;
   searchNotFriends: boolean = false;
@@ -104,13 +106,36 @@ export class FriendList {
     this.getSentInvitation(refresher);
   }
 
+  listsAreDifferent(list1: any[], list2: any[]): boolean{
+    let isDifferent: boolean = list1.length != list2.length;
+
+    if(!isDifferent){
+      compareLoop:{
+        for(let i = 0; i < list1.length; i++){
+          if(JSON.stringify(list1[i]) != JSON.stringify(list2[i])){
+            isDifferent = true;
+            break compareLoop;
+          }
+        }
+      }
+    }
+
+    return isDifferent
+  }
+
   getFriends() {
-    this.api.getFriends().subscribe(
+    let call = this.api.getFriends(this.firstLoad).subscribe(
       data => {
+        call.unsubscribe();
+        this.firstLoad = false;
         data.length == 0 ? this.noFriends = true : this.noFriends = false;
         if (data) {
-          this.friends = data;
-          this.unsortFriends = data;
+          if(this.listsAreDifferent(data,this.friends)){
+            this.friends = data;
+          }
+          if(this.listsAreDifferent(data,this.unsortFriends)){
+            this.unsortFriends = data;
+          }
         } else {
           this.friends = [];
         }
@@ -125,10 +150,13 @@ export class FriendList {
   }
 
   getPendingFriends(ref: any = false) {
-    this.api.getPendingFriends().subscribe(
+    let call = this.api.getPendingFriends().subscribe(
       data => {
+        call.unsubscribe();
         if (data) {
-          this.pendingFriends = data;
+          if(this.listsAreDifferent(data,this.pendingFriends)){
+            this.pendingFriends = data;
+          }
         } else {
           this.pendingFriends = [];
         }
@@ -146,10 +174,13 @@ export class FriendList {
   }
 
   getSentInvitation(ref: any = false) {
-    this.api.getSentInvitation().subscribe(
+    let call = this.api.getSentInvitation().subscribe(
       data => {
+        call.unsubscribe();
         if (data) {
-          this.sentInvitation = data;
+          if(this.listsAreDifferent(this.sentInvitation,data)){
+            this.sentInvitation = data;
+          }
         } else {
           this.sentInvitation = [];
         }
@@ -161,13 +192,16 @@ export class FriendList {
   }
 
   getCacheFriends() {
-    this.cache.getCache('MERGED_CONTACTS_FRIENDS').subscribe(
+    let call = this.cache.getCache('MERGED_CONTACTS_FRIENDS').subscribe(
       data => {
+        call.unsubscribe();
         data.length == 0 ? this.noFriends = true : this.noFriends = false;
         if (data != undefined) {
           this.noFriends = false;
-          this.friends = data;
-          this.unsortFriends = this.friends;
+          if(this.listsAreDifferent(data,this.friends)){
+            this.friends = data;
+            this.unsortFriends = this.friends;
+          }
         } else {
           this.noFriends = true;
         }
@@ -180,8 +214,9 @@ export class FriendList {
       this.showOfflineToast(1);
       return;
     }
-    this.api.acceptFriend(friendId).subscribe(
+    let call = this.api.acceptFriend(friendId).subscribe(
       data => {
+        call.unsubscribe();
         if (this.contactPermState) {
           this.friends = [];
           this.contacts.resetAll();
@@ -241,8 +276,9 @@ export class FriendList {
       this.showOfflineToast(1);
       return;
     }
-    this.api.deleteFriend(friendId).subscribe(
+    let call = this.api.deleteFriend(friendId).subscribe(
       data => {
+        call.unsubscribe();
         if (this.contactPermState) {
           this.friends = [];
           this.contacts.resetAll();
@@ -274,8 +310,9 @@ export class FriendList {
       this.showOfflineToast(1);
       return;
     }
-    this.api.blockFriend(friendId).subscribe(
+    let call = this.api.blockFriend(friendId).subscribe(
       data => {
+        call.unsubscribe();
         if (this.contactPermState) {
           this.friends = [];
           this.contacts.resetAll();
@@ -350,8 +387,9 @@ export class FriendList {
   }
 
   getNotFriends() {
-    this.api.findUser(this.searchWord).subscribe(
+    let call = this.api.findUser(this.searchWord).subscribe(
       data => {
+        call.unsubscribe();
         if (data) {
           this.notFriends = data;
           this.searchNotFriends = true;
@@ -412,8 +450,9 @@ export class FriendList {
 
     const toDelete = new Set([notFriendId]);
     this.notFriends = this.notFriends.filter(obj => !toDelete.has(obj.id));
-    this.api.addFriend(notFriendId).subscribe(
+    let call = this.api.addFriend(notFriendId).subscribe(
       data => {
+        call.unsubscribe();
         if (data) {
           this.getSentInvitation();
           this.getNotFriends();

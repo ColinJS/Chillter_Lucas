@@ -233,7 +233,7 @@ export class ApiService {
    *
    * Return friends, used in friend-list
    */
-  getFriends(): Observable<any> {
+  getFriends(takeCache: boolean = true): Observable<any> {
     const cacheKey: string = 'friends';
 
     let cacheStream = this.cache.getCache(cacheKey);
@@ -248,9 +248,13 @@ export class ApiService {
           return res;
         });
     });
-
-    return Observable.merge(cacheStream, webStream)
+    if(takeCache){
+      return Observable.merge(cacheStream, webStream)
       .filter(res => res);
+    }else{
+      return webStream.filter(res => res);
+    }
+    
   }
 
   getSentInvitation(): Observable<any> {
@@ -329,7 +333,7 @@ export class ApiService {
   /**
    * Get pending friends
    */
-  getPendingFriends(): Observable<any> {
+  getPendingFriends(takeCache: boolean = true): Observable<any> {
     const cacheKey: string = 'pending_friends';
 
     let cacheStream = this.cache.getCache(cacheKey);
@@ -348,8 +352,12 @@ export class ApiService {
         });
     });
 
-    return Observable.merge(cacheStream, webStream)
+    if(takeCache){
+      return Observable.merge(cacheStream, webStream)
       .filter(res => res);
+    }else{
+      return webStream.filter(res => res);
+    }
   }
 
   /**

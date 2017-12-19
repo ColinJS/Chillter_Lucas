@@ -54,8 +54,9 @@ export class History {
   }
 
   getEvents() {
-    this.api.getEvents().subscribe(
+    let call = this.api.getEvents().subscribe(
       data => {
+        call.unsubscribe();
         if (data) {
           this.events = data;
           this.sortEvents();
