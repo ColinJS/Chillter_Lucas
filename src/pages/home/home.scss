@@ -1,4 +1,5 @@
 home {
+  font-family: SF_Medium;
   img {
     max-width: 80%;
 
@@ -34,7 +35,7 @@ home {
   .chill-contain {
     width: calc((85vmin / 3) - 3px);
     font-size: 1.2rem;
-    color: black;
+    color: #4A4A4A;
     position: relative;
     text-transform: capitalize; 
     }

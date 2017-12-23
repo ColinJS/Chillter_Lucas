@@ -19,7 +19,22 @@
 }
 
 @font-face {
-  font-family: 'SF';
+  font-family: 'SF_Light';
+  src: url('../assets/fonts/SanFranciscoDisplay-Light.otf');
+}
+
+@font-face {
+  font-family: 'SF_Medium';
+  src: url('../assets/fonts/SanFranciscoDisplay-Medium.otf');
+}
+
+@font-face {
+  font-family: 'SF_Regular';
+  src: url('../assets/fonts/SanFranciscoDisplay-Regular.otf');
+}
+
+@font-face {
+  font-family: 'SF_Semibold';
   src: url('../assets/fonts/SanFranciscoDisplay-Semibold.otf');
 }
 
@@ -145,5 +160,5 @@ ion-item-options button.activated {
 }
 
 ion-app{
-  font-family: SF!important;
+  font-family: SF_Medium!important;
 }

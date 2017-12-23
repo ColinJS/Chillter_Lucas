@@ -16,7 +16,7 @@
         </div>
         <div class="details-info">
           <div *ngIf="!firstName && !lastName" class="content-pl-7">&nbsp;</div>
-          <h1>{{firstName}} {{lastName}}</h1>
+          <h1><span class="chiller-firstname">{{firstName}}</span> <span class="chiller-lastname">{{lastName}}</span></h1>
           <div class="contact-chiller-container contact-chiller-phone">
             <div *ngIf="!phone" class="content-pl-5">&nbsp;</div>
             <h2>{{phone}}</h2>

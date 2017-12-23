@@ -1,21 +1,19 @@
-<ion-header no-border>
+<ion-header class="tabbar-segment" no-border>
   <ion-navbar>
+    <ion-title>
+      <ion-segment [(ngModel)]="chillListDisplay">
+        <ion-segment-button value="chills">
+          Chills
+        </ion-segment-button>
+        <ion-segment-button value="customChills">
+          {{'chill-list.customized-chill' | translate}}
+        </ion-segment-button>
+      </ion-segment>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="chill-list">
-  
-  <div padding>
-    <ion-segment [(ngModel)]="chillListDisplay">
-      <ion-segment-button value="chills">
-        Chills
-      </ion-segment-button>
-      <ion-segment-button value="customChills">
-        {{'chill-list.customize-chill' | translate}}
-      </ion-segment-button>
-    </ion-segment>
-  </div>
-
 
   <div [ngSwitch]="chillListDisplay">
     <div *ngSwitchCase="'chills'">
@@ -86,7 +84,7 @@
 
       <ion-list>
         <ion-list-header>
-          {{ 'chill-list.customize-chill' | translate }}
+          {{ 'chill-list.customized-chill' | translate }}
         </ion-list-header>
         <ion-item-sliding *ngFor="let customChill of customChills">
           <ion-item (tap)="close(customChill)">
