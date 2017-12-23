@@ -17,8 +17,8 @@
         <div class="chill-contain {{ 'chill_' + s.id }}" *ngFor="let s of slide" id="{{ 'chill_' + s.id }}">
           <div class="{{s.id}}" id=" {{s.type}}">
             <div [ngClass]="shakingMode ? 'shaking-chill' : null" id="{{s.id}}">
-              <div *ngIf="!s.loadingState" class="{{s.type != 'custom' ? '' : 'rounded-chill-image'}}">
-                <img src="{{s.logo ? s.logo : placeholderLogo }}" width="100%" (tap)="tapDistrib(s)" (press)="pressDistrib(s)" image-cache/>
+              <div *ngIf="!s.loadingState" class="shadowed rounded-chill-image {{ 'home-image-' + s.name }}">
+                <img src="{{s.logo ? s.logo : placeholderLogo }}" width="100%" (tap)="tapDistrib(s)" (press)="pressDistrib(s)"/>
               </div>
               <div *ngIf="!s.loadingState">{{ s.name }}</div>
               <div class="delete-icon" *ngIf="!s.loadingState && deleteMode" (tap)="deleteChill(s)">

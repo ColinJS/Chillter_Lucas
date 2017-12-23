@@ -59,7 +59,7 @@
           <ion-list-header>
             {{cat.name}}
           </ion-list-header>
-          <ion-item-sliding *ngFor="let chill of cat.chills; trackBy: trackByChills" >
+          <ion-item-sliding *ngFor="let chill of cat.chills; trackBy: trackByChills" #slidingItem>
             <ion-item (tap)="close(chill)">
               <ion-avatar item-left>
                 <img src="{{ baseUrl + '/api/images/chills/' + chill.info.logo + '.svg' }}" image-cache>
@@ -67,7 +67,7 @@
               <h2>{{chill.info.name}}</h2>
             </ion-item>
             <ion-item-options side="right">
-              <button ion-button (tap)="homeSwitcher(chill)" clear>
+              <button ion-button (tap)="homeSwitcher(slidingItem, chill)" clear>
                 <ion-icon name="star" [isActive]="chill.homeState" ></ion-icon>
               </button>
             </ion-item-options>

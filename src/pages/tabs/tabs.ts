@@ -9,6 +9,7 @@ import { ChillSet } from '../chill-set/chill-set';
 
 @Component({
   templateUrl: 'tabs.html',
+  selector: 'tabs',
 })
 export class TabsPage {
   tab1Root: any = Home;

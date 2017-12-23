@@ -196,7 +196,6 @@ edit-chills {
     text-transform: capitalize;
   }
   .invite-header .title {
-    font-family: LemonMilk;
   }
   .invite h2 {
     margin-bottom: 1vmax;
@@ -207,7 +206,6 @@ edit-chills {
   .invite-header h2 {
     color: rgb(180, 180, 180);
     font-size: 1.7rem;
-    font-family: Lobster;
   }
   .invite-header .creator {
     color: gray;
@@ -224,7 +222,6 @@ edit-chills {
     flex-direction: column;
   }
   .invite-geo .h1 {
-    font-family: MyBold !important;
     font-size: 3rem;
     font-weight: bold;
     margin-bottom: -10px;
@@ -233,7 +230,6 @@ edit-chills {
     font-size: 2.2rem;
     opacity: 0.6;
     width: 93%;
-    font-family: MyBold !important;
   }
   .invite-time {
     margin: 1vmax 0px;
@@ -261,18 +257,15 @@ edit-chills {
     .invite-day,
     .invite-day-number {
       font-size: 3.3rem;
-      font-family: MyBold;
     }
     .invite-day-number {
       opacity: 0.7;
     }
     .invite-hours {
       font-size: 38px;
-      font-family: MyBold !important;
     }
     .invite-minutes {
       font-size: 38px;
-      font-family: MyBold !important;
       opacity: 0.7;
     }
     .exp {
@@ -287,18 +280,15 @@ edit-chills {
     .invite-day,
     .invite-day-number {
       font-size: 2rem;
-      font-family: MyBold;
     }
     .invite-day-number {
       opacity: 0.7;
     }
     .invite-hours {
       font-size: 20px;
-      font-family: MyBold !important;
     }
     .invite-minutes {
       font-size: 20px;
-      font-family: MyBold !important;
       opacity: 0.7;
     }
     .exp {

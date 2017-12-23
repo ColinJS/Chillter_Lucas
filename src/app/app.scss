@@ -19,6 +19,11 @@
 }
 
 @font-face {
+  font-family: 'SF';
+  src: url('../assets/fonts/SanFranciscoDisplay-Semibold.otf');
+}
+
+@font-face {
   font-family: 'chillter-font';
   src: url('../assets/icons/chillter-font.eot?67flqu');
   src: url('../assets/icons/chillter-font.eot?67flqu#iefix') format('embedded-opentype'), url('../assets/icons/chillter-font.ttf?67flqu') format('truetype'), url('../assets/icons/chillter-font.woff?67flqu') format('woff'), url('../assets/icons/chillter-font.svg?67flqu#chillter-font') format('svg');
@@ -137,4 +142,8 @@ ion-item-options button.activated {
 .content-pl-img {
   -webkit-filter: grayscale(30%) blur(7px);
   filter: grayscale(30%) blur(7px);
+}
+
+ion-app{
+  font-family: SF!important;
 }

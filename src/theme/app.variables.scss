@@ -20,7 +20,7 @@
 // The "primary" color is the only required color in the map.
 // Both iOS and MD colors can be further customized if colors
 // are different per mode.
-$chillter-col:#ff862a;
+$chillter-col:#fe872b;
 
 $colors: ( primary=$chillter-col,
 secondary=#32db64,
@@ -46,15 +46,3 @@ $searchbar-ios-input-clear-icon-color: $chillter-col;
 $item-ios-avatar-size: 5.5rem;
 
 $toolbar-background: #ffffff;
-
-/*
-@font-face {
-    font-family: 'LemonMilk'; /*a name to be used later
-    src: url('../../../build/fonts/LemonMilk.otf'); /*URL to font
-}
-
-@font-face {
-    font-family: 'Lobster'; /*a name to be used later
-    src: url('../../../build/fonts/Lobster.otf'); /*URL to font
-}
-*/

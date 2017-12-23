@@ -783,7 +783,7 @@ export class ApiService {
   /**
    * Get all chills, used in chill-list
    */
-  getAllChills(): Observable<any> {
+  getAllChills(takeCache: boolean = true): Observable<any> {
     const cacheKey: string = 'all_chills';
 
     let cacheStream = this.cache.getCache(cacheKey);
@@ -796,9 +796,13 @@ export class ApiService {
 
         return res;
       });
-
-    return Observable.merge(cacheStream, webStream)
+      if(takeCache){
+        return Observable.merge(cacheStream, webStream)
       .filter(res => res);
+      }else{
+        return webStream.filter(res => res);
+      }
+    
   }
 
   /**

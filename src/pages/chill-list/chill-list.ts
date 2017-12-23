@@ -8,8 +8,10 @@ import {
   ToastController,
   NavParams,
   Events,
-  ModalController
+  ModalController,
+  ItemSliding
 } from 'ionic-angular';
+import { Keyboard } from 'ionic-native';
 import { SyncService } from '../../providers/sync';
 import { EditChills } from '../edit-chills/edit-chills';
 import { Home } from '../home/home';
@@ -32,10 +34,10 @@ export class ChillList {
   private transaltions: any;
   private homeChills: any = [];
   private chills: any = [];
-  private customChills: any;
+  private customChills: any[] = [];
   private baseUrl: string;
   private myProfile: Object = {};
-  private fromHomePage: boolean;
+  private fromPage: string;
 
   constructor(
     private navCtrl: NavController,
@@ -60,67 +62,156 @@ export class ChillList {
       });
   }
 
-  ngOnInit(){
+  ionViewDidEnter(){
     this.getAllChills();
-    this.fromHomePage = (this.navCtrl.getPrevious() != undefined && this.navCtrl.getPrevious().name == "Home" ) ? true : false;
+    if(this.navCtrl.getPrevious() == undefined){
+      this.fromPage = 'Chiller';
+    }else if(this.navCtrl.getPrevious().name == 'Home'){
+      this.fromPage = 'Home';
+    }else{
+      this.fromPage = 'Chillbox';
+    }
   }
 
   getAllChills() {
 
-    this.api.getAllChills().subscribe(
+    let allChills: boolean = false;
+    let customChillsBool: boolean = false;
+    let homeChills: boolean = false;
+
+    let callChills = this.api.getAllChills().subscribe(
       (data) => {
-        this.chills = data;
-        for(let i = 0; i < this.chills.length; i++){
-          for(let j = 0; j < this.chills[i].chills.length; j++){
-            this.chills[i].chills[j].homeState = false;
+        if(data.length != 0){
+          callChills.unsubscribe()
+          let chills = data;
+          for(let i = 0; i < chills.length; i++){
+            for(let j = 0; j < chills[i].chills.length; j++){
+              chills[i].chills[j].homeState = false;
+            }
           }
-        }
-        console.log(this.chills);
-      });
 
-    this.api.getCustomChills().subscribe(
-      (data) => {
-        this.customChills = [].concat(data);
-        for(let i = 0; i < this.customChills.length; i++){
-          this.customChills[i].homeState = false;
-        }
-        console.log(this.customChills);
-      });
+          let willChange = this.chills.length == chills.length ? false : true;
 
-    this.api.getHome().subscribe(
-      data => {
-
-        this.homeChills = data;
-        for(let i = 0; i < this.homeChills.length; i++){
-
-          homeLoop:{
-            for(let j = 0; j < this.chills.length; j++){
-              for(let k = 0; k < this.chills[j].chills.length; k++){
-                if(this.chills[j].chills[k].info.id == this.homeChills[i].chill_id){
-                  this.chills[j].chills[k].homeState = true;
-                  break homeLoop;
+          if(!willChange){
+            checkLoop:{
+              for(let i = 0; i < chills.length; i++){
+                if(chills[i].chills.length != this.chills[i].chills.length){
+                  willChange = true;
+                  break checkLoop;
+                }
+                for(let j = 0; j < chills[i].chills.length; j++){
+                  if(JSON.stringify(chills[i].chills[j]) != JSON.stringify(this.chills[i].chills[j])){
+                    willChange = true;
+                    break checkLoop;
+                  }
                 }
               }
             }
-            for(let j = 0; j < this.customChills.length; j++){
-              if(this.customChills[j].id == this.homeChills[i].chill_id){
-                console.log("I'm in");
-                this.customChills[j].homeState = true;
-                break homeLoop;
+          }
+
+          if(willChange){
+            this.chills = chills;
+          }
+          allChills = true;
+          if(allChills && customChillsBool && homeChills){
+            this.changeHomeState();
+          }
+        }
+    });
+
+    let callCustoms = this.api.getCustomChills().subscribe(
+      (data) => {
+
+        if(data.length != 0){
+          callCustoms.unsubscribe()
+
+          let customChills = [].concat(data);
+
+          for(let i = 0; i < customChills.length; i++){
+            customChills[i].homeState = false;
+          }
+
+          let willChange = this.customChills.length == customChills.length ? false : true;
+
+          if(!willChange){
+            checkLoop:{
+              for(let i = 0; i < customChills.length; i++){
+                if(JSON.stringify(customChills[i]) != JSON.stringify(this.customChills[i])){
+                  willChange = true;
+                  break checkLoop;
+                }
               }
             }
           }
+
+          if(willChange){
+            this.customChills = customChills;
+          }
+          customChillsBool = true;
+          if(allChills && customChillsBool && homeChills){
+            this.changeHomeState();
+          }
         }
-        //I don't know why but this log is needed to make the homeState change effective
-        console.log(this.customChills);
-      });
+    });
+
+    let callHome = this.api.getHome(true).subscribe(
+    data => {
+      if(data.length != 0){
+        callHome.unsubscribe();
+        this.homeChills = data;
+        
+        homeChills = true;
+        if(allChills && customChillsBool && homeChills){
+          this.changeHomeState();
+        }
+      }
+    });
+
   }
 
-  homeSwitcher(chill: any){
+  getHomeRequest(){
+    let callHome = this.api.getHome(true).subscribe(
+    data => {
+      if(data.length != 0){
+        console.log("refresh");
+        callHome.unsubscribe();
+        this.homeChills = data;
+      }
+    });
+  }
+
+  changeHomeState(){
+
+    console.log("Manage home state");
+    console.log(this.homeChills);
+
+    for(let i = 0; i < this.homeChills.length; i++){
+
+      homeLoop:{
+        for(let j = 0; j < this.chills.length; j++){
+          for(let k = 0; k < this.chills[j].chills.length; k++){
+            if(this.chills[j].chills[k].info.id == this.homeChills[i].chill_id){
+              this.chills[j].chills[k].homeState = true;
+              break homeLoop;
+            }
+          }
+        }
+        for(let j = 0; j < this.customChills.length; j++){
+          if(this.customChills[j].id == this.homeChills[i].chill_id){
+            console.log("I'm in");
+            this.customChills[j].homeState = true;
+            break homeLoop;
+          }
+        }
+      }
+    }
+  }
+
+  homeSwitcher(slidingItem: ItemSliding,chill: any){
     if(chill.homeState){
-      this.deleteChill(chill);
+      this.deleteChill(slidingItem,chill);
     }else{
-      this.addChill(chill);
+      this.addChill(slidingItem,chill);
     }
   }
 
@@ -146,7 +237,19 @@ export class ChillList {
 
   }
 
-  addChill(chill: any) {
+  showEditChills(chill: any) {
+
+    let chillObj = { "type": chill.info ? "chill" : "custom" , "chill_id": chill.info ? chill.info.id : chill.id , "link": { "chills": chill.info ? chill.info.id : chill.id } };
+
+    let modal = this.modalCtrl.create(EditChills, { chill: chillObj });
+
+    modal.onDidDismiss(() => {
+      Keyboard.close()
+    });
+    modal.present()
+  }
+
+  addChill(slidingItem: ItemSliding, chill: any) {
 
     let custom = !!chill.id;
     let currentId = custom ? chill.id : chill.info.id;
@@ -154,12 +257,14 @@ export class ChillList {
     this.api.addChill(currentId, custom ? 'custom' : 'chill').subscribe(
       data => {
         chill.homeState = !chill.homeState;
+        slidingItem.close();
+        this.getHomeRequest();
       },
       err => { console.log(err) }
     )
   }
 
-  deleteChill(chill: any) {
+  deleteChill(slidingItem: ItemSliding, chill: any) {
 
     let custom = !!chill.id;
     let tmpId = custom ? chill.id : chill.info.id;
@@ -174,7 +279,15 @@ export class ChillList {
     this.sync.status ? null : this.showToast(1);
     this.api.deleteChill(currentId).subscribe(
       data=>{
+        console.log("alors !");
         chill.homeState = !chill.homeState;
+        slidingItem.close();
+      },
+      res => {
+        console.log(res.status)
+        if (res.status == 0 || res.status == 204) {
+          
+        }
       }
     );
 
@@ -193,8 +306,11 @@ export class ChillList {
     * If current view is ChillList add the Chill to Homepage (from Chillbox)
     * else (from Chiller-details -> Send a Chill), dismiss ChilllList and open chill-edit with choosen friends
     */
-    if (!this.fromHomePage) {
+    if (this.fromPage == 'Chiller') {
       this.viewCtrl.dismiss(chill);
+    }else{
+      this.showEditChills(chill);
+      this.navCtrl.pop()
     }
   }
 

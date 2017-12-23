@@ -87,7 +87,7 @@ export class Home {
   // Update the "sliders" list with the data that server return
   changeSlides(home: any) {
     let chillPlus = {
-      "logo": this.baseUrl + "/api/images/chills/plus.svg",
+      "logo": "assets/images/chills/plus.svg",
       "name": "plus",
       "id": "plus"
     };
@@ -151,6 +151,9 @@ export class Home {
       this.slides = slides;
       this.idList = idList;
     }
+
+    console.log(home);
+    console.log(slides);
 
   }
 

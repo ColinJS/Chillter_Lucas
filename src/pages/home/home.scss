@@ -34,14 +34,19 @@ home {
   .chill-contain {
     width: calc((85vmin / 3) - 3px);
     font-size: 1.2rem;
-    color: $chillter-col;
+    color: black;
     position: relative;
-  }
+    text-transform: capitalize; 
+    }
 
   .shaking-chill:not(#plus) {
     animation: shake 0.50s infinite;
     backface-visibility: hidden;
     perspective: 1000px;
+  }
+
+  .shadowed{
+    box-shadow: 0px 3px 9px -1px #c29c8c;
   }
 
   @keyframes shake {
@@ -116,7 +121,7 @@ home {
   }
 
   .rounded-chill-image {
-    border: 2px solid #f8973a;
+    border: 2px solid #fe872b;
     margin: 2px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -133,7 +138,13 @@ home {
       box-sizing: border-box;
       position: relative;
       top: 0;
+      height: 100%;
+      width: 100%;
     }
+  }
+
+  .home-image-plus{
+    border: 2px solid #D2D3D3;
   }
 
   .delete-loading {
