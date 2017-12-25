@@ -123,7 +123,7 @@ export class ChillList {
       (data) => {
 
         if(data.length != 0){
-          callCustoms.unsubscribe()
+          //callCustoms.unsubscribe()
 
           let customChills = [].concat(data);
 
