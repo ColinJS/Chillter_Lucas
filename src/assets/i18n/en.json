@@ -221,8 +221,9 @@
     "title": "Photo edit"
   },
   "chill-list": {
-    "customize-chill": "Create your own",
-    "customized-chill": "Customized Chills"
+    "chill-list": "Chill List",
+    "customize-chill": "Make your own",
+    "customized-chill": "Custom"
   },
   "resolve-expense": {
     "title": "Balance",

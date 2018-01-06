@@ -275,7 +275,10 @@ export class Home {
 
   showList() {
     this.getHome();
-    this.navCtrl.push(ChillList, { idList: this.idList });
+    let modal = this.modal.create(ChillList, { from: 'home', idList: this.idList});
+
+    modal.present();
+    //this.navCtrl.push(ChillList, { idList: this.idList });
   }
 
   toggleTrash() {

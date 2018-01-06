@@ -14,13 +14,13 @@ export class StatusImg {
     let imgPath: string = "";
 
     if (value == "0") {
-      imgPath = "assets/images/status-no-thin.svg";
+      imgPath = args[0] ? "#ff4a48" : "assets/images/status-no-thin.svg";
     } else if (value == "1") {
-      imgPath = "assets/images/status-yes-thin.svg";
+      imgPath = args[0] ? "#7ed321" : "assets/images/status-yes-thin.svg";
     } else if (value == "2") {
-      imgPath = "assets/images/status-maybe-thin.svg";
+      imgPath = args[0] ? "#f5a623" : "assets/images/status-maybe-thin.svg";
     } else if (value == "3") {
-      imgPath = "assets/images/status-wait.svg";
+      imgPath = args[0] ? "lightgrey" : "assets/images/status-wait.svg";
     }
     return imgPath;
   }

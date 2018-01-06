@@ -85,44 +85,14 @@ export class ChillBox {
 
     this.viewEvents = this.events.filter((v) => {
       if (v.info.name.toLowerCase().indexOf(this.searchWord.toLowerCase()) > -1 || this.searchWord == "") {
-        return this.filterSelected[parseInt(v.participation_status)];
+        return true;
       } else {
         return false;
       }
     });
-  }
 
-  toggleFilter(ind: number) {
-    this.filterSelected[ind] = !this.filterSelected[ind];
-    this.changeFilter();
-  }
+    console.log(this.viewEvents);
 
-  activeFilter(ind: number) {
-    this.filterSelected = [false, false, false, true];
-    this.filterSelected[ind] = true;
-    this.changeFilter();
-  }
-
-  changeFilter() {
-    if (this.filterSelected[0]) {
-      this.noPath = "assets/images/status-no-thin.svg";
-    } else {
-      this.noPath = "assets/images/filter-no.svg";
-    }
-
-    if (this.filterSelected[1]) {
-      this.yesPath = "assets/images/status-yes-thin.svg";
-    } else {
-      this.yesPath = "assets/images/filter-yes.svg";
-    }
-
-    if (this.filterSelected[2]) {
-      this.maybePath = "assets/images/status-maybe-thin.svg";
-    } else {
-      this.maybePath = "assets/images/filter-maybe.svg";
-    }
-
-    this.filterEvents();
   }
 
   capitalizeFirstLetter(string) {
@@ -159,7 +129,6 @@ export class ChillBox {
           }
           this.filterEvents();
         }
-        this.list.closeSlidingItems();
         this.notif.publish("notif:update");
       }
     );

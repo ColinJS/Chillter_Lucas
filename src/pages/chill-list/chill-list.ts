@@ -64,10 +64,11 @@ export class ChillList {
 
   ionViewDidEnter(){
     this.getAllChills();
-    if(this.navCtrl.getPrevious() == undefined){
-      this.fromPage = 'Chiller';
-    }else if(this.navCtrl.getPrevious().name == 'Home'){
+    let from = this.navParams.get('from');
+    if(from && from == 'home'){
       this.fromPage = 'Home';
+    }else if(this.navCtrl.getPrevious() == undefined){
+      this.fromPage = 'Chiller';
     }else{
       this.fromPage = 'Chillbox';
     }
@@ -82,14 +83,15 @@ export class ChillList {
     let callChills = this.api.getAllChills().subscribe(
       (data) => {
         if(data.length != 0){
-          callChills.unsubscribe()
+          //callChills.unsubscribe()
           let chills = data;
           for(let i = 0; i < chills.length; i++){
             for(let j = 0; j < chills[i].chills.length; j++){
               chills[i].chills[j].homeState = false;
             }
           }
-
+          console.log("allChills");
+          console.log(chills);
           let willChange = this.chills.length == chills.length ? false : true;
 
           if(!willChange){
@@ -243,9 +245,6 @@ export class ChillList {
 
     let modal = this.modalCtrl.create(EditChills, { chill: chillObj });
 
-    modal.onDidDismiss(() => {
-      Keyboard.close()
-    });
     modal.present()
   }
 
@@ -310,7 +309,7 @@ export class ChillList {
       this.viewCtrl.dismiss(chill);
     }else{
       this.showEditChills(chill);
-      this.navCtrl.pop()
+      this.viewCtrl.dismiss(chill);
     }
   }
 

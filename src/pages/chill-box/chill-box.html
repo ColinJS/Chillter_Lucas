@@ -2,10 +2,26 @@
   <ion-navbar>
     <ion-title>
       <img class="nav-title" src="assets/images/nav-chillbox.svg" image-cache/>
+      
     </ion-title>
-    <div class="history-button"(tap)="showHistory()">{{ 'history.title' | translate }}</div>
-    <div class="plus-button"><ion-icon ios="ios-add" md="md-add" (tap)="addChill()"></ion-icon></div>
+    <ion-buttons start>
+      <button class="history-button" ion-button icon-only>
+        <ion-icon name="time" (tap)="showHistory()"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button class="plus-button" ion-button icon-only>
+        <ion-icon name="add" (tap)="addChill()"></ion-icon>
+      </button>
+    </ion-buttons>
+    <!-- 
+      <div class="history-button"><ion-icon name="time" (tap)="showHistory()"></ion-icon></div>
+    <div class="plus-button"><ion-icon name="add" (tap)="addChill()"></ion-icon></div>
+    -->
   </ion-navbar>
+  <div class="search-evt">
+    <ion-searchbar class="search-evt" placeholder="{{ 'global.search' | translate }}" (ionInput)="inputChange($event)"></ion-searchbar>
+  </div>
 </ion-header>
 
 <ion-content class="chill-box">
@@ -14,16 +30,42 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="search-evt">
-    <ion-searchbar class="search-evt" placeholder="{{ 'global.search' | translate }}" (ionInput)="inputChange($event)"></ion-searchbar>
-  </div>
-
-  <div class="filter-evt">
-    <img [src]="yesPath" class="filter-img" (tap)="toggleFilter(1)" (press)="activeFilter(1)" image-cache/>
-    <img [src]="maybePath" class="filter-img" (tap)="toggleFilter(2)" (press)="activeFilter(2)" image-cache/>
-    <img [src]="noPath" class="filter-img" (tap)="toggleFilter(0)" (press)="activeFilter(0)" image-cache/>
-  </div>
-
+  <ion-card *ngFor="let event of viewEvents" class="card-round" (tap)="showDetailEvent(event.info.id)">
+    <ion-item>
+      <ion-avatar item-left>
+        <div class="logo-container">
+          <div class="orange-border">
+            <div *ngIf="event.info.logo || event.info.chill.logo">
+              <img [src]="event.info.logo ? event.info.logo : event.info.chill.logo" class="logo-chill" image-cache>
+            </div>
+            <div *ngIf="!event.info.logo && !event.info.chill.logo">
+              <img src="assets/images/default-profil.svg" class="logo-chill">
+            </div>
+          </div>
+          <div class="participation-status" style.background-color="{{event.participation_status | statusImg:[true]}}"></div>
+        </div>
+      </ion-avatar>
+      <div class="global-infos">
+        <h2>{{event.info.name}}</h2>
+        <p class="chiller-name" *ngIf="event.info.chillerid != profileId">{{event.info.chiller}}</p>
+        <p class="chiller-name" *ngIf="event.info.chillerid == profileId">{{ 'chill-box.me' | translate }}</p>
+        <p class="event-canceled" *ngIf="event.info.is_cancelled">{{ 'chill-box.event-cancelled' | translate }}</p>
+      </div>
+      <!--<div *ngIf="!event.info.is_cancelled" style="display:inline-block;float:right;">
+        <i><img [src]="event.participation_status | statusImg" class="status-img-chill" image-cache/></i>
+      </div>-->
+      <div class="infos-events">
+        <p class="soon chill-hours">{{event.date | date: 'H:mm'}} </p>
+        <p *ngIf="(event.date | date:'yyMMdd') > (timeTomorrow | date:'yyMMdd')" class="soon chill-date">{{event.date | date:'dd/MM/yy'}}</p>
+        <p *ngIf="(event.date | date:'yyMMddHHmm') <= (timeNow | date:'yyMMddHHmm')" class="ongoing soon chill-date">{{ 'chiller-details.is-ongoing' | translate }}</p>
+        <p *ngIf="(event.date | date:'yyMMdd') == (timeNow | date:'yyMMdd') && !((event.date | date:'HHMM') <= (timeNow | date:'HHMM'))  " class="today soon chill-date">{{ 'chiller-details.is-today' | translate }}</p>
+        <p *ngIf="(event.date | date:'yyMMdd') == (timeTomorrow | date:'yyMMdd')" class="soon chill-date">{{ 'chiller-details.is-tomorrow' | translate }}</p>
+      </div>
+    </ion-item>
+    <div *ngIf="event.info.banner" class="custom-chill-banner"><img src="{{event.info.banner}}"/></div>
+    <img *ngIf="!event.info.banner" class="base-chill-banner" src="{{'assets/images/banner-'+event.info.chill.category+'.jpg'}}"/>
+  </ion-card>
+  <!--
   <ion-list>
     <div class="no-events" *ngIf="noEventSoon == true">
       {{ 'chill-box.no-events' | translate }}
@@ -94,5 +136,5 @@
       </ion-item>
     </span>
   </ion-list>
-
+ -->
 </ion-content>

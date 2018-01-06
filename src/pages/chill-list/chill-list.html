@@ -1,9 +1,9 @@
 <ion-header class="tabbar-segment" no-border>
   <ion-navbar>
     <ion-title>
-      <ion-segment [(ngModel)]="chillListDisplay">
+      <ion-segment mode="md" [(ngModel)]="chillListDisplay">
         <ion-segment-button value="chills">
-          Chills
+          {{'chill-list.chill-list' | translate}}
         </ion-segment-button>
         <ion-segment-button value="customChills">
           {{'chill-list.customized-chill' | translate}}
@@ -15,18 +15,18 @@
 
 <ion-content class="chill-list">
 
-  <div [ngSwitch]="chillListDisplay">
+  <div  class="list-round-wrapper" [ngSwitch]="chillListDisplay">
     <div *ngSwitchCase="'chills'">
       <ion-item no-lines class="top-space" (tap)="addPersonalized()">
         <ion-avatar item-left>
           <img src="assets/images/chill-plus.svg" image-cache>
         </ion-avatar>
-        <h2 ion-text color="primary">{{ 'chill-list.customize-chill' | translate }}</h2>
+        <h2 class="create-customized" ion-text>{{ 'chill-list.customize-chill' | translate }}</h2>
       </ion-item>
 
       <!-- Fake data, used for content placeholder -->
       <div *ngIf="chills.length == 0">
-        <ion-list>
+        <ion-list padding>
           <ion-list-header>
             <div class="content-pl-5">&nbsp;</div>
           </ion-list-header>
@@ -53,9 +53,9 @@
       <!-- End of fake data -->
 
       <div *ngIf="chills.length">
-        <ion-list *ngFor="let cat of chills">
-          <ion-list-header>
-            {{cat.name}}
+        <ion-list *ngFor="let cat of chills" padding>
+          <ion-list-header style.border-bottom="2px solid #{{cat.color}}">
+            <span style.color="#{{cat.color}}">{{cat.name}}</span>
           </ion-list-header>
           <ion-item-sliding *ngFor="let chill of cat.chills; trackBy: trackByChills" #slidingChills>
             <ion-item (tap)="close(chill)">
@@ -74,16 +74,16 @@
       </div>
     </div>
 
-    <div *ngSwitchCase="'customChills'">
+    <div class="list-round-wrapper" *ngSwitchCase="'customChills'">
       <ion-item no-lines class="top-space" (tap)="addPersonalized()">
         <ion-avatar item-left>
           <img src="assets/images/chill-plus.svg" image-cache>
         </ion-avatar>
-        <h2 ion-text color="primary">{{ 'chill-list.customize-chill' | translate }}</h2>
+        <h2  class="create-customized" ion-text>{{ 'chill-list.customize-chill' | translate }}</h2>
       </ion-item>
 
-      <ion-list>
-        <ion-list-header>
+      <ion-list padding>
+        <ion-list-header class="custom-header">
           {{ 'chill-list.customized-chill' | translate }}
         </ion-list-header>
         <ion-item-sliding *ngFor="let customChill of customChills" #slidingCustoms>
