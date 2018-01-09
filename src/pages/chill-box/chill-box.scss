@@ -4,12 +4,25 @@ chill-box {
     border-radius: 0px 0px 16px 16px;
     height: 110px;
     background: white;
+
+    ion-navbar{
+      padding-top: 0!important;
+      background: none;
+      ion-title{
+        padding-top: 0!important;
+        height: 100%!important;
+        min-height: 100%!important;
+      }
+
+    }
+
     img.nav-title{
       max-width: 80%;
       height: 47px;
-
     }
+
     .search-evt{
+      margin-top: 1px;
       display: block;
       border: none;
       background: none;
@@ -25,6 +38,7 @@ chill-box {
     font-size: 2rem;
     color: grey;
     border: none;
+    overflow: visible;
   }
 
   .plus-button {
