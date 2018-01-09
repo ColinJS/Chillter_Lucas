@@ -8,6 +8,7 @@ chill-box {
     ion-navbar{
       padding-top: 0!important;
       background: none;
+      height: 60px!important;
       ion-title{
         padding-top: 0!important;
         height: 100%!important;
@@ -39,6 +40,9 @@ chill-box {
     color: grey;
     border: none;
     overflow: visible;
+    ion-icon{
+      overflow: visible;
+    }
   }
 
   .plus-button {
