@@ -114,11 +114,12 @@ export class ChillList {
           if(willChange){
             this.chills = chills;
           }
-          allChills = true;
+          
+        }
+        allChills = true;
           if(allChills && customChillsBool && homeChills){
             this.changeHomeState();
           }
-        }
     });
 
     let callCustoms = this.api.getCustomChills().subscribe(
@@ -149,11 +150,11 @@ export class ChillList {
           if(willChange){
             this.customChills = customChills;
           }
-          customChillsBool = true;
+        }
+        customChillsBool = true;
           if(allChills && customChillsBool && homeChills){
             this.changeHomeState();
           }
-        }
     });
 
     let callHome = this.api.getHome(true).subscribe(
@@ -162,11 +163,12 @@ export class ChillList {
         callHome.unsubscribe();
         this.homeChills = data;
         
-        homeChills = true;
+        
+      }
+      homeChills = true;
         if(allChills && customChillsBool && homeChills){
           this.changeHomeState();
         }
-      }
     });
 
   }
