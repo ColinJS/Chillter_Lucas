@@ -33,11 +33,11 @@
           <input *ngIf="isEdit" type="text" class="title" [(ngModel)]="name" />
           <div *ngIf="!isEdit" class="title">{{name}}</div>
         </h1>
-        <h2>{{ 'chill-detail.invited-by' | translate }} <i class="creator" [style.color]="'#'+color">{{firstName}} {{lastName}}</i></h2>
+        <h2>{{ 'chill-detail.invited-by' | translate }} {{firstName}} {{lastName}}</h2>
       </div>
     </div>
 
-    <div class="invite-geo" [style.color]="'#'+color">
+    <div class="invite-geo">
       <h1>
         <input *ngIf="isEdit" type="text" placeholder="{{ 'chill-detail.place' | translate }}" [(ngModel)]="geo" />
         <div *ngIf="!isEdit && !geo">{{ 'chill-detail.place' | translate }}</div>
@@ -74,21 +74,34 @@
       </h2>
       <!-- END IOS PART -->
     </div>
-
+    <!--
     <ion-icon *ngIf="autocompleteAddress != ''" style="margin-top: 2%;" (tap)="clearAutocomplete()" name="close-circle"></ion-icon>
-      <ion-item [style.color]="'#'+color" style="font-size: 14px;" *ngFor="let address of autocompleteAddress" (click)="chooseAddress(address)">
+      <ion-item style="font-size: 14px;" *ngFor="let address of autocompleteAddress" (click)="chooseAddress(address)">
         {{ address.description }}
       </ion-item>
+    -->
+      <div class="invite-time" (tap)="showDatePicker(isEdit)">
       
-      <div class="invite-time" [style.color]="'#'+color" (tap)="showDatePicker(isEdit)">
-        <div class="no-ending-date" *ngIf="!haveEndingDate">
-          <div class="invite-time-left">
-            <i class="invite-day">{{stringDay}}</i>
-            <i class="invite-day-number">{{numberDay}}</i> 
-            <i class="invite-day-number">{{stringMonth}}</i> 
-            <i class="invite-hours">{{hours}}</i>
-            <i class="exp">h</i><i class="invite-minutes">{{min}}</i>
+        <div class="date-container">
+
+          <div class="date-left">
+            <div>{{stringMonth}}</div>
+            <div>{{numberDay}}</div>
           </div>
+
+          <div class="date-middle">
+            {{stringDay}} {{hours}}:{{min}}
+          </div>
+
+          <div class="date-right">
+            <div *ngIf="soonDateDisplay && !weatherDisplay"><p>{{soonDate | toNow}}</p></div>
+            <div *ngIf="weatherDisplay"><ion-icon name="{{weatherIcon}}"></ion-icon><div class="text">{{ chillWeatherTemp }}°c</div></div>
+          </div>
+
+        </div>
+      <!--
+        <div class="no-ending-date" *ngIf="!haveEndingDate">
+          
         </div>
         <div class="with-ending-date" *ngIf="haveEndingDate">
           <div class="invite-time-left">
@@ -108,15 +121,7 @@
             </div>
           </div>
         </div>
-        <div class="invite-time-right-text" *ngIf="soonDateDisplay && !weatherDisplay"><p>{{soonDate | toNow}}</p></div>
-        <div class="invite-time-right" *ngIf="weatherDisplay"><ion-icon name="{{weatherIcon}}"></ion-icon><div class="text">{{ chillWeatherTemp }}°c</div></div>
-      </div>
-
-      <div class="invite-com" text-justify (tap)="openChat()">
-        <ion-scroll scrollY="true" *ngIf="punchline" [style.color]="'#'+color">
-          {{ punchline }}
-        </ion-scroll>
-        <div *ngIf="noPunchline == true" [style.color]="'#'+color">{{ 'chill-detail.no-chat-message' | translate }}</div>
+        -->
       </div>
 
       <div class="invite-utils">
@@ -128,25 +133,35 @@
         <img *ngIf="!filledExpIcon" src="assets/images/tool-pig-outline.svg" (tap)="showUtils(2)" image-cache/>
       </div>
 
-      <div class="friends-number">{{ friends.length }} {{ 'chill-detail.invited-number' | translate }}</div>
-
-      <div class="invite-friends">
-        <img src="assets/images/chill-plus.svg"  (tap)="showFriends()" image-cache/>
-        <div *ngFor="let friend of shownFriends" class="friend-list-img">
-          <img class="friend-picture" *ngIf="idProfile == friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil.svg'" image-cache/>
-          <img class="friend-picture" *ngIf="idProfile != friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil.svg'" (tap)="showChillerDetails(friend.id)" image-cache/>
-          <div class="status-icon">
-            <img [src]="friend.statut | statusImg" image-cache/>
+      <div class="friends-part">
+        <div class="friends-number">{{ friends.length }} {{ 'chill-detail.invited-number' | translate }}</div>
+        <div class="invite-friends">
+          <img src="assets/images/chill-plus.svg"  (tap)="showFriends()" image-cache/>
+          <div *ngFor="let friend of shownFriends" class="friend-list-img">
+            <img class="friend-picture" *ngIf="idProfile == friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil.svg'" image-cache/>
+            <img class="friend-picture" *ngIf="idProfile != friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil.svg'" (tap)="showChillerDetails(friend.id)" image-cache/>
+            <div class="status-icon">
+              <img [src]="friend.statut | statusImg" image-cache/>
+            </div>
+            <div *ngIf="isEdit" class="delete-friend" (tap)="deleteFriend(friend.id)" >
+              <img src="assets/images/close-outline.svg" image-cache *ngIf="idProfile == chillCreatorId && friend.id != chillCreatorId"/>
+            </div>
           </div>
-          <div *ngIf="isEdit" class="delete-friend" (tap)="deleteFriend(friend.id)" >
-            <img src="assets/images/close-outline.svg" image-cache *ngIf="idProfile == chillCreatorId && friend.id != chillCreatorId"/>
+          <div *ngIf="showMoreFriends" class="show-more-friends" (tap)="showMoreFriendsPage()">
+            {{ 'edit-chills.more-friends' | translate }}
           </div>
-        </div>
-        <div *ngIf="showMoreFriends" class="show-more-friends" (tap)="showMoreFriendsPage()">
-          {{ 'edit-chills.more-friends' | translate }}
         </div>
       </div>
+
+      <div class="invite-com" text-justify (tap)="openChat()">
+        <ion-scroll scrollY="true" *ngIf="punchline" >
+          {{ punchline }}
+        </ion-scroll>
+        <div *ngIf="noPunchline == true">{{ 'chill-detail.no-chat-message' | translate }}</div>
+      </div>
+
     </div>
+    
     <div class="invite-fixed">
       <div class="invite-answer">
         <div class="invite-answer-refuse" (tap)="animateTo(0)"><span class="text-answer">{{ 'chill-detail.refuse' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>

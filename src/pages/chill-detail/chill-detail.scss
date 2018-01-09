@@ -107,6 +107,11 @@ chill-detail {
     padding-bottom: 3px;
     height: 3.5rem;
   }
+
+  .invite-header{
+    flex: 0 1 16.66%;
+  }
+
   .invite-header .edit-icon {
     right: 0;
     position: absolute;
@@ -255,6 +260,8 @@ chill-detail {
     position: absolute;
     border: 3px solid $chillter-col;
     background-color: white;
+    padding: 4px;
+    box-shadow: 0px 10px 20px 0px rgba(50,50,50,0.6);
   }
   .ch-logo img-loader,
   .ch-logo img {
@@ -270,168 +277,141 @@ chill-detail {
     top: 10px;
     margin: 5px;
   }
+
   .invite {
-    color: $chillter-col;
+    color: black;
     text-align: center;
     overflow-y: auto;
     min-height: unset;
     display: flex;
     flex-direction: column;
-    justify-content: initial;
+    justify-content: space-evenly;
     padding: 16px 16px 0;
-  }
-  .invite input {
-    margin: auto;
-    width: 93%;
-    border: none;
-    text-align: center;
-    text-transform: capitalize;
-  }
-  .invite h1 {
-    margin: 0px;
-    font-size: 3rem;
-    text-transform: capitalize;
-    /*padding-top: 10px;*/
-    height: 36px;
-  }
-  .invite-header h1 {
+    height: calc(100vmax - 11.5rem - 38px);//Screen size without banner header and sending footer
+    
     input {
-      position: relative;
-      top: -1px;
+      margin: auto;
+      width: 93%;
+      border: none;
+      text-align: center;
+      text-transform: capitalize;
     }
+    
+    h1 {
+      margin: 0px;
+      font-size: 3.5rem;
+      font-family: SF_Semibold;
+      text-transform: capitalize;
+      height: 36px;
+    }
+
+    h2 {
+      margin-bottom: 1vmax;
+    }
+
   }
-  .invite h2 {
-    margin-bottom: 1vmax;
+
+  .invite-header {
+    flex: 0 1 16.6%;
+
+    input {
+      text-transform: capitalize;
+    }
+
+    h1 {
+      input {
+        position: relative;
+        top: -1px;
+      }
+    }
+
+    h2 {
+      color: rgb(180, 180, 180);
+      font-size: 1.8rem;
+      font-family: SF_Light;
+    }
+    
   }
-  .invite-header input {
-    text-transform: uppercase;
-  }
-  .invite-header h2 {
-    color: rgb(180, 180, 180);
-    font-size: 1.7rem;
-  }
-  .invite-header .creator {
-    color: gray;
-    font-size: 2rem;
-  }
+
   .invite-geo {
-    height: 10vh;
-    min-height: 8rem;
     border: 2px solid $chillter-col;
     border-radius: 2.7rem;
     overflow: hidden;
-    font: bold;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-direction: column;
     padding: 0px 5%;
+    box-shadow: 0px 3px 9px 0px rgba(50,50,50,0.4);
+
+    h1 {
+      margin: 0px;
+      font-family: SF_Medium;
+    }
+
+    h2 {
+      font-size: 2rem;
+      opacity: 0.6;
+      overflow: hidden;
+      white-space: nowrap;
+      font-family: SF_Light;
+    }
+
+    .no-decoration a {
+      color: black;
+      opacity: 0.6;
+    }
   }
-  .invite-geo h1 {
-    margin: 0px;
-  }
-  .invite-geo h2 {
-    font-size: 2.2rem;
-    opacity: 0.6;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .invite-geo .no-decoration a {
-    text-decoration: none;
-  }
+
   .invite-time {
     margin: 1vmax 0px;
     height: 8vmax;
     min-height: 7rem;
     border: 2px solid $chillter-col;
-    border-radius: 4rem;
+    border-radius: 2.7rem;
     font-size: 1.8rem;
     overflow: hidden;
-  }
-  .invite-time i {
-    font-style: normal;
-  }
-  .invite-time div {
-    display: inline-block;
+    box-shadow: 0px 3px 9px 0px rgba(50,50,50,0.4);
+    padding: 1vmax;
+
+    i {
+      font-style: normal;
+    }
+
+    .date-container{
+      height: 100%;
+      display: flex;
+      justify-content: center; /* align horizontal */
+      align-items: center;
+    }
+    .date-left{
+      height: 100%;
+      width: 20%;
+      border-right: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* align horizontal */
+      align-items: center; /* align vertical */
+    }
+
+    .date-middle{
+      display: inline-block;
+      height: 100%;
+      width: 68%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* align horizontal */
+      align-items: center; /* align vertical */
+    }
+
+    .date-right{
+      display: flex;
+      justify-content: center; /* align horizontal */
+      align-items: center; /* align vertical */
+      height: 100%;
+      width: 10%;
+    }
   }
 
-  .no-ending-date{
-    .invite-time-left {
-      position: relative;
-      padding: 10px 3px;
-    }
-    .invite-day,
-    .invite-day-number {
-      font-size: 3.4rem;
-    }
-    .invite-day-number {
-      opacity: 0.7;
-    }
-    .invite-hours {
-      font-size: 40px;
-    }
-    .invite-minutes {
-      font-size: 40px;
-      opacity: 0.7;
-    }
-    .exp {
-      margin-left: -5px;
-      font-size: 1.2rem;
-      vertical-align: top;
-    }
-  }
-
-  .with-ending-date{
-    .invite-time-left {
-      position: relative;
-      padding: 0px 3px;
-    }
-    .starting-date{
-      display: block;
-      height: initial!important;
-      .invite-day,
-      .invite-day-number {
-        font-size: 3.3rem;
-      }
-      .invite-day-number {
-        opacity: 0.7;
-      }
-      .invite-hours {
-        font-size: 38px;
-      }
-      .invite-minutes {
-        font-size: 38px;
-        opacity: 0.7;
-      }
-      .exp {
-        margin-left: -5px;
-        font-size: 1.2rem;
-        vertical-align: top;
-      }
-    }
-    .ending-date{
-      display: block;
-      height: initial!important;
-      .invite-day,
-      .invite-day-number {
-        font-size: 2rem;
-      }
-      .invite-day-number {
-        opacity: 0.7;
-      }
-      .invite-hours {
-        font-size: 20px;
-      }
-      .invite-minutes {
-        font-size: 20px;
-        opacity: 0.7;
-      }
-      .exp {
-        margin-left: -5px;
-        font-size: 0.8rem;
-        vertical-align: top;
-      }
-    }
-  }
   
   .invite-time-right {
     height: auto;
@@ -448,19 +428,18 @@ chill-detail {
       font-size: 1.3rem;
     }
   }
-  .invite-time-right-text {
-    height: auto;
-    min-height: 100%;
-    float: right;
-    font-size: 1.3rem;
-    background-color: rgba($chillter-col, 0.8);
-    width: 12%;
-    color: white;
-    display: flex!important;
-    justify-content: center;
-    align-items: center;
+
+  .invite-utils {
+    margin: 0;
+    height: 8.5vmax;
+
+    img {
+      height: 100%;
+      margin: 0px 2vmin;
+    }
+
   }
-    
+
   .invite-com {
     margin: 0px;
     padding: 3px 0px;
@@ -472,28 +451,53 @@ chill-detail {
     text-align: center;
     overflow: hidden;
   }
-  .invite-utils {
-    margin: 0;
-    height: 8.5vmax;
+
+  
+  .friends-part{
+
+    .friends-number {
+      margin: 0;
+      text-align: left;
+    }
+
+    .invite-friends {
+      margin: 6px 3px 3px 0;
+      width: auto;
+      display: flex;
+      flex-direction: row;
+      min-height: 70px;
+      img {
+        height: 5.5rem;
+        width: 5.5rem;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+
+      .delete-friend {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 20px;
+        width: 20px;
+        vertical-align: top;
+        z-index: 999;
+        img {
+          height: 100%;
+          width: 100%;
+          vertical-align: top;
+        }
+      }
+
+    }
+
+    .show-more-friends {
+      float: right;
+      line-height: 6.5rem;
+      top: -5px;
+    }
+
   }
-  .invite-utils img {
-    height: 100%;
-    margin: 0px 2vmin;
-  }
-  .friends-number {
-    margin: 0;
-    text-align: left;
-  }
-  .invite-friends {
-    margin: 6px 3px 3px 0;
-    width: auto;
-    display: flex;
-    flex-direction: row;
-    min-height: 70px;
-  }
-  .show-more-friends {
-    float: right;
-  }
+  
   .friend-contener,
   .show-more-friends {
     position: relative;
@@ -501,30 +505,7 @@ chill-detail {
     height: 6.5rem;
     width: 6.5rem;
   }
-  .show-more-friends {
-    line-height: 6.5rem;
-    top: -5px;
-  }
-  .invite-friends img {
-    height: 5.5rem;
-    width: 5.5rem;
-    border-radius: 50%;
-    vertical-align: middle;
-  }
-  .delete-friend {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 20px;
-    width: 20px;
-    vertical-align: top;
-    z-index: 999;
-  }
-  .delete-friend img {
-    height: 100%;
-    width: 100%;
-    vertical-align: top;
-  }
+
   .invite-sending {
     border-top: 1px solid rgb(180, 180, 180);
     padding: 5px 20px;
