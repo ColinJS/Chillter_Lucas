@@ -6,7 +6,7 @@ chill-box {
     background: white;
 
     .bar-button-default-ios{
-      height: inherit;
+      height: initial!important;
     }
 
     ion-navbar{
