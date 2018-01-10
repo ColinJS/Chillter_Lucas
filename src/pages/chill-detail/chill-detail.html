@@ -28,7 +28,7 @@
         <img src="assets/images/edit-on.svg" *ngIf="isEdit" image-cache/>
       </div>
 
-      <div>
+      <div class="invite-header-text">
         <h1>
           <input *ngIf="isEdit" type="text" class="title" [(ngModel)]="name" />
           <div *ngIf="!isEdit" class="title">{{name}}</div>
@@ -85,16 +85,23 @@
         <div class="date-container">
 
           <div class="date-left">
-            <div>{{stringMonth}}</div>
-            <div>{{numberDay}}</div>
+            <div>
+              {{stringMonth}}
+              {{numberDay}}
+            </div>
+            <div class="date-left-ending" *ngIf="haveEndingDate">
+              {{stringEndingMonth}}
+              {{numberEndingDay}}
+            </div>
           </div>
 
           <div class="date-middle">
-            {{stringDay}} {{hours}}:{{min}}
+            <span>{{stringDay}} {{hours}}:{{min}}</span>
+            <span class="date-middle-ending" *ngIf="haveEndingDate">{{stringEndingDay}} {{endingHours}}:{{endingMin}}</span>
           </div>
 
           <div class="date-right">
-            <div *ngIf="soonDateDisplay && !weatherDisplay"><p>{{soonDate | toNow}}</p></div>
+            <!-- <div *ngIf="soonDateDisplay && !weatherDisplay"><p>{{soonDate | toNow}}</p></div> -->
             <div *ngIf="weatherDisplay"><ion-icon name="{{weatherIcon}}"></ion-icon><div class="text">{{ chillWeatherTemp }}°c</div></div>
           </div>
 
@@ -134,15 +141,15 @@
       </div>
 
       <div class="friends-part">
+
         <div class="friends-number">{{ friends.length }} {{ 'chill-detail.invited-number' | translate }}</div>
+        
         <div class="invite-friends">
           <img src="assets/images/chill-plus.svg"  (tap)="showFriends()" image-cache/>
           <div *ngFor="let friend of shownFriends" class="friend-list-img">
             <img class="friend-picture" *ngIf="idProfile == friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil.svg'" image-cache/>
             <img class="friend-picture" *ngIf="idProfile != friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil.svg'" (tap)="showChillerDetails(friend.id)" image-cache/>
-            <div class="status-icon">
-              <img [src]="friend.statut | statusImg" image-cache/>
-            </div>
+            <div class="status-icon" style.background-color="{{friend.statut | statusImg:[true]}}"></div>
             <div *ngIf="isEdit" class="delete-friend" (tap)="deleteFriend(friend.id)" >
               <img src="assets/images/close-outline.svg" image-cache *ngIf="idProfile == chillCreatorId && friend.id != chillCreatorId"/>
             </div>
@@ -151,9 +158,14 @@
             {{ 'edit-chills.more-friends' | translate }}
           </div>
         </div>
+
       </div>
 
       <div class="invite-com" text-justify (tap)="openChat()">
+        <div class="invite-com-title">
+          <h1>Description</h1>
+          <ion-icon name="text"></ion-icon>
+        </div>
         <ion-scroll scrollY="true" *ngIf="punchline" >
           {{ punchline }}
         </ion-scroll>
