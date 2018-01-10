@@ -286,7 +286,7 @@ chill-detail {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 16px 16px 0;
+    padding: 0 16px 0;
     height: calc(100vmax - 11.5rem - 38px);//Screen size without banner header and sending footer
     
     input {
@@ -312,7 +312,7 @@ chill-detail {
   }
 
   .invite-header {
-    flex: 0 1 16.6%;
+    flex: 0 1 10%;
 
     input {
       text-transform: capitalize;
@@ -363,9 +363,6 @@ chill-detail {
   }
 
   .invite-time {
-    margin: 1vmax 0px;
-    height: 8vmax;
-    min-height: 7rem;
     border: 2px solid $chillter-col;
     border-radius: 2.7rem;
     font-size: 1.8rem;
@@ -414,8 +411,6 @@ chill-detail {
 
   
   .invite-time-right {
-    height: auto;
-    min-height: 100%;
     float: right;
     background-color: rgba($chillter-col, 0.8);
     color: white;
@@ -441,7 +436,6 @@ chill-detail {
   }
 
   .invite-com {
-    margin: 0px;
     padding: 3px 0px;
     border-top: 1px solid $chillter-col;
     border-bottom: 1px solid $chillter-col;
@@ -466,11 +460,20 @@ chill-detail {
       display: flex;
       flex-direction: row;
       min-height: 70px;
+
+      .friend-list-img{
+        position: relative;
+        .status-icon{
+          position: absolute;
+        }
+      }
+
       img {
         height: 5.5rem;
         width: 5.5rem;
         border-radius: 50%;
         vertical-align: middle;
+        margin: 0 2px;
       }
 
       .delete-friend {
@@ -498,7 +501,7 @@ chill-detail {
 
   }
   
-  .friend-contener,
+  .friend-list-img,
   .show-more-friends {
     position: relative;
     display: inline-block;
