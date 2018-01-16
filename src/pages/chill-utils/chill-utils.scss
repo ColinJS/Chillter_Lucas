@@ -1,53 +1,134 @@
-chill-utils {
-  .fix-nav {
-    margin-top: -90px;
+  .mine-title{
+    color: $chillter-col!important;
   }
 
-  .floating-close-button {
-    position: absolute;
-    top: 18px;
-    left: 10px;
-    width: auto;
-    z-index: 200;
-    min-height: 3.2rem;
-    line-height: 1.7;
-    margin-left: 5px;
-    &:before {
-      content: '';
-      display: block;
-      width: 25px;
-      height: 40px;
-      background-image: url("../assets/images/back-arrow.svg");
-      background-size: 22px auto;
-      background-repeat: no-repeat;
+  .resolve-text{
+    font-size:1.5rem!important; 
+  }
+
+chill-utils {
+  ion-navbar{
+    padding-top: 0!important;
+    min-height: 45px !important;
+    height: 45px!important;
+    padding-bottom: 0!important;
+    .toolbar-background{
+      background: none!important;
     }
   }
 
-  .bottom-button {
-    position: absolute;
-    bottom: 0px;
-    padding: 2rem;
-    width: 100%;
-    background-color: white;
-    color: $chillter-col;
+  ion-title{
+    padding: 0 10vmin 1px!important;
+    padding-top: 0!important;
+    height: 100%!important;
+    min-height: 100%!important;
+    .toolbar-title-ios{
+      height: 100%;
+      .segment{
+        height: 100%;
+        padding-top: 0!important;
+        height: 100%!important;
+        min-height: 100%!important;
+      }
+    }
   }
 
-  .toolbar-title-ios {
-    color: $chillter-col;
+  .scroll-content{
+    padding-top: 45px;
+    margin-top: 0!important;
+  }
+  
+  .tabbar-segment{
+    border-radius: 0px 0px 16px 16px;
+    box-shadow: 0px 0px 3px 0px rgba(130,130,130,0.6);
+    background: white!important;
+    .segment-button{
+      text-transform: capitalize;
+      max-width: 23vmin;
+      height: 70%!important;
+      font-size: 1.7rem;
+      line-height: 1.5;
+      border-color: rgba(0,0,0,0);
+      color: grey;
+      opacity: 1;
+    }
+    .segment-activated{
+      color: $chillter-col;
+    }
+    ion-segment{
+      width: 80vmin;
+      margin: auto;
+    }
+  }
+
+  .back-button {
+    border: 0;
+    background: transparent;
+    display: block;
+    color:white;
+    ion-icon.back-button-icon {
+      text-shadow: 2px 0 0 $chillter-col, -2px 0 0 $chillter-col, 0 2px 0 $chillter-col, 0 -2px 0 $chillter-col, 1px 1px $chillter-col, -1px -1px 0 $chillter-col, 1px -1px 0 $chillter-col, -1px 1px 0 $chillter-col;
+    }
+  }
+
+  .item-first-info{
+    font-family: SF_Regular;
+    color: #4a4a4a;
     font-size: 2.2rem;
-    font-weight: bold;
+    text-transform: capitalize!important;
   }
 
-  .slide-car {
-    margin-top: 0;
+  .item-second-info{
+    font-family: SF_Light;
+    color: #9b9b9b;
+    font-size: 2.2rem;
+    text-align: right;
+  }
+
+  .switch-div-transports {
+
+    ion-list{
+      .item-car{
+        background: none!important;
+      }
+      .car-flames{
+        position: absolute;
+        width: 12rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      button{
+        width: 9rem!important;
+        background: none!important;
+        ion-icon{
+          margin-left: 1.2rem;
+          width: 5rem!important;
+          height:5rem!important;
+          border-radius:50%!important;
+          background-color: $chillter-col!important;
+          line-height: 5rem!important;
+          color: white!important;
+          font-size: 4rem!important;
+        }
+      }
+    }
 
     .subtitle-car {
       font-size: 1.7rem;
       color: grey; //position: fixed;
     }
 
+    .list{
+      ion-label{
+        overflow: visible!important;
+      }
+    }
+
     h1 {
       font-weight: bold;
+      text-align: center;
     }
 
     ion-spinner {
@@ -65,6 +146,7 @@ chill-utils {
       position: relative;
       background-color: white;
       color: $chillter-col;
+      width: 100%;
 
       .suppr-car {
         position: absolute;
@@ -98,10 +180,14 @@ chill-utils {
   }
 
   .seats-left {
-    color: grey;
-    font-size: 1.5rem;
-    width: 100%;
-    margin-bottom: 15px;
+    color: #9b9b9b;
+    font-size: 1.7rem;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+    font-family: SF_Regular;
 
     ion-spinner {
       width: 25px;
@@ -116,8 +202,40 @@ chill-utils {
     }
   }
 
-  .slide-list {
-    margin-top: 0;
+  .switch-div-list {
+
+    ion-list-header{
+      background: #f4f4f4!important;
+      color: #9b9b9b!important;
+      width: 100vmin;
+      margin: 0!important;
+      padding: 0!important;
+      border: none!important;
+      padding-left: 16px!important;
+      font-size: 1.8rem!important;
+      font-family: SF_Regular;
+      text-transform: none!important;
+    }
+
+
+    ion-item{
+      ion-checkbox{
+        .checkbox-icon{
+          width: 3rem!important;
+          height: 3rem!important;
+        }
+
+        .checkbox-inner{
+          top: 16%!important;
+          left: 36%!important;
+          width: 29%!important;
+          height: 57%!important;
+          border-width: 2px!important;
+          border-top-width: 0!important;
+          border-left-width: 0!important;
+        }
+      }
+    }
 
     ion-spinner {
       width: 75px;
@@ -138,7 +256,6 @@ chill-utils {
     .list {
       list-style: none;
       padding: 0px;
-      margin: 3rem 1rem;
 
       .element-list {
         text-align: left;
@@ -198,8 +315,39 @@ chill-utils {
     }
   }
 
-  .slide-expense {
-    margin-top: 0;
+  .switch-div-expense {
+    ion-list-header{
+      border-bottom: 1px solid $chillter-col!important;
+      padding-left: 0!important;
+      ion-avatar {
+        margin-right: 0!important;
+        img{
+          width: 4.5rem;
+          height: 4.5rem;
+          padding: 2px;
+          border: 1px solid $chillter-col;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .header-name, .header-sum{
+      color: #4a4a4a;
+      font-family: SF_Semibold;
+      font-size: 3rem;
+    }
+
+    ion-item{
+      padding-left: 0!important;
+      border-bottom: 0.55px solid #c8c7cc!important;
+      .item-inner{
+        border: none!important;
+      }
+    }
+
+    .header-sum{
+      text-align: right;
+    }
 
     ion-spinner {
       width: 75px;

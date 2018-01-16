@@ -1,15 +1,13 @@
 chill-list {
 
-  ion-slides {
-    height: initial;
-
-    .swiper-pagination-bullet-active {
-      background: $chillter-col;
-    }
-  }
-
   ion-navbar{
     padding-top: 0!important;
+    min-height: 45px !important;
+    height: 45px!important;
+    padding-bottom: 0!important;
+    .toolbar-background{
+      background: none!important;
+    }
   }
 
   ion-title{
@@ -155,15 +153,6 @@ chill-list {
 
   .back-button.show-back-button {
     margin-top: -5px;
-  }
-
-  ion-navbar {
-    min-height: 45px !important;
-    height: 45px!important;
-    padding-bottom: 0!important;
-    .toolbar-background{
-      background: none!important;
-    }
   }
 
   .scroll-content {

@@ -202,7 +202,6 @@ export class ChillList {
         }
         for(let j = 0; j < this.customChills.length; j++){
           if(this.customChills[j].id == this.homeChills[i].chill_id){
-            console.log("I'm in");
             this.customChills[j].homeState = true;
             break homeLoop;
           }
@@ -333,10 +332,6 @@ export class ChillList {
   // Set text for back button (navbar)
   ionViewWillEnter() {
     this.viewCtrl.setBackButtonText(this.transaltions['global.back']);
-  }
-
-  slideChanged() {
-    this.content.scrollToTop();
   }
 
   showToast(type) {

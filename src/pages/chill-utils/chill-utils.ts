@@ -21,6 +21,9 @@ import { ResolveExpenses } from "../resolve-expenses/resolve-expenses";
 export class ChillUtils {
   private transaltions: any;
 
+  chillUtilsDisplay: string = 'transports';
+  chillUtilsDisplayTitles: string[] = ['transports','list','expenses'];
+
   arraySeats: any[];
   title: string;
   slidesOptions: any;
@@ -34,6 +37,8 @@ export class ChillUtils {
   isLoadingAddCar: boolean = false;
 
   list: any[] = [];
+  leftList: any[] = [];
+  bringingList: any[] = [];
   isLoadingList: boolean = true;
   element: string = "";
 
@@ -91,6 +96,8 @@ export class ChillUtils {
       'chill-utils.already-in-car2',
       'chill-utils.already-in-car2',
       'chill-utils.over-10-seats',
+      'chill-utils.me',
+      'chill-utils.owes',
       'offline.blocked',
       'global.add',
       'global.cancel',
@@ -98,12 +105,14 @@ export class ChillUtils {
 
     if (this.navParams.get("init")) {
       this.slideInit = this.navParams.get("init");
+      this.chillUtilsDisplay = this.chillUtilsDisplayTitles[this.slideInit];
     }
     if (this.navParams.get("newMode")) {
       this.newMode = this.navParams.get("newMode");
     }
 
     if (this.newMode && this.navParams.get("utils")) {
+      console.log("alors");
       this.utilsObj = this.navParams.get("utils");
       this.cars = this.utilsObj.cars;
       if (this.cars.length == 0) {
@@ -112,13 +121,11 @@ export class ChillUtils {
         this.addCarBool = false;
       }
       this.list = this.utilsObj.list;
+      this.sortListData();
       this.exps = this.utilsObj.expenses;
     }
 
     this.creator = this.navParams.get("creator");
-
-
-    this.changeSlide({ activeIndex: this.slideInit });
 
     if (this.newMode) {
       this.fixNav = false;
@@ -131,6 +138,8 @@ export class ChillUtils {
       this.fixNav = true;
       this.creatorId = this.navParams.get("creatorId");
       this.getExps();
+      this.getCar();
+      this.getList();
     }
 
     this.api.getProfileId().subscribe(data => {
@@ -146,33 +155,13 @@ export class ChillUtils {
       'place-ar-four',
       'place-ar-five',
       'place-ar-six'];
+
+      console.log(this.utilsObj);
   }
 
-  changeSlide(evt) {
-    let slideId = evt.realIndex
-
-    this.title = this.transaltions['chill-utils.global-title'];
-
-    switch (slideId) {
-      case undefined:
-        this.title = this.transaltions['chill-utils.title-transport'];
-        this.expensesPage = false;
-        if (!this.newMode) {
-          this.getCar();
-        }
-        break;
-      case 1:
-        this.title = this.transaltions['chill-utils.title-list'];
-        this.expensesPage = false;
-        if (!this.newMode) {
-          this.getList();
-        }
-        break;
-      case 2:
-        this.title = this.transaltions['chill-utils.title-expense'];
-        this.expensesPage = true;
-        break;
-    }
+  close(){
+    console.log("Dismiss");
+    this.viewCtrl.dismiss(this.utilsObj);
   }
 
   getCar() {
@@ -234,6 +223,7 @@ export class ChillUtils {
         this.isLoadingList = false;
         if (data) {
           this.list = data;
+          this.sortListData();
         } else {
           this.list = [];
         }
@@ -245,6 +235,25 @@ export class ChillUtils {
         }
       }
     )
+  }
+
+  sortListData(){
+    this.leftList = this.list.filter((value: any, index: number)=>{
+      if(value.assigned_to.id == null){
+        return true;
+      }else{
+        return false;
+      }
+    });
+
+    this.bringingList = this.list.filter((value: any, index: number)=>{
+      console.log(value);
+      if(value.assigned_to.id == null){
+        return false;
+      }else{
+        return true;
+      }
+    });
   }
 
   getExps() {
@@ -563,6 +572,8 @@ export class ChillUtils {
         }
       );
     }
+
+    this.sortListData();
   }
 
   deleteElement(elemId) {
@@ -691,8 +702,152 @@ export class ChillUtils {
 
       prompt.present();
     } else {
-      this.navCtrl.push(ResolveExpenses, { "expenses": this.expsList });
+
+      let baseExps: any = this.expsList;
+
+      console.log(this.expsList);
+
+      let tmpList: any[] = [];
+      let pay: any[] = [];
+
+      for (let e of baseExps) {
+        let neo: boolean = true;
+
+        for (let i in tmpList) {
+          if (tmpList[i].chiller.id == e.payer.id) {
+            tmpList[i].credit += parseFloat(e.price);
+            neo = false;
+          }
+        }
+
+        if (neo) {
+          let tmpExp = {
+            "chiller": e.payer,
+            "credit": parseFloat(e.price)
+          }
+          tmpList.push(tmpExp);
+        }
+
+        let count = e.inheriters.length
+
+        for (let i of e.inheriters) {
+          neo = true;
+
+          for (let j in tmpList) {
+            if (tmpList[j].chiller.id == i.id) {
+              tmpList[j].credit -= parseFloat(e.price) / count;
+              neo = false;
+            }
+          }
+
+          if (neo) {
+            let tmpExp = {
+              "chiller": i,
+              "credit": -(parseFloat(e.price) / count)
+            }
+            tmpList.push(tmpExp);
+          }
+        }
+      }
+
+      let posList = tmpList.filter((a) => {
+        if (a.credit > 0) {
+          return true
+        } else {
+          return false
+        }
+      });
+
+      let negList = tmpList.filter((a) => {
+        if (a.credit < 0) {
+          return true
+        } else {
+          return false
+        }
+      });
+
+      let otherTmp: any[] = [];
+      let toSplice: any[] = [];
+
+      for (let p = 0; p < posList.length; p++) {
+        let tmpCredit = posList[p].credit;
+
+        for (let n = 0; n < negList.length; n++) {
+          tmpCredit += negList[n].credit
+
+          if (tmpCredit == 0) {
+            let tmpPay = {
+              "from": negList[n].chiller,
+              "to": posList[p].chiller,
+              "sum": Math.abs(negList[n].credit)
+            }
+
+            toSplice.push(n);
+            tmpPay.sum = (Math.trunc(tmpPay.sum * 100) / 100)
+            otherTmp.push(tmpPay);
+            break;
+          } else if (tmpCredit > 0) {
+            let tmpPay = {
+              "from": negList[n].chiller,
+              "to": posList[p].chiller,
+              "sum": Math.abs(negList[n].credit)
+            }
+            toSplice.push(n);
+            tmpPay.sum = (Math.trunc(tmpPay.sum * 100) / 100)
+            otherTmp.push(tmpPay);
+          } else {
+            let tmpPay = {
+              "from": negList[n].chiller,
+              "to": posList[p].chiller,
+              "sum": (Math.abs(negList[n].credit) + tmpCredit)
+            }
+            negList[n].credit = tmpCredit;
+            tmpPay.sum = (Math.trunc(tmpPay.sum * 100) / 100)
+            otherTmp.push(tmpPay);
+            break;
+          }
+        }
+
+        for (let i = 0; i < toSplice.length; i++) {
+          negList.splice((toSplice[i] - i), 1);
+        }
+      }
+
+      pay = otherTmp;
+
+      let alertMessage: string = '';
+
+      for(let i = 0; i < pay.length; i++){
+
+        let from = this.profileId == pay[i].from.id ? '<span class="mine-title">' + this.transaltions['chill-utils.me'] + '</span>' : pay[i].from.firstname;
+        let to = this.profileId == pay[i].to.id ? '<span class="mine-title">' + this.transaltions['chill-utils.me'] + '</span>' : pay[i].to.firstname;
+        let sum = pay[i].sum;
+        let owes = this.transaltions['chill-utils.owes']
+
+        alertMessage += '<div class="resolve-text">'+ from +' '+ owes +' '+ to +': '+ sum +' €</div>'
+      }
+
+      let alert = this.alertCtrl.create({
+        title: 'Balance', //TODO : add translate
+        message: alertMessage,
+        buttons: ['Dismiss']
+      });
+      alert.present();
+
+      //this.navCtrl.push(ResolveExpenses, { "expenses": this.expsList });
     }
+  }
+
+  promptManager(){
+    console.log("prompt manager");
+    if(this.chillUtilsDisplay == 'transports'){
+      this.addCarPrompt();
+    }else if(this.chillUtilsDisplay == 'list'){
+      this.addElementPrompt();
+    }else if(this.chillUtilsDisplay == 'expenses'){
+      this.addExpensePrompt();
+    }
+
   }
 
   addElementPrompt() {
@@ -1069,10 +1224,6 @@ export class ChillUtils {
 
       prompt.present();
     }
-  }
-
-  close() {
-    this.viewCtrl.dismiss(this.utilsObj);
   }
 
   showToast(type) {

@@ -229,7 +229,7 @@ export class EditChills {
               this.chillId = data.id;
               this.parentChill = data;
               this.name = data.name;
-              this.logo = ("http://www.chillter.fr/api/images/chills/" + data.logo + ".svg");
+              this.logo = ("assets/images/chills/" + data.logo + ".svg");
               this.banner = ("assets/images/banner-" + data.category + ".jpg");
               this.color = data.color;
               this.chillType = "chill";
@@ -701,26 +701,30 @@ export class EditChills {
   }
 
   uploadEventLogoBanner(eventId, body) {
-    let bodyImg = {
+    let bodyLogo = {
+      image: null
+    };
+    let bodyBanner = {
       image: null
     };
 
     if (this.chillType == "chill") {
       if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() || this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()) {
+        
         if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()  && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
-          bodyImg.image = this.imgPickerService.getImgResultLogo();
-          this.api.sendEventLogo(eventId, bodyImg).subscribe();
+          bodyLogo.image = this.imgPickerService.getImgResultLogo();
+          this.api.sendEventLogo(eventId, bodyLogo).subscribe();
         }
 
         if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() && this.imgPickerService.getImgResultBanner()) {
-          bodyImg.image = this.imgPickerService.getImgResultBanner();
-          this.api.sendEventBanner(eventId, bodyImg).subscribe();
+          bodyBanner.image = this.imgPickerService.getImgResultBanner();
+          this.api.sendEventBanner(eventId, bodyBanner).subscribe();
         }
       }
     } else if (this.chillType == "custom") {
       if (body.event.chill.banner_changed) {
-        bodyImg.image = this.imgPickerService.getImgResultBanner();
-        this.api.sendEventBanner(eventId, bodyImg).subscribe(
+        bodyBanner.image = this.imgPickerService.getImgResultBanner();
+        this.api.sendEventBanner(eventId, bodyBanner).subscribe(
           data => {
             data ? console.log("banner 200") : console.log("banner error");
           }
@@ -728,8 +732,8 @@ export class EditChills {
       }
 
       if (body.event.chill.logo_changed) {
-        bodyImg.image = this.imgPickerService.getImgResultLogo();
-        this.api.sendEventLogo(eventId, bodyImg).subscribe(
+        bodyLogo.image = this.imgPickerService.getImgResultLogo();
+        this.api.sendEventLogo(eventId, bodyLogo).subscribe(
           data => {
             data ? console.log("logo 200") : console.log("logo error");
           }
@@ -748,55 +752,55 @@ export class EditChills {
       modal = this.mod.create(ChillUtils, { "init": init, "utils": this.utils, "creator": this.creator, "creatorId": this.creatorId, "newMode": true, "friends": this.friends });
     }
 
-    modal.onDidDismiss((utilsObj) => {
-      for (let friend in this.friends) {
-        this.friends[friend].id == this.creatorId ? this.friends.splice(friend, 1) : null;
-      }
-
-      this.utils = utilsObj;
-
-      if (utilsObj.cars.length > 0) {
-        this.cars = utilsObj.cars[0].seats
-      }
-
-      if (utilsObj.list.length > 0) {
-        this.elements = []
-        for (let e of utilsObj.list) {
-          this.elements.push(e.content);
+    modal.onDidDismiss(utilsObj => {
+        for (let friend in this.friends) {
+          this.friends[friend].id == this.creatorId ? this.friends.splice(friend, 1) : null;
         }
-      }
 
-      if (utilsObj.expenses == undefined) {
-        utilsObj.expenses = undefined;
-        this.expenses = undefined;
-        this.apiExpenses = undefined;
-        return;
-      } else {
-        if (utilsObj.expenses[0].expenses.length == 0) {
-          utilsObj.expenses = undefined;
-          this.expenses = [];
-          this.apiExpenses = [];
-          return;
+        this.utils = utilsObj;
+
+        if (utilsObj.cars.length > 0) {
+          this.cars = utilsObj.cars[0].seats
         }
-        if (utilsObj.expenses.length > 0) {
-          this.expenses = [];
-          this.apiExpenses = [];
 
-          for (let e of utilsObj.expenses) {
-            this.expenses.push(e);
-            this.apiExpenses.push(e);
-            delete this.apiExpenses[0].payer;
+        if (utilsObj.list.length > 0) {
+          this.elements = []
+          for (let e of utilsObj.list) {
+            this.elements.push(e.content);
           }
+        }
 
-          for (let e in this.apiExpenses) {
-            for (let el of this.apiExpenses[e].expenses) {
-              if (el.payer != undefined) {
-                delete el.payer;
+        if (utilsObj.expenses == undefined) {
+          utilsObj.expenses = undefined;
+          this.expenses = undefined;
+          this.apiExpenses = undefined;
+          return;
+        } else {
+          if (utilsObj.expenses[0].expenses.length == 0) {
+            utilsObj.expenses = undefined;
+            this.expenses = [];
+            this.apiExpenses = [];
+            return;
+          }
+          if (utilsObj.expenses.length > 0) {
+            this.expenses = [];
+            this.apiExpenses = [];
+
+            for (let e of utilsObj.expenses) {
+              this.expenses.push(e);
+              this.apiExpenses.push(e);
+              delete this.apiExpenses[0].payer;
+            }
+
+            for (let e in this.apiExpenses) {
+              for (let el of this.apiExpenses[e].expenses) {
+                if (el.payer != undefined) {
+                  delete el.payer;
+                }
               }
             }
           }
         }
-      }
     })
 
     modal.present();
@@ -895,45 +899,53 @@ export class EditChills {
 
   // Autocomplete address
   ngOnInit() {
-    this.acService = new google.maps.places.AutocompleteService();
-    this.autocompleteAddress = [];
+    if(this.sync.status){
+      this.acService = new google.maps.places.AutocompleteService();
+      this.autocompleteAddress = [];
+    }
   }
 
   // On each input change, get geocode, only if evt.length is >= 3
   autoAddress(evt) {
-    if (evt == '') {
-      this.autocompleteAddress = [];
-      return;
-    }
+    if(this.sync.status){
+      if (evt == '') {
+        this.autocompleteAddress = [];
+        return;
+      }
 
-    let self = this;
-    let config = {
-      types: ['geocode'],
-      input: evt
-    }
+      let self = this;
+      let config = {
+        types: ['geocode'],
+        input: evt
+      }
 
-    if (evt.length >= 3) {
-      this.acService.getPlacePredictions(config, function (predictions, status) {
-        self.autocompleteAddress = [];
-        if (predictions != null) {
-          predictions.forEach(function (prediction) {
-            self.autocompleteAddress.push(prediction);
-          });
-        }
-      });
+      if (evt.length >= 3) {
+        this.acService.getPlacePredictions(config, function (predictions, status) {
+          self.autocompleteAddress = [];
+          if (predictions != null) {
+            predictions.forEach(function (prediction) {
+              self.autocompleteAddress.push(prediction);
+            });
+          }
+        });
+      }
     }
   }
 
   // When choosing an address from autocomplete, set it in the input
   chooseAddress(address: any) {
-    Keyboard.close();
-    this.geoSpec = address.description;
-    this.autocompleteAddress = [];
+    if(this.sync.status){
+      Keyboard.close();
+      this.geoSpec = address.description;
+      this.autocompleteAddress = [];
+    }
   }
 
   clearAutocomplete() {
-    Keyboard.close();
-    this.autocompleteAddress = [];
+    if(this.sync.status){
+      Keyboard.close();
+      this.autocompleteAddress = [];
+    }
   }
 
   // Handle swipe

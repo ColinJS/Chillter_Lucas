@@ -67,13 +67,13 @@ export class Home {
   }
 
   ionViewWillEnter() {
-    this.getHome();
+    this.getHome(true);
     this.provideSortableOpt(1);
   }
 
   // Take the home chills (logo of event) from the dataBase
-  getHome() {
-    let call = this.api.getHome(this.slides.length != 0).subscribe(
+  getHome(noCache: boolean = false) {
+    let call = this.api.getHome(noCache).subscribe(
       data => {
         if (data) {
           this.changeSlides(data)
@@ -276,7 +276,9 @@ export class Home {
   showList() {
     this.getHome();
     let modal = this.modal.create(ChillList, { from: 'home', idList: this.idList});
-
+    modal.onDidDismiss(()=>{
+      this.getHome(true);
+    });
     modal.present();
     //this.navCtrl.push(ChillList, { idList: this.idList });
   }

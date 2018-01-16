@@ -158,6 +158,8 @@ edit-chills {
     position: absolute;
     border: 3px solid $chillter-col;
     background-color: white;
+    padding: 4px;
+    box-shadow: 0px 10px 20px 0px rgba(50,50,50,0.6);
   }
   .ch-logo img-picker-logo,
   .ch-logo img {
@@ -173,224 +175,260 @@ edit-chills {
     top: 10px;
     margin: 5px;
   }
+
   .invite {
-    color: $chillter-col;
+    color: black;
     text-align: center;
     overflow-y: auto;
-    min-height: calc(100% - 14rem);
     display: flex;
     flex-direction: column;
-    justify-content: initial;
-    padding: 16px 16px 0;
+    justify-content: space-around;
+    padding: 0 16px 0;
+    height: calc(100vmax - 11.5rem - 40px);//Screen size without banner header and sending footer
+    input {
+      margin: auto!important;
+      width: 93%;
+      border: none;
+      text-align: center;
+      text-transform: capitalize;
+    }
+    
+    h1,.h1 {
+      margin:0;
+      font-size: 3.5rem;
+      font-family: SF_Semibold;
+      text-transform: capitalize;
+    }
+
   }
-  .invite input {
-    margin: auto;
-    width: 93%;
-    border: none;
-    text-align: center;
-    text-transform: capitalize;
+
+  .invite-header {
+    flex: 0 1 14.6%;
+    .invite-header-text{
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    input {
+      text-transform: capitalize;
+    }
+
+    h1 {
+      input {
+        position: relative;
+        top: -1px;
+      }
+    }
+
+    h2 {
+      color: rgb(180, 180, 180);
+      font-size: 1.8rem;
+      font-family: SF_Light;
+    }
+    .creator {
+      color: gray;
+      font-size: 2rem;
+    }
+    
   }
-  .invite h1 {
-    margin: 0px;
-    font-size: 3rem;
-    text-transform: capitalize;
-  }
-  .invite-header .title {
-  }
-  .invite h2 {
-    margin-bottom: 1vmax;
-  }
-  .invite-header input {
-    text-transform: uppercase;
-  }
-  .invite-header h2 {
-    color: rgb(180, 180, 180);
-    font-size: 1.7rem;
-  }
-  .invite-header .creator {
-    color: gray;
-    font-size: 2rem;
-  }
+
   .invite-geo {
-    height: 10vh;
-    min-height: 8rem;
+    flex: 0 1 16.4%;
     border: 2px solid $chillter-col;
     border-radius: 2.7rem;
     overflow: hidden;
     display: flex;
-    justify-content: initial;
+    justify-content: space-evenly;
     flex-direction: column;
+    padding: 0px 1vmax;
+    box-shadow: 0px 3px 9px 0px rgba(50,50,50,0.4);
+
+    .h1 {
+      margin: 0px;
+      font-family: SF_Medium;
+    }
+
+    .h2 {
+      font-size: 2rem;
+      opacity: 0.6;
+      overflow: hidden;
+      white-space: nowrap;
+      font-family: SF_Light;
+    }
+
+    .no-decoration a {
+      color: black;
+      opacity: 0.6;
+    }
   }
-  .invite-geo .h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: -10px;
-  }
-  .invite-geo .h2 {
-    font-size: 2.2rem;
-    opacity: 0.6;
-    width: 93%;
-  }
+
   .invite-time {
-    margin: 1vmax 0px;
-    height: 8vmax;
-    min-height: 7rem;
+    flex: 0 1 13.0%;
     border: 2px solid $chillter-col;
-    border-radius: 4rem;
+    border-radius: 2.7rem;
     font-size: 1.8rem;
     overflow: hidden;
-  }
-  .invite-time i {
-    font-style: normal;
-  }
-  .invite-time div {
-    display: inline-block;
-    height: 100%;
-  }
-  .invite-time-left {
-    position: relative;
-    padding: 0px 3px;
-  }
-  .starting-date{
-    display: block;
-    height: initial!important;
-    .invite-day,
-    .invite-day-number {
-      font-size: 3.3rem;
+    box-shadow: 0px 3px 9px 0px rgba(50,50,50,0.4);
+    padding: 1vmax;
+
+    i {
+      font-style: normal;
     }
-    .invite-day-number {
-      opacity: 0.7;
+
+    .date-container{
+      height: 100%;
+      display: flex;
+      justify-content: center; /* align horizontal */
+      align-items: center;
     }
-    .invite-hours {
-      font-size: 38px;
+    .date-left{
+      line-height: 150%;
+      height: 100%;
+      width: 20%;
+      border-right: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* align horizontal */
+      align-items: center; /* align vertical */
+      text-transform: uppercase;
+      .date-left-ending{
+        font-size: 1.6rem;
+        opacity: 0.4;
+      }
     }
-    .invite-minutes {
-      font-size: 38px;
-      opacity: 0.7;
+
+    .date-middle{
+      line-height: 120%;
+      display: inline-block;
+      height: 100%;
+      width: 68%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* align horizontal */
+      align-items: center; /* align vertical */
+      font-size: 2.4rem;
+      .date-middle-ending{
+        font-size: 1.8rem;
+        opacity: 0.4;
+      }
     }
-    .exp {
-      margin-left: 3px;
-      font-size: 1.2rem;
-      vertical-align: top;
-    }
-  }
-  .ending-date{
-    display: block;
-    height: initial!important;
-    .invite-day,
-    .invite-day-number {
-      font-size: 2rem;
-    }
-    .invite-day-number {
-      opacity: 0.7;
-    }
-    .invite-hours {
-      font-size: 20px;
-    }
-    .invite-minutes {
-      font-size: 20px;
-      opacity: 0.7;
-    }
-    .exp {
-      margin-left: 3px;
-      font-size: 0.8rem;
-      vertical-align: top;
+
+    .date-right{
+      font-size: 1.6rem;
+      display: flex;
+      justify-content: center; /* align horizontal */
+      align-items: center; /* align vertical */
+      height: 100%;
+      width: 10%;
     }
   }
-  .invite-time-right {
-    float: right;
-    background-color: rgba($chillter-col, 0.8);
-    color: white;
-    width: 12%;
-    ion-icon {
-      font-size: 3rem;
-      margin-top: 10%;
+
+  .invite-utils {
+    height: 8%;
+    img {
+      margin: 0px 2vmin;
+      height:130%;
     }
-    .text {
-      font-size: 1.3rem;
+
+  }
+
+    .friends-part{
+    flex: 0 1 15.6%;
+    margin-bottom: 2px;
+    .friends-number {
+      margin: 0;
+      text-align: left;
     }
+
+    .invite-friends {
+      margin: 6px 3px 3px 0;
+      width: auto;
+      display: flex;
+      flex-direction: row;
+
+      img {
+          height: calc((100vmin - 88px) / 5);
+          width: calc((100vmin - 88px) / 5);
+          border-radius: 50%;
+          vertical-align: middle;
+          margin: 0 4px;
+      }
+
+      .friend-list-img{
+        position: relative;
+        display: inline-block;
+        margin: 0px;
+        color: $chillter-col;
+        img {
+          box-shadow: 0px 3px 9px 0px rgba(50,50,50,0.2);
+          padding: 2px;
+          border: 1px solid $chillter-col;
+        }
+        .status-icon{
+          height: 15px;
+          width: 15px;
+          position: absolute;
+          bottom: 0;
+          right: 4px;
+          border-radius: 50%;
+          border: 2px solid white;
+        }
+      }
+
+      .delete-friend {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 20px;
+        width: 20px;
+        vertical-align: top;
+        z-index: 999;
+        img {
+          height: 100%;
+          width: 100%;
+          vertical-align: top;
+        }
+      }
+
+    }
+
+    .show-more-friends {
+      position: relative;
+      display: inline-block;
+      height: 6.5rem;
+      width: 6.5rem;
+      line-height: 6.5rem;
+      top: -5px;
+    }
+
   }
-  .invite-time-right-text {
-    height: auto;
-    min-height: 100%;
-    float: right;
-    font-size: 1.3rem;
-    background-color: rgba($chillter-col, 0.8);
-    width: 12%;
-    color: white;
-    display: flex!important;
-    justify-content: center;
-    align-items: center;
-  }
-  
+
   .invite-com {
+    flex: 0 1 14.8%;
+    margin: 0;
+    padding: 3px 0px;
     border-top: 1px solid $chillter-col;
-    border-bottom: 1px solid $chillter-col;
-    height: 7vmax;
-    min-height: 4rem;
     font-size: 1.5rem;
     text-align: center;
     overflow: hidden;
+    .invite-com-title{
+      margin-bottom:1vmax;
+      h1{
+        display:inline;
+        color: $chillter-col;
+        font-family: SF_Regular;
+        font-size: 1.6rem;
+      }
+      ion-icon{
+        float: right;
+        color: $chillter-col;
+        font-size: 2.5rem;
+      }
+    }
   }
-  .invite-utils {
-    margin: 0;
-    height: 8.5vmax;
-  }
-  .invite-utils img {
-    height: 100%;
-    margin: 0px 2vmin;
-  }
-  .friends-number {
-    margin: 3px;
-    text-align: left;
-  }
-  .invite-friends {
-    margin: 6px 3px 3px 0;
-    width: auto;
-    display: flex;
-    flex-direction: row;
-  }
-  .friend-contener,
-  .show-more-friends {
-    position: relative;
-    display: inline-block;
-    height: 6.5rem;
-    width: 6.5rem;
-  }
-  .show-more-friends {
-    line-height: 6.5rem;
-  }
-  .invite-friends img {
-    border-radius: 50%;
-    vertical-align: middle;
-    width: 55px;
-    height: 55px;
-  }
-  .ion-scroll-friends {
-    height: 6.8rem;
-    overflow-y: hidden;
-    vertical-align: middle;
-    padding-bottom: 2px;
-    flex: 1 !important;
-  }
-  .ion-scroll-content {
-    white-space: nowrap;
-    widows: 100% !important;
-    text-align: left;
-    overflow-y: hidden;
-  }
-  .delete-friend {
-    position: absolute;
-    top: 5px;
-    left: 4.5rem;
-    height: 20px;
-    vertical-align: top;
-  }
-  .delete-friend img {
-    height: 100%;
-    width: 100%;
-    vertical-align: top;
-  }
+
   .invite-sending {
     border-top: 1px solid rgb(180, 180, 180);
     background-color: white;

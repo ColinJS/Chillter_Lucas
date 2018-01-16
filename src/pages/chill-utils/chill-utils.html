@@ -1,12 +1,258 @@
-<ion-header no-border>
-  <ion-toolbar>
-    <ion-title>{{title}}</ion-title>
-    <div class="floating-close-button" (tap)="close()"></div>
-  </ion-toolbar>
+<ion-header class="tabbar-segment" no-border>
+  <ion-navbar hideBackButton="true">
+    <ion-title>
+      <ion-segment mode="md" [(ngModel)]="chillUtilsDisplay">
+        <ion-segment-button value="transports">
+          {{'chill-utils.title-transport' | translate}}
+        </ion-segment-button>
+        <ion-segment-button value="list">
+          {{'chill-utils.title-list' | translate}}
+        </ion-segment-button>
+        <ion-segment-button value="expenses">
+          {{'chill-utils.title-expense' | translate}}
+        </ion-segment-button>
+      </ion-segment>
+    </ion-title>
+    <ion-buttons start>
+      <button class="plus-button" (tap)="close()" ion-button icon-only clear>
+        <ion-icon name="arrow-back" outline></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button class="plus-button" (tap)="promptManager()" ion-button icon-only clear>
+        <ion-icon name="add" ></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
 
+  <div [ngSwitch]="chillUtilsDisplay">
+
+    <div *ngSwitchCase="'transports'" class="switch-div-transports">
+        <!--
+        <div *ngIf="fixNav" class="fix-nav"></div>
+        <div class="subtitle-car">{{ 'chill-utils.transport-subtitle' | translate}}</div>
+        -->
+        <ion-spinner class="loading-spinner-car" *ngIf="!newMode && isLoadingCar" name="crescent"></ion-spinner>
+
+        <ion-list *ngFor="let car of cars" no-lines>
+          <ion-item>
+            <h1>{{ car.driver.firstname }}</h1>
+          </ion-item>
+          <ion-item-sliding>
+            <ion-item class="item-car">
+              <div class="car-class">
+                <img src="assets/images/car.svg"  image-cache/>
+                <div *ngFor="let seat of arraySeats; let i=index" class="passangers-block">
+                  <div *ngIf="i < car.seats" class="{{ seat }}" (tap)="passengerTap(car.id, profileId)">
+                    <img *ngIf="car.passengers[i]" src="{{ car.passengers[i].picture }}" />
+                    <img *ngIf="seat == 'place-av-driver' && newMode" src="{{ car.driver.picture }}" />
+                  </div>
+                </div>
+              </div>
+            </ion-item>
+            <ion-item-options side="left" *ngIf="newMode || (!newMode && car.driver.id == profileId)">
+              <div class="car-flames">
+                <img src="assets/images/tool-car-flames.svg" image-cache/>
+              </div>
+              <button ion-button (tap)="deleteCar(car.id)" clear>
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+          <ion-item>
+            <div class="seats-left">
+              <div *ngIf="newMode">{{ car.seats - 1 }} {{ 'chill-utils.seats-left' | translate }}</div>
+              <div *ngIf="!newMode">{{ car.seats_left }} {{ 'chill-utils.seats-left' | translate }} <ion-spinner *ngIf="car.isGetOutLoading || car.isGetInLoading" name="crescent"></ion-spinner></div>
+            </div>
+          </ion-item>
+        </ion-list>
+        
+        <!--
+        <div *ngFor="let car of cars">
+          <h1>{{ car.driver.firstname }}</h1>
+          <div class="car-class">
+            <img src="assets/images/car.svg"  image-cache />
+            <div *ngFor="let seat of arraySeats; let i=index" class="passangers-block">
+              <div *ngIf="i < car.seats" class="{{ seat }}" (tap)="passengerTap(car.id, profileId)">
+                <img *ngIf="car.passengers[i]" src="{{ car.passengers[i].picture }}" />
+                <img *ngIf="seat == 'place-av-driver' && newMode" src="{{ car.driver.picture }}" />
+              </div>
+            </div>
+            <div class="suppr-car" *ngIf="newMode" (tap)="deleteCar(car.id)">
+              <img src="assets/images/close-filled.png" image-cache/>
+            </div>
+            <div class="suppr-car" *ngIf="!newMode && car.driver.id == profileId" (tap)="deleteCar(car.id)">
+              <img *ngIf="!car.isDeleteLoading" src="assets/images/close-filled.png" image-cache/>
+              <ion-spinner *ngIf="car.isDeleteLoading" name="crescent"></ion-spinner>
+            </div>
+          </div>
+          <div class="seats-left">
+            <div *ngIf="newMode">{{ car.seats - 1 }} {{ 'chill-utils.seats-left' | translate }}</div>
+            <div *ngIf="!newMode">{{ car.seats_left }} {{ 'chill-utils.seats-left' | translate }} <ion-spinner *ngIf="car.isGetOutLoading || car.isGetInLoading" name="crescent"></ion-spinner></div>
+          </div>
+        </div>
+        -->
+        <div class="new-car-spinner">
+          <ion-spinner *ngIf="!newMode && isLoadingAddCar" name="crescent"></ion-spinner>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'list'" class="switch-div-list">
+      <!--
+        <div *ngIf="fixNav" class="fix-nav"></div>
+        <div class="subtitle-list">{{ 'chill-utils.list-subtitle' | translate}}</div>
+        -->
+        <ion-spinner class="loading-spinner-list" *ngIf="!newMode && isLoadingList" name="crescent"></ion-spinner>
+
+        <ion-list *ngIf="leftList.length > 0">
+          <ion-list-header>
+            {{leftList.length}} {{'chill-utils.item' | translate}}<span *ngIf="leftList.length > 1">s</span> {{'chill-utils.left' | translate}}<span *ngIf="leftList.length > 1">{{'chill-utils.item-plural' | translate}}</span>
+          </ion-list-header>
+          <ion-item-sliding *ngFor="let element of leftList">
+            <ion-item>
+              <p class="item-first-info" item-left>
+                {{element.content}}
+              </p>
+              <p class="item-second-info" *ngIf="!newMode && !element.state && !element.assigned_to.state" item-right>
+                {{element.assigned_to.firstname}}
+              </p>
+              <ion-checkbox (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)" item-right></ion-checkbox>
+            </ion-item>
+            <ion-item-options side="left" *ngIf="element.mine || element.created_by.id == profileId && !element.state">
+              <button ion-button (tap)="deleteElement(element.id)" color="white">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+
+        <ion-list *ngIf="bringingList.length > 0">
+          <ion-list-header>
+            {{'chill-utils.people-bring' | translate}}
+          </ion-list-header>
+          <ion-item-sliding *ngFor="let element of bringingList">
+            <ion-item>
+              <p class="item-first-info" item-left>
+                {{element.content}}
+              </p>
+              <p class="item-second-info" *ngIf="!newMode && !(element.mine || element.created_by.id == profileId)" item-right>
+                {{element.assigned_to.firstname}}
+              </p>
+              <p class="item-second-info mine-title" *ngIf="element.mine || element.created_by.id == profileId" item-right>
+                {{'chill-utils.me' | translate}}
+              </p>
+              <ion-checkbox *ngIf="element.mine || element.created_by.id == profileId" checked="true" (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)" item-right></ion-checkbox>
+              <ion-avatar *ngIf="!(element.mine || element.created_by.id == profileId)" item-right><img src="{{element.assigned_to.logo ? element.assigned_to.logo : 'assets/images/default-profil.svg'}}" image-cache/></ion-avatar>
+            </ion-item>
+            <ion-item-options side="left" *ngIf="element.mine || element.created_by.id == profileId && !element.state">
+              <button ion-button (tap)="deleteElement(element.id)" color="white">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+        <!--
+          <ul class="list">
+            <li *ngFor="let element of list" class="element-list">
+              <div *ngIf="element.mine || element.created_by.id == profileId && !element.state" class="list-suppr" (tap)="deleteElement(element.id)">
+                <img src="assets/images/close-filled.png" image-cache/>
+              </div>
+              <div *ngIf="!newMode && element.created_by.id != profileId && !element.state" class="list-bullet"></div>
+              <div *ngIf="!element.state" class="element">{{element.content}}</div>
+              <div *ngIf="newMode && !element.state" class="taker" (tap)="elementTap(element.id,element.firstname)">
+                  {{ 'chill-utils.me' | translate }}
+              </div>
+              <div *ngIf="!newMode && !element.assigned_to.firstname && !element.state && !element.assigned_to.state" class="no-taker" (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)">
+                  {{ 'chill-utils.list-select-name' | translate }}
+              </div>
+              <div *ngIf="!newMode && !element.state && !element.assigned_to.state" class="taker" (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)">
+                  {{element.assigned_to.firstname}}
+              </div>
+              <div *ngIf="!newMode && element.assigned_to.state" class="taker spinner-list-actions">
+                <ion-spinner name="crescent"></ion-spinner>
+              </div>
+              <div *ngIf="!newMode && element.state" class="spinner-list-actions">
+                <ion-spinner name="crescent"></ion-spinner>
+              </div>
+            </li>
+          </ul>
+        -->
+    </div>
+
+    <div *ngSwitchCase="'expenses'" class="switch-div-expense">
+      <!--
+        <div *ngIf="fixNav" class="fix-nav"></div>
+        <div class="subtitle-expense">{{ 'chill-utils.expense-subtitle' | translate}} <ion-spinner *ngIf="isLoadingExpAction" name="crescent"></ion-spinner></div>
+      -->
+        
+        <ion-spinner class="loading-spinner-exp" *ngIf="!newMode && isLoadingExp" name="crescent"></ion-spinner>
+          
+          <ion-list *ngFor="let e of exps;let ind=index" padding>
+            <ion-list-header>
+              <ion-avatar item-left>
+                <img [src]="e.payer.logo ? e.payer.logo :'assets/images/default-profil.svg'" image-cache/>
+              </ion-avatar>
+              <ion-label class="header-name" item-left>
+                <h1 class="mine-title" *ngIf="newMode || creatorId == e.payer.id">
+                  {{'chill-utils.me' | translate}}
+                </h1>
+                <h1 *ngIf="!(newMode || (!newMode && creatorId == e.payer.id))">
+                  {{e.payer.firstname}}
+                </h1>
+              </ion-label >
+              <ion-label class="header-sum" item-right>
+                <h1>
+                  {{e.sum}} €
+                </h1>
+              </ion-label>
+            </ion-list-header>
+            <ion-item-sliding *ngFor="let d of e.expenses">
+              <ion-item>
+                <ion-label class="item-first-info" item-left>
+                  {{d.element}}
+                </ion-label>
+                <ion-label class="item-second-info" item-right>
+                  {{d.price}} €
+                </ion-label>
+              </ion-item>
+              <ion-item-options *ngIf="newMode || creatorId == d.payer.id" side="left">
+                <button ion-button *ngIf="newMode" (tap)="deleteExp(d.id, d.price, d.element)" color="white">
+                  <ion-icon name="close"></ion-icon>
+                </button>
+                <button ion-button *ngIf="!newMode && creatorId == d.payer.id" (tap)="deleteExp(d.id)" color="white">
+                  <ion-icon name="close"></ion-icon>
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+          <!--
+          <div *ngFor="let e of exps;let ind=index" class="expense">
+            <div class="exps-title">
+              <div class="exps-name">{{e.payer.firstname}}</div>
+              <div class="exps-sum">{{e.sum}} €</div>
+            </div>
+            <div class="exps-details">
+              <ul class="exps-list">
+                <li class="exp" *ngFor="let d of e.expenses">
+                  <img *ngIf="newMode" src="assets/images/close-filled.png" class="exp-suppr" (tap)="deleteExp(d.id, d.price, d.element)" image-cache/>
+                  <img *ngIf="!newMode && creatorId == d.payer.id" src="assets/images/close-filled.png" class="exp-suppr" (tap)="deleteExp(d.id)" image-cache/>
+                  <span class="exp-title">{{d.element}}</span>
+                  <div class="exp-price">{{d.price}} €</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          -->
+        <div class="resolve-div" *ngIf="!newMode && exps && exps.length > 0" (tap)="resolve()">
+          <ion-icon name="calculator"></ion-icon>
+        </div>
+    </div>
+
+  </div>
+<!--
   <ion-slides [initialSlide]="slideInit" [pager]="slidePager" (ionSlideDidChange)="changeSlide($event)">
     <ion-slide class="slide-car" style="display:block;" [ngClass]="addCarBool ? '' : 'slide-full'">
       <div class="wrapper-list">
@@ -123,5 +369,5 @@
       </div>
     </ion-slide>
   </ion-slides>
-
+-->
 </ion-content>

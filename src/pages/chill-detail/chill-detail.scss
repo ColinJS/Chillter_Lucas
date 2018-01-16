@@ -1,4 +1,7 @@
 chill-detail {
+  ion-content{
+    overflow-y: hidden;
+  }
   .hide-left-pan {
     margin-left: -100%;
     visibility: hidden;
@@ -106,10 +109,6 @@ chill-detail {
     padding-right: 3px;
     padding-bottom: 3px;
     height: 3.5rem;
-  }
-
-  .invite-header{
-    flex: 0 1 16.66%;
   }
 
   .invite-header .edit-icon {
@@ -266,13 +265,11 @@ chill-detail {
     color: black;
     text-align: center;
     overflow-y: auto;
-    min-height: unset;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     padding: 0 16px 0;
-    height: calc(100vmax - 11.5rem - 38px);//Screen size without banner header and sending footer
-    margin-top:1vmax;
+    height: calc(100vmax - 11.5rem - 40px);//Screen size without banner header and sending footer
     input {
       margin: auto;
       width: 93%;
@@ -501,7 +498,6 @@ chill-detail {
       margin-bottom:1vmax;
       h1{
         display:inline;
-        margin-top: 2px!important;
         color: $chillter-col;
         font-family: SF_Regular;
         font-size: 1.6rem;

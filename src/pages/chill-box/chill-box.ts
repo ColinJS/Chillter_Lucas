@@ -157,7 +157,6 @@ export class ChillBox {
     let noEvent = false;
     let noEventSoon = false;
 
-
     let call = this.api.getEvents(this.firstLoad).subscribe(
       data => {
         call.unsubscribe();
@@ -233,13 +232,14 @@ export class ChillBox {
           this.noEventSoon = true;
           this.events = [];
         }
-        if (ref) {
-          ref.complete();
-        }
       },
       res => {
         if (res.status != 200) {
           console.log("Http request error :" + res.status);
+        }else{
+          if (ref) {
+            ref.complete();
+          }
         }
       });
   }

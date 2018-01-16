@@ -86,7 +86,7 @@
 
           <div class="date-left">
             <div>
-              {{stringMonth}}
+              {{stringMonth}}<br *ngIf="!haveEndingDate" />
               {{numberDay}}
             </div>
             <div class="date-left-ending" *ngIf="haveEndingDate">

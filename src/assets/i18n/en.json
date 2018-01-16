@@ -154,6 +154,11 @@
     "no-exp-info": "The name and the price need to be specified !",
     "no-exp-inheriter": "At least one person need to be selected !",
     "over-10-seats": "A car cannot have more than 9 seats",
+    "left": "left to bring",
+    "item": "item",
+    "item-plural": "",
+    "people-bring": "What people are bringing",
+    "owes": "owes",
     "input-add-element": {
       "title": "Add an element",
       "placeholder": "Something..."
