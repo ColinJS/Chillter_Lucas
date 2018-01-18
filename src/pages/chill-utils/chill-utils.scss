@@ -46,11 +46,12 @@ chill-utils {
       text-transform: capitalize;
       max-width: 23vmin;
       height: 70%!important;
-      font-size: 1.7rem;
+      font-size: 1.6rem;
       line-height: 1.5;
       border-color: rgba(0,0,0,0);
       color: grey;
       opacity: 1;
+      font-family: SF_Bold;
     }
     .segment-activated{
       color: $chillter-col;
@@ -85,6 +86,16 @@ chill-utils {
     text-align: right;
   }
 
+  .image-border-active{
+    border: 1px solid $chillter-col;
+    padding: 2px;
+  }
+
+  .image-border-unactive{
+    border: 1px solid #dfdfdf;
+    padding: 2px;
+  }
+
   .switch-div-transports {
 
     ion-list{
@@ -98,19 +109,24 @@ chill-utils {
         display: flex;
         align-items: center;
         justify-content: center;
+        left: 2.4rem;
+        img{
+          width: 85%;
+        }
       }
       button{
         width: 9rem!important;
         background: none!important;
         ion-icon{
           margin-left: 1.2rem;
-          width: 5rem!important;
-          height:5rem!important;
+          width: 4.5rem!important;
+          height:4.5rem!important;
           border-radius:50%!important;
           background-color: $chillter-col!important;
-          line-height: 5rem!important;
+          line-height: 4.5rem!important;
           color: white!important;
           font-size: 4rem!important;
+          box-shadow: 1px 1px 7px 0px rgba(130,130,130,0.6);
         }
       }
     }
@@ -144,7 +160,7 @@ chill-utils {
 
     .car-class {
       position: relative;
-      background-color: white;
+      background: none;
       color: $chillter-col;
       width: 100%;
 
@@ -217,9 +233,16 @@ chill-utils {
       text-transform: none!important;
     }
 
-
+    ion-item-sliding{
+      padding: 0 20px;
+      button{
+        padding: 0!important;
+      }
+    }
     ion-item{
+      padding: 0!important;
       ion-checkbox{
+        margin-right: 0!important;
         .checkbox-icon{
           width: 3rem!important;
           height: 3rem!important;
@@ -328,6 +351,9 @@ chill-utils {
           border: 1px solid $chillter-col;
           border-radius: 50%;
         }
+      }
+      h1{
+        text-transform: capitalize!important;
       }
     }
 
@@ -485,20 +511,20 @@ chill-utils {
     display: flex;
     flex-wrap: wrap;
     width: 360px;
-    height: 180px;
-    margin: 0 auto 15px;
+    height: 190px;
+    margin: auto;
     padding: 15px;
     >img {
       width: 100%;
       max-width: unset;
-      height: unset;
+      height: 100%;
       max-height: unset;
       position: absolute;
       left: 0;
       top: 0;
     }
     >div.passangers-block {
-      width: 25%;
+      width: 21%;
       align-self: center;
       z-index: 999;
       &:nth-of-type(1) {
@@ -535,23 +561,26 @@ chill-utils {
   .place-ar-four,
   .place-ar-five,
   .place-ar-six {
-    border: 1px solid #dfdfdf;
     border-radius: 100%;
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     margin: 0 auto;
     img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      padding: 2px;
+    }
+    .no-passenger-div{
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
     }
   }
 
-  @media(max-width: 400px) {
+  @media(max-width: 350px) {
     .car-class {
       width: 300px;
-      height: 150px;
+      height: 170px;
       .place-av-driver,
       .place-av-passenger,
       .place-ar-one,

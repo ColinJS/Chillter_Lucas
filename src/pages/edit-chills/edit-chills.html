@@ -10,7 +10,7 @@
   </div>
 
   <div class="chills-header">
-    <div class="floating-close-button" (tap)="close(2)"></div>
+    <div class="floating-close-button" (tap)="close()"></div>
     <div class="ch-background">
       <img-picker-banner id="background" [src]="banner"></img-picker-banner>
     </div>
@@ -31,23 +31,33 @@
       <input class="h2" type="text" placeholder="{{ 'edit-chills.address' | translate }}" [(ngModel)]="geoSpec" (input)="autoAddress($event.target.value)" />
     </div>
 
-    <ion-icon *ngIf="autocompleteAddress != ''" style="margin-top: 2%;" (tap)="clearAutocomplete()" name="close-circle"></ion-icon>
-    <ion-item [style.color]="'#'+color" style="font-size: 14px;" *ngFor="let address of autocompleteAddress" (click)="chooseAddress(address)">
-      {{ address.description }}
-    </ion-item>
+    <div class="adress-choice-container" *ngIf="autocompleteAddress != ''" >
+      <div class="adress-choice">
+        <ion-icon *ngIf="autocompleteAddress != ''" style="margin-top: 2%;" (tap)="clearAutocomplete()" name="close-circle"></ion-icon>
+        <ion-item [style.color]="'#'+color" style="font-size: 14px;" *ngFor="let address of autocompleteAddress" (click)="chooseAddress(address)">
+          {{ address.description }}
+        </ion-item>
+      </div>
+    </div>
 
     <div class="invite-time">
 
       <div class="date-container">
 
         <div class="date-left">
-          <div>
-            {{stringMonth}}<br *ngIf="!haveEndingDate" />
-            {{numberDay}}
+          <div *ngIf="!haveEndingDate">
+            <span class="date-left-month">{{stringMonth}}</span><br/>
+            <span class="date-left-day">{{numberDay}}</span>
           </div>
-          <div class="date-left-ending" *ngIf="haveEndingDate">
-            {{stringEndingMonth}}
-            {{numberEndingDay}}
+          <div *ngIf="haveEndingDate">
+            <div>
+              {{stringMonth}}
+              {{numberDay}}
+            </div>
+            <div class="date-left-ending">
+              {{stringEndingMonth}}
+              {{numberEndingDay}}
+            </div>
           </div>
         </div>
 
@@ -57,8 +67,14 @@
             {{ 'edit-chills.addEndingDate' | translate }}
           </div>
           <div *ngIf="haveEndingDate">
-            <ion-icon name="close" (tap)="removeEndingDate()"></ion-icon><span class="date-middle-ending" (tap)="showDatePicker(false)">{{stringEndingDay}} {{endingHours}}:{{endingMin}}</span>
+            <div class="remove-ending-date-icon-container">
+              <ion-icon name="close" (tap)="removeEndingDate()"></ion-icon>
+            </div> 
+            <span class="date-middle-ending" (tap)="showDatePicker(false)">{{stringEndingDay}} {{endingHours}}:{{endingMin}}</span>
           </div>
+        </div>
+
+        <div class="date-right">
         </div>
 
       </div>
@@ -101,7 +117,7 @@
       
       <div class="invite-friends">
         <img src="assets/images/chill-plus.svg" (tap)="showFriends()" image-cache/>
-          <div class="friend-contener" *ngFor="let friend of shownFriends">
+          <div class="friend-list-img" *ngFor="let friend of shownFriends">
             <img class="friend-picture" src="{{friend.picture}}" image-cache/>
             <div class="delete-friend" (tap)="deleteFriend(friend.id)"><img src="assets/images/close-outline.svg" image-cache/></div>
           </div>
@@ -125,19 +141,18 @@
         </div>
       </ion-scroll>
     </div>
-
-      <div class="invite-sending" *ngIf="!custom  && !editCustom">
-        <div class="invite-sending-remove" (tap)="animateTo(0)"><span class="text-sending">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
-        <div class="invite-sending-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-sending">{{ 'edit-chills.send' | translate }}</span></div>
-      </div>
-      <div class="invite-sending-custom" *ngIf="custom && !editCustom">
-        <div class="invite-sending-remove" (tap)="animateTo(0)"><span class="text-sending">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
-        <div class="invite-sending-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-sending">{{ 'edit-chills.save' | translate }}</span></div>
-      </div>
-      <div class="invite-editing-custom" *ngIf="editCustom">
-        <div class="invite-editing-remove" (tap)="animateTo(0)"><span class="text-editing">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
-        <div class="invite-editing-save" (tap)="animateTo(2)"><span class="text-editing">{{ 'edit-chills.update' | translate }}</span></div>
-        <div class="invite-editing-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-editing">{{ 'edit-chills.updateSend' | translate }}</span></div>
-      </div>
+  </div>
+  <div class="invite-sending" *ngIf="!custom  && !editCustom">
+    <div class="invite-sending-remove" (tap)="animateTo(0)"><span class="text-sending">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
+    <div class="invite-sending-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-sending">{{ 'edit-chills.send' | translate }}</span></div>
+  </div>
+  <div class="invite-sending-custom" *ngIf="custom && !editCustom">
+    <div class="invite-sending-remove" (tap)="animateTo(0)"><span class="text-sending">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
+    <div class="invite-sending-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-sending">{{ 'edit-chills.save' | translate }}</span></div>
+  </div>
+  <div class="invite-editing-custom" *ngIf="editCustom">
+    <div class="invite-editing-remove" (tap)="animateTo(0)"><span class="text-editing">{{ 'edit-chills.remove' | translate }}</span> <ion-icon name="arrow-round-back"></ion-icon></div>
+    <div class="invite-editing-save" (tap)="animateTo(2)"><span class="text-editing">{{ 'edit-chills.update' | translate }}</span></div>
+    <div class="invite-editing-send" (tap)="animateTo(1)"><ion-icon name="arrow-round-forward"></ion-icon> <span class="text-editing">{{ 'edit-chills.updateSend' | translate }}</span></div>
   </div>
 </ion-content>

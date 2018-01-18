@@ -85,13 +85,19 @@
         <div class="date-container">
 
           <div class="date-left">
-            <div>
-              {{stringMonth}}<br *ngIf="!haveEndingDate" />
-              {{numberDay}}
+            <div *ngIf="!haveEndingDate">
+              <span class="date-left-month">{{stringMonth}}</span><br/>
+              <span class="date-left-day">{{numberDay}}</span>
             </div>
-            <div class="date-left-ending" *ngIf="haveEndingDate">
-              {{stringEndingMonth}}
-              {{numberEndingDay}}
+            <div *ngIf="haveEndingDate">
+              <div>
+                {{stringMonth}}
+                {{numberDay}}
+              </div>
+              <div class="date-left-ending">
+                {{stringEndingMonth}}
+                {{numberEndingDay}}
+              </div>
             </div>
           </div>
 

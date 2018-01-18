@@ -47,8 +47,9 @@
                 <img src="assets/images/car.svg"  image-cache/>
                 <div *ngFor="let seat of arraySeats; let i=index" class="passangers-block">
                   <div *ngIf="i < car.seats" class="{{ seat }}" (tap)="passengerTap(car.id, profileId)">
-                    <img *ngIf="car.passengers[i]" src="{{ car.passengers[i].picture }}" />
-                    <img *ngIf="seat == 'place-av-driver' && newMode" src="{{ car.driver.picture }}" />
+                    <img class="image-border-active" *ngIf="car.passengers[i]" src="{{ car.passengers[i].picture }}" />
+                    <img class="image-border-active" *ngIf="seat == 'place-av-driver' && newMode" src="{{ car.driver.picture }}" />
+                    <div *ngIf="!(seat == 'place-av-driver' && newMode) && !car.passengers[i]" class="image-border-unactive no-passenger-div"></div>
                   </div>
                 </div>
               </div>
@@ -145,7 +146,7 @@
                 {{'chill-utils.me' | translate}}
               </p>
               <ion-checkbox *ngIf="element.mine || element.created_by.id == profileId" checked="true" (tap)="elementTap(element.id,element.assigned_to.firstname,element.assigned_to.id)" item-right></ion-checkbox>
-              <ion-avatar *ngIf="!(element.mine || element.created_by.id == profileId)" item-right><img src="{{element.assigned_to.logo ? element.assigned_to.logo : 'assets/images/default-profil.svg'}}" image-cache/></ion-avatar>
+              <ion-avatar *ngIf="!(element.mine || element.created_by.id == profileId)" item-right><img class="image-border-active" src="{{element.assigned_to.logo ? element.assigned_to.logo : 'assets/images/default-profil.svg'}}" image-cache/></ion-avatar>
             </ion-item>
             <ion-item-options side="left" *ngIf="element.mine || element.created_by.id == profileId && !element.state">
               <button ion-button (tap)="deleteElement(element.id)" color="white">

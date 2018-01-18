@@ -53,10 +53,14 @@ export class ChillterApp {
     platform.ready().then(() => {
       // TestFairy.begin("f19649910e4277942e0b30324951a914cfa2ffd1");
       StatusBar.styleDefault();
-
       ImgCache.init();
 
-      api.isLoggedIn().subscribe(val => this.rootPage = val ? TabsPage : LogIn);
+      api.isLoggedIn().subscribe(val => {
+        this.rootPage = val ? TabsPage : LogIn;
+        setTimeout(()=>{
+          Splashscreen.hide();
+        },500);
+      });
 
       if (window.hasOwnProperty('cordova')) {
         this.oneSignal
@@ -126,7 +130,6 @@ export class ChillterApp {
           .endInit();
       }
 
-      Splashscreen.hide();
       Keyboard.hideKeyboardAccessoryBar(false);
       Keyboard.disableScroll(true);
     });

@@ -105,7 +105,7 @@ import {
       modalEnter: 'custom-modal-enter',
       modalLeave: 'custom-modal-leave',
       scrollPadding: false,
-      scrollAssist: true,
+      scrollAssist: false,
       autoFocusAssist: false
     }),
     TranslateModule.forRoot({
