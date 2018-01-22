@@ -1,6 +1,11 @@
 <ion-header no-border>
   <ion-navbar>
-    <ion-title class="main-title">Chat - {{eventName}}</ion-title>
+    <ion-title >
+      <div class="main-title">
+        <img class="event-logo" [src]="eventLogo" image-cache/>
+        <span class="event-name">{{eventName}}</span>
+      </div>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 

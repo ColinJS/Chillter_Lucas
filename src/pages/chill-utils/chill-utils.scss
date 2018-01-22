@@ -1,12 +1,18 @@
-  .mine-title{
-    color: $chillter-col!important;
-  }
+// for the resolve pop-up
+.mine-title{
+  color: $chillter-col!important;
+}
 
-  .resolve-text{
-    font-size:1.5rem!important; 
-  }
+.resolve-text{
+  font-size:1.5rem!important; 
+}
 
 chill-utils {
+  ion-header{
+    box-shadow: 0px 0px 1px 0px rgba(130,130,130,0.8);
+    border-radius: 0px 0px 16px 16px;
+    background: white;
+  }
   ion-navbar{
     padding-top: 0!important;
     min-height: 45px !important;
@@ -39,9 +45,6 @@ chill-utils {
   }
   
   .tabbar-segment{
-    border-radius: 0px 0px 16px 16px;
-    box-shadow: 0px 0px 3px 0px rgba(130,130,130,0.6);
-    background: white!important;
     .segment-button{
       text-transform: capitalize;
       max-width: 23vmin;
@@ -479,80 +482,32 @@ chill-utils {
     }
   }
 
-  .slide-car,
-  .slide-list,
-  .slide-expense {
-    .slide-zoom {
-      height: 100%;
-    }
-    .wrapper-list {
-      -webkit-overflow-scrolling: touch;
-      overflow-y: scroll;
-      height: -moz-calc(100% - 120px);
-      height: -webkit-calc(100% - 120px);
-      height: calc(100% - 120px);
-      top: 0;
-      align-items: flex-start;
-      padding-top: 90px;
-      padding-top: 90px;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      display: block;
-    }
-    &.slide-full {
-      .wrapper-list {
-        height: 100%;
-      }
+  .car-class {
+    display: block;
+    >img {
+      width: 100%;
     }
   }
 
-  .car-class {
-    display: flex;
-    flex-wrap: wrap;
-    width: 360px;
-    height: 190px;
-    margin: auto;
-    padding: 15px;
-    >img {
-      width: 100%;
-      max-width: unset;
-      height: 100%;
-      max-height: unset;
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    >div.passangers-block {
-      width: 21%;
-      align-self: center;
-      z-index: 999;
-      &:nth-of-type(1) {
-        order: 4;
+  .passenger-container{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    padding: 6%;
+    right: 12%;
+    div.passenger-container-row{
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+      height: 50%;
+      >div.passangers-block {
+        margin: 1px;
+        width: fit-content;
+        flex: 0 0 auto;
       }
-      &:nth-of-type(2) {
-        order: 8;
-      }
-      &:nth-of-type(3) {
-        order: 3;
-      }
-      &:nth-of-type(4) {
-        order: 7;
-      }
-      &:nth-of-type(5) {
-        order: 2;
-      }
-      &:nth-of-type(6) {
-        order: 6;
-      }
-      &:nth-of-type(7) {
-        order: 1;
-      }
-      &:nth-of-type(8) {
-        order: 5;
-      }
-    }
+    } 
   }
+
   .place-av-driver,
   .place-av-passenger,
   .place-ar-one,
@@ -562,45 +517,22 @@ chill-utils {
   .place-ar-five,
   .place-ar-six {
     border-radius: 100%;
-    width: 55px;
-    height: 55px;
+    height: 100%;
+    width: fit-content;
     margin: 0 auto;
     img {
-      width: 100%;
       height: 100%;
       border-radius: 50%;
     }
-    .no-passenger-div{
-      width: 100%;
-      height: 100%;
+    .image-border-unactive{
       border-radius: 50%;
-    }
-  }
-
-  @media(max-width: 350px) {
-    .car-class {
-      width: 300px;
-      height: 170px;
-      .place-av-driver,
-      .place-av-passenger,
-      .place-ar-one,
-      .place-ar-two,
-      .place-ar-three,
-      .place-ar-four,
-      .place-ar-five,
-      .place-ar-six {
-        width: 50px;
-        height: 50px;
+      height: 100%;
+      width: fit-content;
+      >img{
+        opacity: 0;
+        height: 100%;
+        border-radius: 50%;
       }
-    }
-  }
-
-  .swiper-wrapper {
-    -webkit-transform: none;
-    transform: none;
-    .swiper-slide {
-      -webkit-transform: none;
-      transform: none;
     }
   }
 }

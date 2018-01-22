@@ -2,7 +2,51 @@ $chatColor: #4e4d4d;
 $chatMessageOther: #FFEB6C;
 $chatMessageMe: #FFB779;
 
+
+
 page-chill-chat {
+
+  ion-navbar{
+    padding-top: 0!important;
+    min-height: 45px !important;
+    height: 55px!important;
+    padding-bottom: 0!important;
+    border-radius: 0px 0px 16px 16px;
+    box-shadow: 0px 0px 3px 0px rgba(130,130,130,0.6);
+    background: white!important;
+    .toolbar-background{
+      background: none!important;
+    }
+  }
+
+  ion-title{
+    padding: 0 20vmin 1px!important;
+    padding-top: 5px!important;
+    height: 100%!important;
+    min-height: 100%!important;
+    .toolbar-title-ios{
+      height: 100%;
+    }
+  }
+
+  .main-title{
+    font-family: SF_Regular;
+    font-size: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+    .event-logo{
+      //float: left;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      padding: 2px;
+      border: 1px solid $chillter-col;
+      margin: 0 10px;
+    }
+  }
+  
   /* items */
   .chat-message {
     border-radius: 10px;
@@ -10,9 +54,11 @@ page-chill-chat {
     color: $chatColor;
     &.primary {
       background-color: $chatMessageOther;
+      border-bottom-left-radius: 2px;
     }
     &.secondary {
       background-color: $chatMessageMe;
+      border-bottom-right-radius: 2px;
     }
   }
   .item-ios {

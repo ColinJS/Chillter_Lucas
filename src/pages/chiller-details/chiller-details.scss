@@ -1,6 +1,10 @@
 chiller-details {
-  overflow: hidden;
-
+  ion-content{
+    overflow-y: hidden;
+    >div.scroll-content{
+      overflow-y: hidden!important;
+    }
+  }
   ion-navbar {
     min-height: 75px !important;
 
@@ -15,6 +19,9 @@ chiller-details {
       text-align: left;
       max-height: 250px;
       overflow: auto;
+      border-radius: 0px 0px 16px 16px;
+      box-shadow: 0px 0px 3px 0px rgba(130,130,130,0.6);
+      background: white!important;
 
       .head-top {
         overflow: auto;
@@ -29,8 +36,8 @@ chiller-details {
             padding: 2px;
             max-width: 10rem;
             max-height: 10rem;
-            height: 28vw;
-            width: 28vw;
+            height: 22vw;
+            width: 22vw;
           }
         }
 
@@ -38,19 +45,14 @@ chiller-details {
           display: inline-block;
           vertical-align: middle;
           text-align: left;
-          margin-left: 5px;
+          margin-left: 10px;
 
           h1 {
             margin-top: 5px;
-            font-size: 5vw;
+            font-size: 2.8rem;
+            font-family: SF_Bold;
             line-height: 25%;
-            color: #4c4c4c;
-            .chiller-firstname{
-              font-family: SF_Regular;
-            }
-            .chiller-lastname{
-              font-family: SF_Semibold;
-            }
+            color: black;
           }
 
           .contact-chiller-container {
@@ -65,11 +67,12 @@ chiller-details {
             h2 {
               font-size: 4vw;
               line-height: 10%;
-              color: grey;
+              color: #9B9B9B;
               display: inline-block;
               vertical-align: middle;
               margin-top: 0;
               margin-bottom: 0;
+              font-family: SF_Regular;
             }
 
             h2.email {
@@ -125,12 +128,12 @@ chiller-details {
       .btn-send-chill {
         display: inline-block;
         text-align: center;
-        height: 5rem;
-        line-height: 5rem;
+        height: 4.3rem;
+        line-height: 4.3rem;
         border: 1px solid $chillter-col;
         border-radius: 5rem;
         font-size: 2.3rem;
-        color: $chillter-col;
+        color: black;
         width: 100%;
         vertical-align: middle;
         margin: auto;
@@ -139,16 +142,22 @@ chiller-details {
           position: relative;
           top: 5px;
           font-size: 3rem;
+          color: $chillter-col;
         }
       }
     }
 
     .details-events {
+
       height: calc(70vmax - 115px); // Removing the bottom of the searchbar
+      overflow: visible;
+
       .searchbar-ios {
         border-bottom: 0;
       }
-
+      .search-chill{
+        background: none;
+      }
       .global-infos {
         display: inline-block;
         float: left;
@@ -179,8 +188,17 @@ chiller-details {
       }
 
       ion-scroll {
+
         display: flex;
-        height: calc(70vmax - 115px);
+        height: calc(70vmax - 90px);
+        overflow: visible;
+
+        .chiller-detail-list-header{
+          color: #9B9B9B;
+          font-size: 3rem;
+          font-family: SF_Bold;
+          margin: 3%;
+        }
 
         h2 {
           font-size: 2rem;
@@ -280,6 +298,124 @@ chiller-details {
       }
     }
   }
+
+  .card-round{
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 3px 0px 13px 0px rgba(130,130,130,0.6);
+      overflow: hidden;
+      width: 100vmin;
+      margin:0px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    .base-chill-banner{
+      height: 25px;
+    }
+
+    .custom-chill-banner{
+      height: 95px;
+      overflow: hidden;
+    }
+
+    .scroll-content {
+      border: none;
+    }
+    .global-infos {
+      display: inline-block;
+      float: left;
+
+      h2 {
+        font-family: SF_Bold;
+        font-size: 2.5rem;
+        color: black;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+
+      .chiller-name {
+        font-family: SF_Semibold;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.4);
+        text-transform: uppercase;
+      }
+
+      .event-canceled {
+        font-weight: bold;
+        color: rgba(255, 26, 26, 0.7);
+      }
+    }
+
+    .filter-evt {
+      //width: 35vw;
+      margin-top: 10px;
+      float: right;
+      display: inline-block;
+      margin-right: 2.5vw;
+      padding: 0px 2px;
+
+      .filter-img {
+        height: 7.5vw;
+        display: inline-block;
+        max-height: 30px;
+        margin: 0px 0.6vw;
+      }
+    }
+
+    .logo-container{
+      position: absolute;
+    }
+
+    .participation-status{
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      bottom: 8px;
+      right: 1px;
+      border: 2px solid white;
+    }
+
+    .infos-events {
+      display: inline-block;
+      float: right;
+      text-align: right;
+
+      .chill-hours {
+        font-size: 2.2rem;
+        font-style: normal;
+        color: #666666;
+        display: inline-block;
+      }
+
+      .soon {
+        vertical-align: 40%;
+      }
+
+      .today {
+        color: $chillter-col !important;
+      }
+
+      .ongoing {
+        color: #43a1eb !important;
+      }
+
+      .chill-date {
+        display: block;
+        margin-top: -10px;
+        text-align: right;
+        font-family: SF_Light;
+        font-size: 1.6rem;
+
+      }
+
+      img {
+        width: 50px;
+        float: right;
+      }
+    }
 
   /* Override rules for screen with width > 768px (iPad...) */
   @media screen and (min-width: 768px) {

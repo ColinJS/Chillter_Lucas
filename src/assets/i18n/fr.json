@@ -72,7 +72,10 @@
     "move-chill-error": "Vous ne pouvez pas mettre ce Chill ici !"
   },
   "add-friends": {
-    "friends": "Amis"
+    "friends": "Amis",
+    "add": "Ajouter des invités",
+    "view": "Voir les invités",
+    "done": "Ok"
   },
   "add-expense": {
     "expense": "Ajouter une dépense"
@@ -213,7 +216,9 @@
     "request-subtitle": "Demande de contact",
     "no-result": "Pas de résultat trouvé",
     "add-friends": "Ajouter Chillers",
-    "no-friends": "Vous n'avez pas d'ami"
+    "no-friends": "Vous n'avez pas d'ami",
+    "chillter": "Chillers",
+    "contact": "Contacts"
   },
   "history": {
     "title": "Historique",

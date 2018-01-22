@@ -35,6 +35,7 @@ export class ChillChatPage {
   reloadingChat: boolean = false;
   closeOnce: boolean = false;
   eventName: string;
+  eventLogo: string;
 
   constructor(
     private navCtrl: NavController,
@@ -84,6 +85,7 @@ export class ChillChatPage {
 
   ionViewDidEnter() {
     this.eventName = this.navParams.get("eventName");
+    this.eventLogo = this.navParams.get("eventLogo");
     this.storage.getValue("id").subscribe(
       id => {
         if (id) {

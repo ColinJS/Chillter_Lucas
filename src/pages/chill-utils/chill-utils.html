@@ -45,12 +45,32 @@
             <ion-item class="item-car">
               <div class="car-class">
                 <img src="assets/images/car.svg"  image-cache/>
-                <div *ngFor="let seat of arraySeats; let i=index" class="passangers-block">
-                  <div *ngIf="i < car.seats" class="{{ seat }}" (tap)="passengerTap(car.id, profileId)">
-                    <img class="image-border-active" *ngIf="car.passengers[i]" src="{{ car.passengers[i].picture }}" />
-                    <img class="image-border-active" *ngIf="seat == 'place-av-driver' && newMode" src="{{ car.driver.picture }}" />
-                    <div *ngIf="!(seat == 'place-av-driver' && newMode) && !car.passengers[i]" class="image-border-unactive no-passenger-div"></div>
-                  </div>
+                <div class="passenger-container">
+                  
+                    <div class="passenger-container-row">
+                      <ng-container *ngFor="let seat of arraySeats; let i=index">
+                        <div *ngIf="[0,2,4,6].indexOf(i) != -1" class="passangers-block">
+                            <div *ngIf="i < car.seats" class="{{ seat }}" (tap)="passengerTap(car.id, profileId)">
+                              <img class="image-border-active" *ngIf="car.passengers[i]" src="{{ car.passengers[i].picture }}" />
+                              <img class="image-border-active" *ngIf="seat == 'place-av-driver' && newMode" src="{{ car.driver.picture }}" />
+                              <div *ngIf="!(seat == 'place-av-driver' && newMode) && !car.passengers[i]" class="image-border-unactive"><img src="assets/images/default-profil.svg" image-cache/></div>
+                            </div>
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <div class="passenger-container-row">
+                      <ng-container *ngFor="let seat of arraySeats; let i=index">
+                        <div *ngIf="[1,3,5,7].indexOf(i) != -1" class="passangers-block">
+                            <div *ngIf="i < car.seats" class="{{ seat }}" (tap)="passengerTap(car.id, profileId)">
+                              <img class="image-border-active" *ngIf="car.passengers[i]" src="{{ car.passengers[i].picture }}" />
+                              <img class="image-border-active" *ngIf="seat == 'place-av-driver' && newMode" src="{{ car.driver.picture }}" />
+                              <div *ngIf="!(seat == 'place-av-driver' && newMode) && !car.passengers[i]" class="image-border-unactive"><img src="assets/images/default-profil.svg" image-cache/></div>
+                            </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  
                 </div>
               </div>
             </ion-item>

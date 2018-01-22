@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../providers/api';
 import { SyncService } from '../../providers/sync';
-import { NavController, AlertController, Events, ToastController } from 'ionic-angular';
+import { NavController, AlertController, Events, ToastController, ViewController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import { ChillerDetails } from "../chiller-details/chiller-details";
-import { FriendListSearch } from "../friend-list-search/friend-list-search";
 import { StorageService } from "../../providers/storage";
 import { CacheService } from '../../providers/cache';
 import { ContactsService } from '../../providers/contacts'
 
 @Component({
-  selector: 'friend-list',
-  templateUrl: 'friend-list.html',
+  selector: 'friend-list-search',
+  templateUrl: 'friend-list-search.html',
 })
-export class FriendList {
+export class FriendListSearch {
   private transaltions: any;
 
   chillersDisplay: string = "chillers";
@@ -58,7 +57,8 @@ export class FriendList {
     private sync: SyncService,
     private storage: StorageService,
     private cache: CacheService,
-    private contacts: ContactsService
+    private contacts: ContactsService,
+    private viewCtrl: ViewController
   ) {
     translate.get(['friend-list.delete-alert.title',
       'friend-list.delete-alert.message',
@@ -435,10 +435,6 @@ export class FriendList {
     this.navCtrl.push(ChillerDetails, { "friendId": friendId, "firstname": firstname, "phone": phone, "have_chillter": have_chillter }, { animate: true, direction: 'back' });
   }
 
-  showSearch(){
-    this.navCtrl.push(FriendListSearch, { animate: true, direction: 'back' });
-  }
-
   addFriend(notFriendId: number) {
     if (!this.sync.status) {
       this.showOfflineToast(1);
@@ -453,6 +449,7 @@ export class FriendList {
         if (data) {
           this.getSentInvitation();
           this.getNotFriends();
+          this.viewCtrl.dismiss();
         }
       }
     );

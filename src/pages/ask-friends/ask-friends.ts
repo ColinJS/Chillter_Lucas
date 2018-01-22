@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, ViewController, NavParams } from 'ionic-angular';
+import { NavController, ViewController, NavParams,ToastController,ItemSliding } from 'ionic-angular';
 import { ApiService } from '../../providers/api';
+import { TranslateService } from 'ng2-translate';
+import { SyncService } from '../../providers/sync';
 
 @Component({
   selector: 'ask-friends',
@@ -11,17 +13,31 @@ export class AskFriends {
   arrayFriends: any = [];
   friends: any = [];
   filteredFriends: any = [];
-  viewFriends: any = [];
+  addFriendsDisplay: string = 'add'
+  viewAddGuest: any = [];
+  viewViewGuest: any[] = [];
   friendsList: any = [];
   isLoadingFriends: boolean = true;
+  transaltions: any;
+  eventId: any;
+  editor: boolean = false;
 
   constructor(
     private nav: NavController,
     private viewCtrl: ViewController,
     private api: ApiService,
-    private navP: NavParams
+    private translate: TranslateService,
+    private toastCtrl: ToastController,
+    private navP: NavParams,
+    private sync: SyncService
   ) {
+
+    translate.get(['offline.blocked']).subscribe(value => this.transaltions = value);
+
     this.friendsList = this.navP.get("friendsList");
+    this.eventId = this.navP.get("eventId");
+    this.editor = this.navP.get("editor");
+    this.viewViewGuest = this.friendsList;
     this.getFriends();
   }
 
@@ -29,10 +45,19 @@ export class AskFriends {
     if (searchbar.target.value == "" || searchbar.target.value == undefined) {
       searchbar.target.value = "";
       this.getFriends();
+      this.viewViewGuest = this.friendsList;
       return;
     }
 
-    this.viewFriends = this.filteredFriends.filter((v) => {
+    this.viewAddGuest = this.filteredFriends.filter((v) => {
+      if (v.firstname.toLowerCase().indexOf(searchbar.target.value.toLowerCase()) > -1) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    this.viewViewGuest = this.friendsList.filter((v) => {
       if (v.firstname.toLowerCase().indexOf(searchbar.target.value.toLowerCase()) > -1) {
         return true;
       } else {
@@ -65,7 +90,7 @@ export class AskFriends {
           } else {
             this.filteredFriends = this.friends;
           }
-          this.viewFriends = this.filteredFriends;
+          this.viewAddGuest = this.filteredFriends;
         } else {
           this.friends = [];
           this.filteredFriends = [];
@@ -88,6 +113,33 @@ export class AskFriends {
 
     this.close(friend);
   }
+
+  deleteFriend(slidingItem: ItemSliding, friendId: string) {
+    if (!this.sync.status) {
+      this.showOfflineToast(1);
+      return;
+    }
+    this.api.deleteFriendFromEvent(this.eventId, friendId).subscribe();
+    let ind;
+    for (let i = 0; i < this.friendsList.length; i++) {
+      if (this.friendsList[i].id == friendId) {
+        ind = i;
+      }
+    }
+    this.friendsList.splice(ind, 1);
+    slidingItem.close();
+}
+
+  showOfflineToast(type) {
+    if (type == 1) {
+      const toast = this.toastCtrl.create({
+        message: this.transaltions['offline.blocked'],
+        duration: 3000
+      });
+      toast.present();
+    }
+  }
+
   addToArray(id, e) {
     if (e.checked) {
       this.arrayTmp[id.id] = id;

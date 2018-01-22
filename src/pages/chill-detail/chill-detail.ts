@@ -24,7 +24,7 @@ import { ChillChatPage } from '../chill-chat/chill-chat';
 import { MoreFriendsPage } from '../more-friends/more-friends';
 import { CacheService } from '../../providers/cache';
 
-declare var google: any;
+// declare var google: any;
 
 @Component({
   selector: 'chill-detail',
@@ -530,7 +530,7 @@ export class ChillDetail {
       this.showOfflineToast(1);
       return;
     }
-    let modal = this.mod.create(AskFriends, { "friendsList": this.friends })
+    let modal = this.mod.create(AskFriends, { "editor": (this.idProfile == this.chillCreatorId), "eventId": this.eventId,"friendsList": this.friends })
     modal.onDidDismiss((data) => {
       if (data) {
         for (let f of data) {
@@ -706,7 +706,7 @@ export class ChillDetail {
 
   // Autocomplete address
   ngOnInit() {
-    this.acService = new google.maps.places.AutocompleteService();
+    // this.acService = new google.maps.places.AutocompleteService();
     this.autocompleteAddress = [];
   }
 
@@ -903,7 +903,7 @@ export class ChillDetail {
   }
 
   showMoreFriendsPage() {
-    let modal = this.mod.create(MoreFriendsPage, { friends: this.friends, eventCreated: true, chillCreatorId: this.chillCreatorId, idProfile: this.idProfile });
+    let modal = this.mod.create(MoreFriendsPage, {  friends: this.friends, eventCreated: true, chillCreatorId: this.chillCreatorId, idProfile: this.idProfile });
 
     modal.onDidDismiss((data, idToDelete) => {
 
@@ -936,7 +936,7 @@ export class ChillDetail {
     }
     let eventId = this.navParams.get("eventId");
 
-    this.navCtrl.push(ChillChatPage, { "eventId": eventId, "eventName": this.name });
+    this.navCtrl.push(ChillChatPage, { "eventId": eventId, "eventName": this.name, "eventLogo": this.logo });
   }
 
   close() {

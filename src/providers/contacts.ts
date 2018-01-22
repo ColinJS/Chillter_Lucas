@@ -157,7 +157,7 @@ export class ContactsService {
         if (data == undefined) {
           this.cache.addCache('CONTACTS', notFoundFriends);
 
-          this.getFriends();
+          //this.getFriends();
         } else {
           this.cache.clearCache('CONTACTS');
           this.cache.addCache('CONTACTS', notFoundFriends);

@@ -1,33 +1,16 @@
 <ion-header no-border>
   <ion-navbar>
     <ion-title>
-      <img class="nav-title" src="assets/images/nav-chillers.svg" image-cache/>
+      <div class="search-wrapper">
+        <div class="search-evt">
+          <ion-searchbar class="search-evt" placeholder="{{ 'global.search' | translate }}" (ionInput)="inputChange($event)"></ion-searchbar>
+        </div>
+      </div>
     </ion-title>
-    <ion-buttons end>
-      <button (tap)="showSearch()" ion-button icon-only clear>
-        <ion-icon name="search"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
-  <ion-segment mode="md" [(ngModel)]="chillersDisplay">
-    <ion-segment-button value="chillers">
-      {{'friend-list.chillter' | translate}}
-    </ion-segment-button>
-    <ion-segment-button value="contact">
-      {{'friend-list.contact' | translate}}
-    </ion-segment-button>
-  </ion-segment>
 </ion-header>
 
 <ion-content class="friend-list">
-
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <div [ngSwitch]="chillersDisplay">
-
-    <div *ngSwitchCase="'chillers'">
 
       <ion-list *ngIf="pendingFriends.length != 0 || sentInvitation.length != 0">
           <div class="friend-request-subtitle">{{ 'friend-list.request-subtitle' | translate}}</div>
@@ -90,29 +73,5 @@
             <ion-icon md="md-add" ios="md-add" class="add-friends-icon" item-right></ion-icon>
           </ion-item>
         </ion-list>
-
-    </div>
-
-    <div *ngSwitchCase="'contact'">
-
-      <div *ngIf="noContacts == true" class="no-events"><p>{{ 'friend-list.no-friends' | translate}}</p></div>
-
-        <ion-list>
-          <ion-item *ngIf="noResultContacts == true" class="no-result">
-            {{ 'friend-list.no-result' | translate }}
-          </ion-item>
-            <ion-item *ngFor="let friend of phoneContacts[0]" (tap)="showChillerDetails(friend.id, friend.firstname, friend.phone, friend.have_chillter)">
-              <ion-avatar item-left>
-                <img src="{{friend.picture || 'assets/images/default-profil.svg'}}" image-cache>
-              </ion-avatar>
-              <h2>{{friend.firstname}}</h2>
-            </ion-item>
-        </ion-list>
-
-    </div>
-  </div>
-
-  
-
 </ion-content>
 

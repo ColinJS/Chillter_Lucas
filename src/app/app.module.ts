@@ -29,6 +29,7 @@ import { ChillUtils } from '../pages/chill-utils/chill-utils';
 import { ChillerDetails } from '../pages/chiller-details/chiller-details';
 import { EditChills } from '../pages/edit-chills/edit-chills';
 import { FriendList } from '../pages/friend-list/friend-list';
+import { FriendListSearch } from '../pages/friend-list-search/friend-list-search';
 import { History } from '../pages/history/history';
 import { Home } from '../pages/home/home';
 import { LogIn } from '../pages/login/login';
@@ -79,6 +80,7 @@ import {
     ChillerDetails,
     EditChills,
     FriendList,
+    FriendListSearch,
     History,
     Home,
     LogIn,
@@ -127,6 +129,7 @@ import {
     ChillerDetails,
     EditChills,
     FriendList,
+    FriendListSearch,
     CroppiePage,
     History,
     Home,
