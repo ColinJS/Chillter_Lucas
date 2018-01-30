@@ -7,48 +7,52 @@
 </ion-header>
 
 <ion-content class="chill-set">
-
   <form [formGroup]="form">
-    <ion-list padding>
+    <div class="header-chill-set">
       <div class="avatar">
         <img-picker-logo id="avatarLoader" [src]="picture" (change)="loadChange($event)"></img-picker-logo>
       </div>
+      <div class="infos">
+        <h1 class="info-name">{{name}}</h1>
+        <div class="info-contact">
+          <ion-input placeholder="Phone" type="tel" formControlName="phone"></ion-input>
+          <ion-input placeholder="Email" type="email" formControlName="email"></ion-input>
+        </div>
+      </div>
+      <div class="forward-arrow-div">
+        <ion-icon class="forward-arrow" name="arrow-forward"></ion-icon>
+      </div>
+    </div>
 
-      <ion-item>
-        <ion-input placeholder="Phone" type="tel" formControlName="phone"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input placeholder="Email" type="email" formControlName="email"></ion-input>
-      </ion-item>
-
-      <ion-item *ngIf="(form.controls.phone.valid &&  form.controls.email.valid) && (form.controls.phone.dirty || form.controls.email.dirty)" class="item-info">
+      <div *ngIf="(form.controls.phone.valid &&  form.controls.email.valid) && (form.controls.phone.dirty || form.controls.email.dirty)" class="item-info">
         <div class="update-info" (tap)="changeInfo()">
           {{ 'global.update' | translate }}
         </div>
-      </ion-item>
+      </div>
 
       <!-- Next elements use same class -->
-      <ion-item class="change-password" (tap)="changePassword()">
-        {{ 'chill-set.change-password' | translate }}
-      </ion-item>
+      <div class="change-password" (tap)="changePassword()">
+        <ion-icon name="md-lock"></ion-icon>{{ 'chill-set.change-password' | translate }}<ion-icon class="forward-arrow" name="arrow-forward"></ion-icon>
+      </div>
 
-      <ion-item class="change-password" (tap)="synchronizeContacts()">
-        {{ 'chill-set.synchro-contacts' | translate }} <ion-icon *ngIf="synchronizeFinished" name="ios-checkmark"></ion-icon>
-      </ion-item>
+      <div class="change-password" (tap)="setLanguageTo()">
+        <ion-icon name="md-globe"></ion-icon>
+        <span *ngIf="!changingLang">{{ 'chill-set.change-lang' | translate }}</span>
+        <span *ngIf="changingLang"><span (tap)="setLanguageTo('fr')">Français</span>, <span (tap)="setLanguageTo('en')">English</span></span>
+        <ion-icon class="forward-arrow" name="arrow-forward"></ion-icon>
+      </div>
 
-      <ion-item class="change-password" (tap)="setLanguageTo()">
-        <div *ngIf="!changingLang">{{ 'chill-set.change-lang' | translate }}</div>
-        <div *ngIf="changingLang"><span (tap)="setLanguageTo('fr')">Français</span>, <span (tap)="setLanguageTo('en')">English</span></div>
-      </ion-item>
+      <div class="change-password" (tap)="synchronizeContacts()">
+        <ion-icon name="md-sync"></ion-icon>{{ 'chill-set.synchro-contacts' | translate }} <ion-icon *ngIf="synchronizeFinished" name="ios-checkmark"></ion-icon><ion-icon class="forward-arrow" name="arrow-forward"></ion-icon>
+      </div>
 
-    </ion-list>
+      
   </form>
 
   <div class="btn-disconnect-container">
-    <div class="btn-disconnect" (tap)="logout()">
+    <button ion-button clear class="btn-disconnect" (tap)="logout()">
       {{ 'chill-set.signout' | translate }}
-    </div>
+    </button>
   </div>
 
 </ion-content>

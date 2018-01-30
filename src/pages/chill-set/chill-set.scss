@@ -1,6 +1,17 @@
 chill-set {
+  font-family: SF_Regular;
+  ion-header{
+    box-shadow: 0px 0px 1px 0px rgba(130,130,130,0.8);
+    border-radius: 0px 0px 16px 16px;
+    background: white;
+  }
   ion-navbar {
     min-height: 75px !important;
+    background: none;
+
+    .toolbar-background{
+      background: none!important;
+    }
 
     img {
       height: 47px;
@@ -16,23 +27,64 @@ chill-set {
   }
 
   .chill-set {
-    .avatar {
-      position: relative;
-      width: 150px;
-      margin: auto;
+    background-color: #f0f0f0;
 
-      img-picker-logo {
-        background-image: url(../assets/images/default-profil.svg);
-        box-sizing: content-box;
-        border: 2px solid $chillter-col;
-        border-radius: 100%;
-        overflow: hidden;
-        display: inline-block;
-        height: 125px;
-        width: 125px;
-        img {
-          padding: 2px;
+    .forward-arrow{
+      float: right;
+      font-size: 3rem;
+      height: 100%;
+      padding-top: 1rem;
+      color: #9B9B9B;
+    }
+
+    .header-chill-set{
+      display:flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      background: white;
+      border-top: 1px solid #9B9B9B;
+      border-bottom: 1px solid #9B9B9B;
+      margin: 8px 0;
+      .avatar {
+        margin: 10px;
+        img-picker-logo {
+          background-image: url(../assets/images/default-profil.svg);
+          box-sizing: content-box;
+          border: 2px solid $chillter-col;
           border-radius: 100%;
+          overflow: hidden;
+          display: inline-block;
+          height: 90px;
+          width: 90px;
+          img {
+            padding: 2px;
+            border-radius: 100%;
+          }
+        }
+      }
+      .infos{
+        .info-name{
+          margin: 0!important;
+          margin-bottom: 8px!important;
+          font-family: SF_Semibold;
+          color: #4a4a4a
+        }
+        .info-contact{
+          line-height: 1rem;
+          font-size: 1.6rem;
+          ion-input{
+            .text-input{
+              margin: 0!important;
+            }
+          }
+        }
+      }
+      .forward-arrow-div{
+        height:100%;
+        width: 6%;
+        .forward-arrow{
+          padding-top:0;
         }
       }
     }
@@ -45,7 +97,17 @@ chill-set {
 
     .change-password {
       padding-left: 4rem;
-      color: $chillter-col;
+      color: #4a4a4a;
+      background-color: white;
+      border-top: 1px solid #9B9B9B;
+      border-bottom: 1px solid #9B9B9B;
+      margin: 20px 0;
+      height: 5rem;
+      line-height: 5rem;
+      font-size: 1.9rem;
+      ion-icon{
+        margin-right: 2rem;
+      }
     }
 
     .item-info {
@@ -67,12 +129,13 @@ chill-set {
         text-align: center;
         height: 5rem;
         line-height: 5rem;
-        border: 1px solid $chillter-col;
-        border-radius: 5rem;
         font-size: 2.3rem;
         color: $chillter-col;
-        width: 80vmin;
+        width: 100%;
         margin: auto;
+        background-color: white;
+        border-top: 1px solid #9B9B9B;
+        border-bottom: 1px solid #9B9B9B;
 
         ion-icon {
           position: relative;

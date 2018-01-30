@@ -34,6 +34,7 @@ export class ChillSet {
 
   picture: string = "";
   synchronizeFinished: boolean = false;
+  name: string = '';
   changingLang: boolean = false;
 
   constructor(
@@ -54,7 +55,7 @@ export class ChillSet {
   ) {
     this.api.getMyProfile().subscribe(data => {
       this.picture = data.picture ? data.picture : null;
-
+      this.name = data.firstname+" "+data.lastname;
       this.form.controls['phone'].setValue(data.phone, { emitEvent: false });
       this.form.controls['email'].setValue(data.email, { emitEvent: false });
     });

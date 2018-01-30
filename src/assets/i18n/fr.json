@@ -21,7 +21,8 @@
     "create-account-button": "Créer un compte",
     "email-empty": "L'email ne peut être vide",
     "password-empty": "Le mot de passe ne peut être vide",
-    "forgot-password": "Mot de passe oublié ?"
+    "forgot-password": "Mot de passe oublié ?",
+    "no-account": "Pas de compte ? "
   },
   "forgot-password": {
     "title": "Mot de pass oublié",
@@ -66,7 +67,11 @@
     "email-valid": "L'email n'est pas valide",
     "error1": "L'enregistrement à échoué !",
     "error2": "Une erreur est survenue",
-    "error3": "L'email est déjà utilisé"
+    "error3": "L'email est déjà utilisé",
+    "birth": "Date de naissance",
+    "male": "Homme",
+    "female": "Femme",
+    "other": "Autre"
   },
   "home": {
     "move-chill-error": "Vous ne pouvez pas mettre ce Chill ici !"

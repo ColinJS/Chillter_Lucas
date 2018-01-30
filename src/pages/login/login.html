@@ -1,11 +1,11 @@
-<ion-content>
+<ion-content padding>
 
   <img src="assets/images/logo-sun-1000.png" class="logo-sun" image-cache/>
   <img src="assets/images/logo-text.svg" class="logo-text" image-cache/>
 
   <form [formGroup]="form" novalidate>
 
-    <ion-list class="login-list">
+    <ion-list class="login-list" no-lines>
       <ion-item class="login-item">
         <ion-input type="email" placeholder="{{ 'login.email' | translate }}" formControlName="email" autocapitalize="none"></ion-input>
       </ion-item>
@@ -23,7 +23,7 @@
       </ion-item>
     </ion-list>
 
-    <button ion-button outline (tap)="onSubmit()" class="log-btn" block round large>{{ 'login.login-button' | translate }}</button>
+    <button ion-button (tap)="onSubmit()" class="log-btn" block round large>{{ 'login.login-button' | translate }}</button>
   </form>
   <p class="forgot-password" (tap)="openForgotPage()">{{ 'login.forgot-password' | translate }}</p>
 
@@ -31,8 +31,8 @@
 
 <ion-footer>
 
-    <ion-toolbar>
-        <a (tap)="showSignUp()" class="login-tab">{{ 'login.create-account-button' | translate }}</a>
+    <ion-toolbar class="login-tab">
+        {{'login.no-account' | translate}} <a (tap)="showSignUp()">{{ 'login.create-account-button' | translate }}</a>
     </ion-toolbar>
 
 </ion-footer>

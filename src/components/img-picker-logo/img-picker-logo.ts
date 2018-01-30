@@ -44,25 +44,25 @@ export class ImgPickerLogo {
 
   ngAfterViewInit() {
     this.firstSrc = this.imgSrc.nativeElement.currentSrc;
-    !this.firstSrc ? this.picture = "assets/images/default-profil.svg" : null;
+    !this.firstSrc ? this.picture = "assets/images/default-profil-picture.svg" : null;
     this.imgPickerService.setImgResultLogo(undefined);
   }
 
   ngOnChanges(evt) {
-    let stringDefault = "default-profil.svg";
+    let stringDefault = "default-profil-picture.svg";
 
     if (evt.definedSrc.currentValue) {
       evt.definedSrc.currentValue.includes(stringDefault) ?
-        this.imgPickerService.setFirstImgSrcLogo("default-profil.svg")
+        this.imgPickerService.setFirstImgSrcLogo("default-profil-picture.svg")
         : this.imgPickerService.setFirstImgSrcLogo(evt.definedSrc.currentValue);
       if (evt.definedSrc.currentValue.includes(stringDefault)) {
-        this.imgPickerService.setFirstImgSrcLogo("default-profil.svg");
+        this.imgPickerService.setFirstImgSrcLogo("default-profil-picture.svg");
       } else {
         this.imgPickerService.setImgResultLogo(evt.definedSrc.currentValue);
         this.imgPickerService.setFirstImgSrcLogo(evt.definedSrc.currentValue);
       }
     }
-    evt.definedSrc.currentValue ? this.picture = evt.definedSrc.currentValue : this.picture = "assets/images/default-profil.svg";
+    evt.definedSrc.currentValue ? this.picture = evt.definedSrc.currentValue : this.picture = "assets/images/default-profil-picture.svg";
   }
 
   chooseActions() {

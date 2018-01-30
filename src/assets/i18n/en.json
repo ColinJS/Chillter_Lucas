@@ -21,7 +21,8 @@
     "create-account-button": "Create an account",
     "email-empty": "Email cannot be empty",
     "password-empty": "Password cannot be empty",
-    "forgot-password": "Forgot password ?"
+    "forgot-password": "Forgot password ?",
+    "no-account": "Don't have an account ? "
   },
   "forgot-password": {
     "title": "Forgot password",
@@ -66,7 +67,11 @@
     "email-valid": "Email is not valid",
     "error1": "Registration failed !",
     "error2": "An error occured",
-    "error3": "Email already exist"
+    "error3": "Email already exist",
+    "birth": "Date of birth",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other"
   },
   "home": {
     "move-chill-error": "You cannot move this Chill here !"

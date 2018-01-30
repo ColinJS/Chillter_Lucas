@@ -1,7 +1,9 @@
-signin {
+signin{
+  
+  font-family: SF_Regular;
   .toolbar-title-ios {
     font-size: 2.2rem;
-    color: $chillter-col;
+    color: black;
   }
 
   .avatar {
@@ -10,13 +12,14 @@ signin {
   }
 
   .avatar img-picker-logo img {
-    background-size: 150px 150px;
+    background-size: 105px 105px;
     box-sizing: content-box;
     border: 2px solid $chillter-col;
     border-radius: 100%;
     display: inline-block;
-    height: 150px;
-    width: 150px;
+    height: 105px;
+    width: 105px;
+    padding: 2px;
   }
 
   .subtitle-avatar {
@@ -40,6 +43,38 @@ signin {
     }
   }
 
+  .submit-button{
+    height: 4rem;
+    box-shadow: 3px 0px 13px 0px rgba(130,130,130,0.4);
+  }
+
+  .scroll-content{
+    height: calc(100% - 65px);
+    overflow: visible;
+  }
+
+  ion-list{
+    height: 100%;
+    margin-bottom: 0!important;
+    padding-bottom: 0!important;
+    padding-top: 1.5rem!important;
+  }
+
+  .avatar-part{
+    flex: 0 1 auto;
+  }
+
+  .body-part{
+    flex: 0 1 auto;
+  }
+
+  .button-part{
+    flex: 0 1 auto;
+    ion-label{
+      overflow: visible;
+    }
+  }
+
   ion-item.input-has-focus ion-input,
   ion-item.input-has-focus ion-input[required] {
     border: none;
@@ -58,6 +93,38 @@ signin {
 
   ion-input.ng-pristine {
     border: none;
+  }
+
+  .birth-item{
+    .item-inner{
+      flex-direction: column;
+    }
+  }
+
+  .birth-label{
+    font-size: 1.5rem!important;
+    margin: 0!important;
+    padding: 0!important;
+    margin-top: 5px!important;
+  }
+
+  .birth-inputs{
+    margin: 0!important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2rem!important;
+    width: 80%;
+  }
+
+  ion-grid{
+    ion-row{
+      padding-left: 6px;
+      ion-item{
+        padding-left: 0!important;
+      }
+    }
   }
 
   /* Remove the last border-bottom */
