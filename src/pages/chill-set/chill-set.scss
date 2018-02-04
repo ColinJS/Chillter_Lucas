@@ -1,16 +1,16 @@
 chill-set {
   font-family: SF_Regular;
   ion-header{
-    box-shadow: 0px 0px 1px 0px rgba(130,130,130,0.8);
-    border-radius: 0px 0px 16px 16px;
-    background: white;
+    
   }
   ion-navbar {
     min-height: 75px !important;
-    background: none;
 
     .toolbar-background{
-      background: none!important;
+      box-shadow: 0px 0px 1px 0px rgba(130,130,130,0.8);
+      border-radius: 0px 0px 16px 16px;
+      background: white;
+      height: 99%;
     }
 
     img {

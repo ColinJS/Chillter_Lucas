@@ -166,12 +166,11 @@ export class SignIn {
         'firstname': this.form.value.firstname,
         'lastname': this.form.value.lastname,
         'sex': this.form.value.sex,
-        'phonePrefix': this.form.value.phonePrefix,
-        'phone': this.form.value.phone,
+        'phone': this.form.value.phonePrefix+this.form.value.phone,
         'email': this.form.value.email,
         'language': this.languages.filter((value,index)=>{ if(value.title == this.form.value.language){return true} })[0].value, //France => fr, English => en ...
         'currency': this.form.value.currency,
-        'birth': this.form.value.birth.days.stringify()+'-'+this.form.value.birth.months.stringify()+'-'+this.form.value.birth.years.stringify(),
+        'birth': this.form.value.birth.days.toString()+'-'+this.form.value.birth.months.toString()+'-'+this.form.value.birth.years.toString(),
         'pass': this.form.value.passwords.password,
         'image': null
       };

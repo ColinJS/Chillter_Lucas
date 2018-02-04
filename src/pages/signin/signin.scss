@@ -1,5 +1,17 @@
 signin{
-  
+
+  ion-navbar{
+    padding-top: 0!important;
+    background: none;
+    height: 60px!important;
+    min-height: 60px!important;
+    ion-title{
+      padding-top: 0!important;
+      height: 100%!important;
+      min-height: 100%!important;
+    }
+  }
+
   font-family: SF_Regular;
   .toolbar-title-ios {
     font-size: 2.2rem;
@@ -12,13 +24,13 @@ signin{
   }
 
   .avatar img-picker-logo img {
-    background-size: 105px 105px;
+    background-size: 15vh 15vh;
     box-sizing: content-box;
     border: 2px solid $chillter-col;
     border-radius: 100%;
     display: inline-block;
-    height: 105px;
-    width: 105px;
+    height: 15vh;
+    width: 15vh;
     padding: 2px;
   }
 
@@ -50,7 +62,7 @@ signin{
 
   .scroll-content{
     height: calc(100% - 65px);
-    overflow: visible;
+    overflow: scroll;
   }
 
   ion-list{
@@ -119,12 +131,17 @@ signin{
   }
 
   ion-grid{
+    padding: 0!important;
     ion-row{
       padding-left: 6px;
       ion-item{
         padding-left: 0!important;
       }
     }
+  }
+
+  .select-ios{
+    padding: 0 8px 0 16px!important;
   }
 
   /* Remove the last border-bottom */
@@ -154,6 +171,28 @@ signin{
         top: 3px;
         position: relative;
       }
+    }
+  }
+
+  @media screen and (max-height: 660px) {
+    .birth-label{
+      font-size:1.3rem!important;
+    }
+    .birth-inputs{
+      font-size: 1.8rem!important;
+    }
+    .submit-button{
+      height: 3.5rem;
+    }
+    .item-ios{
+      font-size: 1.55rem!important;
+    }
+    .item-block{
+      min-height: 3rem!important;
+    }
+    .subtitle-avatar{
+      font-size: 1.5rem;
+      margin-bottom: 1px!important;
     }
   }
 }

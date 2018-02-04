@@ -1,5 +1,5 @@
-<ion-header no-border>
-  <ion-navbar>
+<ion-header>
+  <ion-navbar no-border>
     <ion-title>
       <img class="nav-title" src="assets/images/nav-chillers.svg" image-cache/>
     </ion-title>
@@ -9,14 +9,16 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-  <ion-segment mode="md" [(ngModel)]="chillersDisplay">
-    <ion-segment-button value="chillers">
-      {{'friend-list.chillter' | translate}}
-    </ion-segment-button>
-    <ion-segment-button value="contact">
-      {{'friend-list.contact' | translate}}
-    </ion-segment-button>
-  </ion-segment>
+  <ion-toolbar class="segment-toolbar">
+    <ion-segment mode="md" [(ngModel)]="chillersDisplay">
+      <ion-segment-button value="chillers">
+        {{'friend-list.chillter' | translate}}
+      </ion-segment-button>
+      <ion-segment-button value="contact">
+        {{'friend-list.contact' | translate}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="friend-list">

@@ -268,7 +268,7 @@ chill-detail {
     flex-direction: column;
     justify-content: space-around;
     padding: 0 16px 0;
-    height: calc(100vmax - 11.5rem - 40px);//Screen size without banner header and sending footer
+    height: calc(100% - 11.5rem - 40px);//Screen size without banner header and sending footer
     input {
       margin: auto!important;
       width: 93%;

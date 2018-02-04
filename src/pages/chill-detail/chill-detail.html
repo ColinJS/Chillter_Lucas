@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="invite" (swipe)="swipeEvent($event)">
+  <div id="invite" class="invite" (swipe)="swipeEvent($event)">
     <div class="invite-header">
       <div *ngIf="idProfile && chillCreatorId && idProfile == chillCreatorId" class="edit-icon" (tap)="editInfo(isEdit)">
         <img src="assets/images/edit.svg" *ngIf="!isEdit" image-cache/>

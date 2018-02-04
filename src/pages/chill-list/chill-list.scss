@@ -6,7 +6,8 @@ chill-list {
     height: 45px!important;
     padding-bottom: 0!important;
     .toolbar-background{
-      background: none!important;
+      border-radius: 0px 0px 16px 16px;
+      box-shadow: 0px 0px 3px 0px rgba(130,130,130,0.6);
     }
   }
 
@@ -29,9 +30,7 @@ chill-list {
 
   
   .tabbar-segment{
-    border-radius: 0px 0px 16px 16px;
-    box-shadow: 0px 0px 3px 0px rgba(130,130,130,0.6);
-    background: white!important;
+    
     .segment-button{
       text-transform: capitalize;
       max-width: 30vmin;

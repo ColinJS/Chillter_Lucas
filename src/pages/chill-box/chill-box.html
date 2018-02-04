@@ -19,9 +19,11 @@
     <div class="plus-button"><ion-icon name="add" (tap)="addChill()"></ion-icon></div>
     -->
   </ion-navbar>
-  <div class="search-evt">
-    <ion-searchbar class="search-evt" placeholder="{{ 'global.search' | translate }}" (ionInput)="inputChange($event)"></ion-searchbar>
-  </div>
+  <ion-toolbar>
+    <div class="search-evt">
+      <ion-searchbar class="search-evt" placeholder="{{ 'global.search' | translate }}" (ionInput)="inputChange($event)"></ion-searchbar>
+    </div>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="chill-box">

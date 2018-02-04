@@ -141,6 +141,7 @@ export class ChillDetail {
     private imgPickerService: ImgPickerService,
     private cache: CacheService
   ) {
+
     if (this.platform.is('ios')) {
       this.isIos = true;
     }
@@ -218,6 +219,7 @@ export class ChillDetail {
   ionViewDidEnter() {
     this.getUtils(this.eventId);
     this.getEvents();
+    document.getElementById("invite").style.height = document.getElementById("invite").offsetHeight.toString()+"px";
   }
 
   filterEvents() {

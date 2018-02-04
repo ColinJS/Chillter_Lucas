@@ -215,6 +215,10 @@ export class EditChills {
     
   }
 
+  ionViewDidEnter(){
+    document.getElementById("invite").style.height = document.getElementById("invite").offsetHeight.toString()+"px";
+  }
+
   getChill() {
     const chill = this.navParams.get("chill");
 

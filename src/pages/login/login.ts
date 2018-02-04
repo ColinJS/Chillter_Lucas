@@ -49,6 +49,11 @@ export class LogIn {
     });
   }
 
+  ionViewDidEnter(){
+    document.getElementById("login-logo").style.height = document.getElementById("login-logo").offsetHeight.toString()+"px";
+    document.getElementById("login-logo").style.width = document.getElementById("login-logo").offsetWidth.toString()+"px";
+  }
+
   showSignUp() {
     this.nav.push(SignIn, {}, { animate: true, direction: 'back' });
   }
