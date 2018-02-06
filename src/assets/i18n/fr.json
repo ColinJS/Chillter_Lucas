@@ -25,7 +25,7 @@
     "no-account": "Pas de compte ? "
   },
   "forgot-password": {
-    "title": "Mot de pass oublié",
+    "title": "Mot de passe oublié",
     "email-placeholder": "Email",
     "email-wrong": "Email valide nécéssaire",
     "confirm": "Confirmer",

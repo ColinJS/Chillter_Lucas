@@ -159,8 +159,8 @@ export class ChillBox {
 
     let call = this.api.getEvents(this.firstLoad).subscribe(
       data => {
-        call.unsubscribe();
         if (data) {
+          call.unsubscribe();
           let events = data.filter((d) => {
             let now = new Date();
             // Could be simplified later when all events will have coherent ending_date
@@ -232,16 +232,18 @@ export class ChillBox {
           this.noEventSoon = true;
           this.events = [];
         }
+        console.log("Ref:")
+        console.log(ref);
+        if (ref) {
+            ref.complete();
+          }
       },
       res => {
         if (res.status != 200) {
           console.log("Http request error :" + res.status);
-        }else{
-          if (ref) {
-            ref.complete();
-          }
         }
-      });
+        
+    });
   }
 
   cancelEvent(eventId: string) {
@@ -291,6 +293,7 @@ export class ChillBox {
   }
 
   doRefresh(refresher) {
+    console.log(refresher);
     this.getEvents(refresher);
   }
 
