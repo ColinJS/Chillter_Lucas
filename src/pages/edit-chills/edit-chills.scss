@@ -186,12 +186,15 @@ edit-chills {
     padding: 0 16px 0;
     height: calc(100vmax - 11.5rem - 40px);//Screen size without banner header and sending footer
     input {
+      margin: auto!important;
+      width: 93%;
       border: none;
       text-align: center;
       text-transform: capitalize;
     }
     
     h1,.h1 {
+      margin:0;
       font-size: 3.5rem;
       text-transform: capitalize;
     }
@@ -238,14 +241,17 @@ edit-chills {
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
+    align-items: center;
     padding: 0px 1vmax;
     box-shadow: 0px 3px 9px 0px rgba(50,50,50,0.4);
 
     .h1 {
+      margin: 0!important;
       font-family: SF_Regular;
     }
 
     .h2 {
+      margin: 0!important;
       font-size: 2rem;
       opacity: 0.6;
       overflow: hidden;
