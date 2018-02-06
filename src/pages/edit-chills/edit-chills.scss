@@ -202,7 +202,7 @@ edit-chills {
   }
 
   .invite-header {
-    flex: 0 0 14.6%;
+    flex: 0 0 13%;
     .invite-header-text{
       height: 100%;
       display: flex;
@@ -216,6 +216,7 @@ edit-chills {
 
     h1 {
       input {
+        padding: 0;
         position: relative;
         top: -1px;
       }
@@ -225,6 +226,7 @@ edit-chills {
       color: rgb(180, 180, 180);
       font-size: 1.8rem;
       font-family: SF_Light;
+      margin: 0;
     }
     .creator {
       color: gray;
@@ -247,11 +249,15 @@ edit-chills {
 
     .h1 {
       margin: 0!important;
+      padding: 0;
+      height: 50%;
       font-family: SF_Regular;
     }
 
     .h2 {
       margin: 0!important;
+      padding: 0;
+      height: 50%;
       font-size: 2rem;
       opacity: 0.6;
       overflow: hidden;
@@ -283,7 +289,7 @@ edit-chills {
   }
 
   .invite-time {
-    flex: 0 0 13.0%;
+    flex: 0 0 14.0%;
     border: 2px solid $chillter-col;
     border-radius: 2.7rem;
     font-size: 1.8rem;
@@ -368,7 +374,7 @@ edit-chills {
     height: 8%;
     img {
       margin: 0px 2vmin;
-      height:130%;
+      height:140%;
     }
 
   }
@@ -449,7 +455,7 @@ edit-chills {
     flex: 0 0 14.8%;
     margin: 0;
     padding: 3px 0px;
-    border-top: 2px solid $chillter-col;
+    border-top: 1px solid $chillter-col;
     font-size: 1.5rem;
     text-align: center;
     overflow: hidden;
