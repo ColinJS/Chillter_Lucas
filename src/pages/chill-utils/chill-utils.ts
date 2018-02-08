@@ -196,10 +196,10 @@ export class ChillUtils {
               "seats_left": data[c].seats - data[c].passengers.length
             };
 
-            obj.driver.picture == "" || !obj.driver.picture ? obj.driver.picture = "assets/images/default-profil.svg" : null;
+            obj.driver.picture == "" || !obj.driver.picture ? obj.driver.picture = "assets/images/default-profil-picture.svg" : null;
 
             for (let p in obj.passengers) {
-              obj.passengers[p].picture == "" || !obj.passengers[p].picture ? obj.passengers[p].picture = "assets/images/default-profil.svg" : null;
+              obj.passengers[p].picture == "" || !obj.passengers[p].picture ? obj.passengers[p].picture = "assets/images/default-profil-picture.svg" : null;
             }
 
             this.cars.push(obj);

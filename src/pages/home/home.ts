@@ -30,7 +30,7 @@ export class Home {
   deleteMode: boolean = false;
   shakingMode: boolean = false;
   chills_order: any[];
-  placeholderLogo: string = "assets/images/default-profil.svg";
+  placeholderLogo: string = "assets/images/default-profil-picture.svg";
   trashIconType: string = "ios-trash-outline";
   trashIconTypeOutline: string = "ios-trash-outline";
   trashIconTypeDone: string = "md-checkmark"
@@ -239,7 +239,7 @@ export class Home {
   }
 
   pressDistrib(clicker: any) {
-    //if (this.isTapping) { return false }
+    if (this.isTapping) { return false }
 
     if (clicker.name === "plus") {
       this.shakingMode = false;

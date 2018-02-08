@@ -17,7 +17,7 @@
         <div *ngSwitchCase="true">
           <ion-item class="my-message">
             <ion-avatar item-left>
-              <img src="{{ message.user.picture || 'assets/images/default-profil.svg' }}">
+              <img src="{{ message.user.picture || 'assets/images/default-profil-picture.svg' }}">
             </ion-avatar>
             <div class="message-content" item-left>
               <p class="chat-message primary">{{message.content}}</p>
@@ -32,7 +32,7 @@
               <p class="timestamp-right">{{message.creation_date | date: 'dd/MM/yyyy'}}</p>
             </div>
             <ion-avatar item-right>
-              <img src="{{ message.user.picture || 'assets/images/default-profil.svg' }}">
+              <img src="{{ message.user.picture || 'assets/images/default-profil-picture.svg' }}">
             </ion-avatar>
           </ion-item>
         </div>

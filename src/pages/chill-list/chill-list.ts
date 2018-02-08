@@ -24,7 +24,7 @@ import { TranslateService } from 'ng2-translate';
 export class ChillList {
   @ViewChild(Content) content: Content;
 
-  placeholderLogo: string = "assets/images/default-profil.svg";
+  placeholderLogo: string = "assets/images/default-profil-picture.svg";
   fakeArray4: any = new Array(6); // Used for content placeholder
   fakeArray5: any = new Array(8); // Used for content placeholder
   isLoadingCustoms: boolean = true;

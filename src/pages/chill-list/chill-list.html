@@ -66,7 +66,7 @@
             </ion-item>
             <ion-item-options side="right">
               <button ion-button (tap)="homeSwitcher(slidingChills, chill)" clear>
-                <ion-icon name="star" [isActive]="chill.homeState" ></ion-icon>
+                <ion-icon class="star-icon" name="star" [isActive]="chill.homeState" ></ion-icon>
               </button>
             </ion-item-options>
           </ion-item-sliding>
@@ -94,16 +94,16 @@
             <h2>{{ customChill.name }}</h2>
           </ion-item>
           <ion-item-options side="left">
-            <button ion-button (tap)="deleteCustomChill(ustomChill)" clear>
+            <button class="close-button" ion-button (tap)="deleteCustomChill(ustomChill)" >
               <ion-icon name="close"></ion-icon>
             </button>
           </ion-item-options>
           <ion-item-options side="right">
-            <button ion-button (tap)="homeSwitcher(slidingCustoms,customChill)" clear>
-              <ion-icon name="star" [isActive]="customChill.homeState"></ion-icon>
-            </button>
             <button ion-button (tap)="editCustomChill(customChill)" clear>
-              <ion-icon name="construct"></ion-icon>
+              <ion-icon class="create-icon" name="md-create"></ion-icon>
+            </button>
+            <button ion-button (tap)="homeSwitcher(slidingCustoms,customChill)" clear>
+              <ion-icon class="star-icon" name="star" [isActive]="customChill.homeState"></ion-icon>
             </button>
           </ion-item-options>
         </ion-item-sliding>

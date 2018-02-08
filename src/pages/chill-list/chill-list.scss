@@ -102,10 +102,29 @@ chill-list {
   }
 
   ion-item-options .button{
-    width: 10vmin!important;
+    width: 6vmin!important;
     box-sizing: initial!important;
+    &.close-button{
+      width: 5rem!important;
+      ion-icon{
+      font-size: 5rem!important;
+      text-shadow: 1px 1px 3px rgba(130, 130, 130, 0.4);
+      }
+    }
     ion-icon{
-      font-size: 3rem!important;
+      font-size: 3.5rem!important;
+      line-height: 2.5rem;
+      height: 3rem;
+      width: 3rem;
+      &.create-icon{
+        border: 2px solid $chillter-col;
+        font-size: 2rem!important;
+        border-radius: 50%;
+        box-shadow: 1px 1px 3px 0px rgba(130,130,130,0.4);
+      }
+      &.star-icon{
+        text-shadow: 1px 1px 3px rgba(130, 130, 130, 0.4);
+      }
     }
   }
   ion-item{
@@ -134,8 +153,6 @@ chill-list {
     border-radius: 100%;
     min-width: unset;
     min-height: unset;
-    width: 53px;
-    height: 53px;
     img {
       padding: 1px;
     }

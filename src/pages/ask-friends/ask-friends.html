@@ -22,7 +22,7 @@
     <div *ngSwitchCase="'add'">
       <ion-list>
         <ion-item *ngFor="let friend of viewAddGuest" >
-          <ion-avatar class="orange-border" item-left><img src="{{friend.picture || 'assets/images/default-profil.svg'}}" image-cache/></ion-avatar>
+          <ion-avatar class="orange-border" item-left><img src="{{friend.picture || 'assets/images/default-profil-picture.svg'}}" image-cache/></ion-avatar>
           <ion-label>{{friend.firstname}} <div class="in-bold">{{friend.lastname}}</div></ion-label>
           <ion-checkbox  (ionChange)="addToArray(friend, $event)" item-right></ion-checkbox>
         </ion-item>
@@ -33,7 +33,7 @@
       <ion-list>
         <ion-item-sliding *ngFor="let friend of viewViewGuest" #slidingGuest>
           <ion-item>
-            <ion-avatar class="orange-border" item-left><img src="{{friend.picture || 'assets/images/default-profil.svg'}}" image-cache/></ion-avatar>
+            <ion-avatar class="orange-border" item-left><img src="{{friend.picture || 'assets/imagesdefault-profil-picture.svg'}}" image-cache/></ion-avatar>
             <ion-label>{{friend.firstname}} <div class="in-bold">{{friend.lastname}}</div></ion-label>
           </ion-item>
           <ion-item-options side="left" *ngIf="editor">

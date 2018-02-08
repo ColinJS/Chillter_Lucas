@@ -153,8 +153,8 @@
         <div class="invite-friends">
           <img src="assets/images/chill-plus.svg"  (tap)="showFriends()" image-cache/>
           <div *ngFor="let friend of shownFriends" class="friend-list-img">
-            <img class="friend-picture" *ngIf="idProfile == friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil.svg'" image-cache/>
-            <img class="friend-picture" *ngIf="idProfile != friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil.svg'" (tap)="showChillerDetails(friend.id)" image-cache/>
+            <img class="friend-picture" *ngIf="idProfile == friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil-picture.svg'" image-cache/>
+            <img class="friend-picture" *ngIf="idProfile != friend.id" [src]="friend.picture ? friend.picture : 'assets/images/default-profil-picture.svg'" (tap)="showChillerDetails(friend.id)" image-cache/>
             <div class="status-icon" style.background-color="{{friend.statut | statusImg:[true]}}"></div>
             <div *ngIf="isEdit" class="delete-friend" (tap)="deleteFriend(friend.id)" >
               <img src="assets/images/close-outline.svg" image-cache *ngIf="idProfile == chillCreatorId && friend.id != chillCreatorId"/>

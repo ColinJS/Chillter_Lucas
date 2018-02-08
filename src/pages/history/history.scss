@@ -17,7 +17,6 @@ history {
   }
 
   .details-events {
-    height: calc(70vmax - 115px);
 
     /* Removing the bottom border of the searchbar */
     .searchbar-ios {
@@ -54,11 +53,15 @@ history {
 
     ion-scroll {
       display: flex;
-      height: calc(70vmax - 10px);
+      height: calc(100vmax - 150px);
 
       .global-infos {
         display: inline-block;
         float: left;
+        width: 57%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         h2 {
           font-size: 2rem;

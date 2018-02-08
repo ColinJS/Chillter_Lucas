@@ -32,6 +32,14 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <div class="no-events" *ngIf="noEventSoon == true">
+      {{ 'chill-box.no-events' | translate }}
+  </div>
+
+  <div class="no-events" *ngIf="noEvent == true">
+    {{ 'chill-box.no-events-all' | translate }}
+  </div>
+
   <ion-card *ngFor="let event of viewEvents" class="card-round" (tap)="showDetailEvent(event.info.id)">
     <ion-item>
       <ion-avatar item-left>
@@ -41,7 +49,7 @@
               <img [src]="event.info.logo ? event.info.logo : event.info.chill.logo" class="logo-chill" image-cache>
             </div>
             <div *ngIf="!event.info.logo && !event.info.chill.logo">
-              <img src="assets/images/default-profil.svg" class="logo-chill">
+              <img src="assets/images/default-profil-picture.svg" class="logo-chill">
             </div>
           </div>
           <div class="participation-status" style.background-color="{{event.participation_status | statusImg:[true]}}"></div>
@@ -69,13 +77,7 @@
   </ion-card>
   <!--
   <ion-list>
-    <div class="no-events" *ngIf="noEventSoon == true">
-      {{ 'chill-box.no-events' | translate }}
-    </div>
-
-    <div class="no-events" *ngIf="noEvent == true">
-      {{ 'chill-box.no-events-all' | translate }}
-    </div>
+    
 
     <ion-item-sliding *ngFor="let event of viewEvents">
       <ion-item (tap)="showDetailEvent(event.info.id)">
@@ -84,7 +86,7 @@
             <img [src]="event.info.logo ? event.info.logo : event.info.chill.logo" class="logo-chill" image-cache>
           </div>
           <div *ngIf="!event.info.logo && !event.info.chill.logo">
-            <img src="assets/images/default-profil.svg" class="logo-chill">
+            <img src="assets/images/default-profil-picture.svg" class="logo-chill">
           </div>
         </ion-avatar>
         <div class="global-infos">

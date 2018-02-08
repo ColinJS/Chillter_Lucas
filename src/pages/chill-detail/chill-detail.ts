@@ -299,9 +299,9 @@ export class ChillDetail {
           this.allFriends = data.chillers;
           if (data.logo) {
             data.logo ? this.logo = data.logo : null;
-            !data.logo && !data.chill.logo ? this.logo = "assets/images/default-profil.svg" : null;
+            !data.logo && !data.chill.logo ? this.logo = "assets/images/default-profil-picture.svg" : null;
           } else {
-            !data.chill.logo && !data.logo ? this.logo = "assets/images/default-profil.svg" : null;
+            !data.chill.logo && !data.logo ? this.logo = "assets/images/default-profil-picture.svg" : null;
             data.chill.logo && !data.logo ? this.logo = data.chill.logo : null;
           }
           this.banner = data.banner ? data.banner : ("assets/images/banner-" + data.category.id + ".jpg");
@@ -499,7 +499,7 @@ export class ChillDetail {
         this.lastName = f.lastname
       }
       if (id != f.id) {
-        f.picture ? null : f.picture = "assets/images/default-profil.svg";
+        f.picture ? null : f.picture = "assets/images/default-profil-picture.svg";
         f.statut ? null : f.statut = "3"
         this.friends.push(f)
       }
@@ -573,7 +573,7 @@ export class ChillDetail {
     };
 
     if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() || this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()) {
-      if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()  && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
+      if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()  && this.imgPickerService.getFirstImgSrcLogo() != "default-profil-picture.svg") {
         bodyImgLogo.image = this.imgPickerService.getImgResultLogo();
         this.cache.clearCache('event_' + this.eventId);
         this.cache.clearCache('events');

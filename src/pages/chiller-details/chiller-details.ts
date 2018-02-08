@@ -25,7 +25,7 @@ export class ChillerDetails {
   info: any;
   firstName: string = "";
   lastName: string = "";
-  picture: string = "assets/images/default-profil.svg"
+  picture: string = "assets/images/default-profil-picture.svg"
   phone: string = "";
   email: string = "";
   dayNow: number = 0;
@@ -62,7 +62,7 @@ export class ChillerDetails {
       this.firstName = this.navParams.get("firstname");
       this.phone = this.navParams.get("phone");
       this.have_chillter = false;
-      this.picture = "assets/images/default-profil.svg";
+      this.picture = "assets/images/default-profil-picture.svg";
       if (this.plt.is('ios')) {
         this.smsMsg = "&body=" + this.transaltions['chiller-details.sms-content-invite'];
       }
@@ -86,7 +86,7 @@ export class ChillerDetails {
           this.phone = data.phone;
           this.getEventsList(friendId);
         }
-        !this.picture ? this.picture = "assets/images/default-profil.svg" : null;
+        !this.picture ? this.picture = "assets/images/default-profil-picture.svg" : null;
       },
       res => {
         if (res.status != 200) {

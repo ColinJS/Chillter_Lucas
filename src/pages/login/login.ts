@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import {
   NavController,
   ViewController,
   AlertController,
-  ToastController
+  ToastController,
+  Content
 } from 'ionic-angular';
 import { ApiService } from '../../providers/api';
 import { TabsPage } from '../tabs/tabs';
@@ -16,6 +17,7 @@ import {
 } from '@angular/forms';
 import { TranslateService } from 'ng2-translate';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
+import { Keyboard } from 'ionic-native';
 
 @Component({
   selector: 'login',
@@ -23,6 +25,9 @@ import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 })
 export class LogIn {
   private transaltions: any;
+  private focusPosition: number;
+  private keyboardObservable: any;
+  @ViewChild(Content) content: Content;
 
   form: FormGroup;
   submitted: boolean = false;
@@ -47,11 +52,40 @@ export class LogIn {
       email: ['', Validators.compose([Validators.required])],
       pass: ['', Validators.compose([Validators.required])]
     });
+
+    
+  }
+
+  focusKeyboard(){
+
+    let activeElem = document.activeElement.parentElement
+    let yPosition = 0;
+    let el = activeElem;
+
+    while(el){
+      yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
+      if(el.tagName != 'ION-CONTENT'){
+        el = el.parentElement;
+      }else{
+        el = null
+      }
+    }
+
+    this.focusPosition = (yPosition/2)-100;
+    console.log(this.focusPosition)
+    this.content.scrollTo(0,this.focusPosition,200);
   }
 
   ionViewDidEnter(){
+    this.keyboardObservable = Keyboard.onKeyboardShow().subscribe(()=>{
+      this.focusKeyboard();
+    });
     document.getElementById("login-logo").style.height = document.getElementById("login-logo").offsetHeight.toString()+"px";
     document.getElementById("login-logo").style.width = document.getElementById("login-logo").offsetWidth.toString()+"px";
+  }
+
+  ionViewDidLeave(){
+    this.keyboardObservable.unsubscribe();
   }
 
   showSignUp() {

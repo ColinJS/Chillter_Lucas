@@ -6,7 +6,8 @@ import {
   NavParams,
   ModalController,
   ToastController,
-  AlertController
+  AlertController,
+  Content
 } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';
 import { TranslateService } from 'ng2-translate';
@@ -29,6 +30,10 @@ export class EditChills {
   private custom: boolean = false;
   editCustom: boolean = false;
   private transaltions: any;
+  private focusPosition: number;
+
+  @ViewChild(Content) content: Content;
+  private keyboardObservable: any;
 
   // Handle swipe
   transformLeftPan: string;
@@ -161,6 +166,41 @@ export class EditChills {
       this.friends.push(myFriends);
       this.sliceFriends();
     }
+
+    
+
+  }
+
+  ionViewDidEnter(){
+    document.getElementById("invite").style.height = document.getElementById("invite").offsetHeight.toString()+"px";
+    this.keyboardObservable = Keyboard.onKeyboardShow().subscribe(()=>{
+      this.focusKeyboard();
+    });
+  }
+
+  ionViewDidLeave(){
+    this.keyboardObservable.unsubscribe();
+  }
+
+    focusKeyboard(){
+
+    let activeElem = document.activeElement.parentElement
+    let yPosition = 0;
+    let el = activeElem;
+
+    while(el){
+      yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
+      if(el.tagName != 'ION-CONTENT'){
+        el = el.parentElement;
+      }else{
+        el = null
+      }
+    }
+
+    this.focusPosition = (yPosition);
+    console.log(this.focusPosition)
+    this.content.scrollToBottom(200);
+    window.scrollTo(0,this.focusPosition);
   }
 
   formatDate(startDate: boolean = true) {
@@ -215,9 +255,7 @@ export class EditChills {
     
   }
 
-  ionViewDidEnter(){
-    document.getElementById("invite").style.height = document.getElementById("invite").offsetHeight.toString()+"px";
-  }
+
 
   getChill() {
     const chill = this.navParams.get("chill");
@@ -249,7 +287,7 @@ export class EditChills {
             this.chillId = data.id;
             this.parentChill = data;
             this.name = data.name;
-            !data.logo ? data.logo = "assets/images/default-profil.svg" : null;
+            !data.logo ? data.logo = "assets/images/default-profil-picture.svg" : null;
             this.logo = data.logo;
             data.banner ? this.banner = data.banner : this.banner = "assets/images/blank.png";
             this.geo = data.place;
@@ -258,7 +296,7 @@ export class EditChills {
             data.comment != "" ? this.comment = data.comment : this.comment = "";
             if (data.participants) {
               for (let p of data.participants) {
-                !p.picture ? p.picture = "assets/images/default-profil.svg" : null;
+                !p.picture ? p.picture = "assets/images/default-profil-picture.svg" : null;
               }
               this.friends = data.participants;
               this.sliceFriends();
@@ -276,7 +314,7 @@ export class EditChills {
       this.api.getMyProfile().subscribe(data => {
         this.parentChill = null;
         this.name = '';
-        !data.picture ? data.picture = "assets/images/default-profil.svg" : null;
+        !data.picture ? data.picture = "assets/images/default-profil-picture.svg" : null;
         this.logo = data.picture;
         this.banner = null;
         this.color = '#000';
@@ -293,7 +331,7 @@ export class EditChills {
           this.creator = data;
           this.firstName = data.firstname;
           this.lastName = data.lastname;
-          !this.creator.picture ? this.creator.picture = "assets/images/default-profil.svg" : null;
+          !this.creator.picture ? this.creator.picture = "assets/images/default-profil-picture.svg" : null;
         }
       },
       res => {
@@ -431,7 +469,7 @@ export class EditChills {
 
       this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner()
 
-      if (this.imgPickerService.getFirstImgSrcLogo == this.imgPickerService.getFirstImgSrcLogo && this.logo != "assets/images/default-profil.svg") {
+      if (this.imgPickerService.getFirstImgSrcLogo == this.imgPickerService.getFirstImgSrcLogo && this.logo != "assets/images/default-profil-picture.svg") {
         body.take_logo = true;
       }
 
@@ -494,7 +532,7 @@ export class EditChills {
           }
 
           if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() || this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()) {
-            if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo() && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
+            if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo() && this.imgPickerService.getFirstImgSrcLogo() != "default-profil-picture.svg") {
               bodyImgLogo.image = this.imgPickerService.getImgResultLogo();
               this.api.sendCustomChillLogo(customChillId.id, bodyImgLogo).subscribe();
             }
@@ -560,7 +598,7 @@ export class EditChills {
         !body.event.category ? body.event.category = 2 : null;
         !body.event.banner ? body.event.banner = null : null;
 
-        if (this.imgPickerService.getFirstImgSrcLogo() != this.imgPickerService.getImgResultLogo()  && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
+        if (this.imgPickerService.getFirstImgSrcLogo() != this.imgPickerService.getImgResultLogo()  && this.imgPickerService.getFirstImgSrcLogo() != "default-profil-picture.svg") {
           body.event.chill.logo_changed = true;
         } else {
           body.event.chill.logo_changed = false;
@@ -572,7 +610,7 @@ export class EditChills {
           body.event.chill.banner_changed = false;
         }
 
-        if (this.imgPickerService.getFirstImgSrcLogo() == "default-profil.svg") {
+        if (this.imgPickerService.getFirstImgSrcLogo() == "default-profil-picture.svg") {
           body.event.chill.logo_changed = null;
         }
 
@@ -629,7 +667,7 @@ export class EditChills {
 
       this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner()
 
-      if (this.imgPickerService.getFirstImgSrcLogo == this.imgPickerService.getFirstImgSrcLogo && this.logo != "assets/images/default-profil.svg") {
+      if (this.imgPickerService.getFirstImgSrcLogo == this.imgPickerService.getFirstImgSrcLogo && this.logo != "assets/images/default-profil-picture.svg") {
         body.take_logo = true;
       }
 
@@ -691,7 +729,7 @@ export class EditChills {
           }
 
           if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() || this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()) {
-            if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo() && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
+            if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo() && this.imgPickerService.getFirstImgSrcLogo() != "default-profil-picture.svgg") {
               bodyImg.image = this.imgPickerService.getImgResultLogo();
               this.api.sendCustomChillLogo(customId.id, bodyImg).subscribe();
             }
@@ -715,7 +753,7 @@ export class EditChills {
     if (this.chillType == "chill") {
       if (this.imgPickerService.getImgResultBanner() != this.imgPickerService.getFirstImgSrcBanner() || this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()) {
         
-        if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()  && this.imgPickerService.getFirstImgSrcLogo() != "default-profil.svg") {
+        if (this.imgPickerService.getImgResultLogo() != this.imgPickerService.getFirstImgSrcLogo()  && this.imgPickerService.getFirstImgSrcLogo() != "default-profil-picture.svg") {
           bodyLogo.image = this.imgPickerService.getImgResultLogo();
           this.api.sendEventLogo(eventId, bodyLogo).subscribe();
         }
@@ -816,7 +854,7 @@ export class EditChills {
     modal.onDidDismiss((data) => {
       if (data) {
         for (let d in data) {
-          !data[d].picture ? data[d].picture = "assets/images/default-profil.svg" : null;
+          !data[d].picture ? data[d].picture = "assets/images/default-profil-picture.svg" : null;
           this.friends.push(data[d]);
         }
 

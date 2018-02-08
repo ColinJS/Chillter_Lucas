@@ -114,14 +114,8 @@ export class FriendList {
     this.getSentInvitation(ref);
 
     if (this.contactPermState) {
-      this.phoneContacts = [];
-      this.phoneContactsUnfilter = [];
-      this.contacts.resetAll();
-      setTimeout(() => {
-        this.notif.publish("notif:update");
-        this.getCacheFriends();
-      }, 3000)
-      
+      this.notif.publish("notif:update");
+      this.getCacheFriends();
       !(this.iconSun != this.iconSunFill) ? this.iconSun = this.iconSunOutline : null;
     }
 
@@ -215,14 +209,18 @@ export class FriendList {
   }
 
   getCacheFriends() {
+
+    let increment = 0
+
     let call = this.cache.getCache('CONTACTS').subscribe(
       data => {
         if(data){
+            increment ++
+            if(increment >= 5){call.unsubscribe();} // disable the observable after a certain amount of data returned
             data.length == 0 ? this.noContacts = true : this.noContacts = false;
             if (data != undefined) {
               console.log("Contacts")
               console.log(data);
-              call.unsubscribe();
               this.noContacts = false;
               if(this.listsAreDifferent(data,this.phoneContacts)){
                 this.phoneContacts = data;
