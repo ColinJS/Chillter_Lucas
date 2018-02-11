@@ -154,7 +154,7 @@ chiller-details {
 
     .details-events {
 
-      height: calc(70vmax - 115px); // Removing the bottom of the searchbar
+      height: calc(100vmax - 75px - 11vmax - 22vw - 41px); // Removing the bottom of the searchbar
       overflow: visible;
 
       .searchbar-ios {
@@ -195,7 +195,7 @@ chiller-details {
       ion-scroll {
 
         display: flex;
-        height: calc(70vmax - 90px);
+        height: calc(100vmax - 75px - 11vmax - 22vw - 41px);
         overflow: visible;
 
         .chiller-detail-list-header{

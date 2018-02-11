@@ -50,10 +50,8 @@
           <ion-item class="phone">
             <ion-select class="phone-prefix" formControlName="phonePrefix">
               <ion-option *ngFor="let prefix of prefixs" value="{{prefix.dial_code}}">
-                {{prefix.name}} {{prefix.dial_code}}
+                {{prefix.dial_code}} {{prefix.name}}
               </ion-option>
-              <!--<ion-option value="fr">+33</ion-option>
-              <ion-option value="us">+1</ion-option>-->
             </ion-select>
             <ion-input class="phone-value" placeholder="{{ 'signup.phone' | translate }}" type="tel" formControlName="phone"></ion-input>
           </ion-item>

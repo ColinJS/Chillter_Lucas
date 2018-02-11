@@ -18,7 +18,7 @@
           <div class="{{s.id}}" id=" {{s.type}}">
             <div [ngClass]="shakingMode ? 'shaking-chill' : null" id="{{s.id}}">
               <div *ngIf="!s.loadingState" class="shadowed rounded-chill-image {{ 'home-image-' + s.name }}">
-                <img src="{{s.logo ? s.logo : placeholderLogo }}" width="100%" (tap)="tapDistrib(s)" (press)="pressDistrib(s)"/>
+                <img src="{{s.logo ? s.logo : placeholderLogo }}" width="100%" (press)="pressDistrib(s)" (tap)="tapDistrib(s)"/>
               </div>
               <div *ngIf="!s.loadingState">{{ s.name }}</div>
               <div class="delete-icon" *ngIf="!s.loadingState && deleteMode" (tap)="deleteChill(s)">
