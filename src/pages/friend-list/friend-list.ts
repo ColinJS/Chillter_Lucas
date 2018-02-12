@@ -81,6 +81,11 @@ export class FriendList {
         if(data){
           this.contactPermState = data;
           call.unsubscribe();
+          if (this.contactPermState) {
+            this.notif.publish("notif:update");
+            this.getCacheFriends();
+            !(this.iconSun != this.iconSunFill) ? this.iconSun = this.iconSunOutline : null;
+          }
         }
     });
 

@@ -57,23 +57,7 @@ export class LogIn {
   }
 
   focusKeyboard(){
-
-    let activeElem = document.activeElement.parentElement
-    let yPosition = 0;
-    let el = activeElem;
-
-    while(el){
-      yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
-      if(el.tagName != 'ION-CONTENT'){
-        el = el.parentElement;
-      }else{
-        el = null
-      }
-    }
-
-    this.focusPosition = (yPosition/2)-100;
-    console.log(this.focusPosition)
-    this.content.scrollTo(0,this.focusPosition,200);
+    this.content.scrollTo(0,(this.content.scrollHeight/4),200);
   }
 
   ionViewDidEnter(){
