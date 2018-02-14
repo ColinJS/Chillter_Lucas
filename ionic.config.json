@@ -13,6 +13,10 @@
     {
       "path": "/api",
       "proxyUrl": "http://chillter"
+    },
+    {
+      "path": "/api",
+      "proxyUrl": "http://93.90.204.215"
     }
   ],
   "integrations": {

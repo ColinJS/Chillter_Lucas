@@ -6,11 +6,12 @@ export class ConfigService {
   devMode: boolean = false;
   localMode: boolean = true;
   ourServerUrl: string = 'http://www.chillter.fr';
+  newServerUrl: string = 'http://93.90.204.215';
   localUrl: string = 'http://chillter';
   masterUrl: string = 'http://chillter-app.publish-it.fr';
   constructor() {
     if (isDevMode()) { this.devMode = true; }
-    this.masterUrl = this.ourServerUrl;
+    this.masterUrl = this.newServerUrl;
   }
 
   getBaseUrl(): string {
@@ -27,7 +28,7 @@ export class ConfigService {
   }
 
   getApiUrl(): string {
-    let url = this.getBaseUrl() + '/api';
+    let url = this.getBaseUrl() + '/api/index.php';
 
     return this.devMode ? url : url + '/v0.1';
   }
