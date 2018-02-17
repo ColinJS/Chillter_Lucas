@@ -194,4 +194,23 @@ chill-list {
   .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-title{
 
   }
+
+  @media screen and (max-width: 325px){
+    ion-label{
+      .create-customized{
+        font-size: 2.2rem!important;
+      }
+    }
+  }
+
+  @media screen and (max-width: 260px){
+    ion-label{
+      .create-customized{
+        font-size: 1.8rem!important;
+      }
+    }
+  }
+
 }
+
+  

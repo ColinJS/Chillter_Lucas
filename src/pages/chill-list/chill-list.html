@@ -55,14 +55,14 @@
       <div *ngIf="chills.length">
         <ion-list *ngFor="let cat of chills" padding>
           <ion-list-header style.border-bottom="2px solid #{{cat.color}}">
-            <span style.color="#{{cat.color}}">{{cat.name}}</span>
+            <span style.color="#{{cat.color}}">{{this.transaltions['category'][cat.name]}}</span>
           </ion-list-header>
           <ion-item-sliding *ngFor="let chill of cat.chills; trackBy: trackByChills" #slidingChills>
             <ion-item (tap)="close(chill)">
               <ion-avatar item-left>
                 <img src="{{ baseUrl + '/api/images/chills/' + chill.info.logo + '.svg' }}" image-cache>
               </ion-avatar>
-              <h2>{{chill.info.name}}</h2>
+              <h2>{{this.transaltions['chills'][chill.info.name]}}</h2>
             </ion-item>
             <ion-item-options side="right">
               <button ion-button (tap)="homeSwitcher(slidingChills, chill)" clear>

@@ -156,11 +156,11 @@ export class ChillUtils {
       'place-ar-five',
       'place-ar-six'];
 
-      console.log(this.utilsObj);
+      //console.log(this.utilsObj);
   }
 
   close(){
-    console.log("Dismiss");
+    //console.log("Dismiss");
     this.viewCtrl.dismiss(this.utilsObj);
   }
 
@@ -247,7 +247,7 @@ export class ChillUtils {
     });
 
     this.bringingList = this.list.filter((value: any, index: number)=>{
-      console.log(value);
+      //console.log(value);
       if(value.assigned_to.id == null){
         return false;
       }else{
@@ -705,7 +705,7 @@ export class ChillUtils {
 
       let baseExps: any = this.expsList;
 
-      console.log(this.expsList);
+      //console.log(this.expsList);
 
       let tmpList: any[] = [];
       let pay: any[] = [];
@@ -839,7 +839,7 @@ export class ChillUtils {
   }
 
   promptManager(){
-    console.log("prompt manager");
+    //console.log("prompt manager");
     if(this.chillUtilsDisplay == 'transports'){
       this.addCarPrompt();
     }else if(this.chillUtilsDisplay == 'list'){

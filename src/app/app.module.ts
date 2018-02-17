@@ -58,7 +58,7 @@ import { CacheService } from '../providers/cache';
 import { ContactsService } from '../providers/contacts';
 import { SyncService } from '../providers/sync';
 import { WeatherService } from '../providers/weather';
-
+import { GooglePlacesService } from '../providers/google-places'
 import { ImageCacheDirective } from '../directives/image';
 
 import { CustomModalEnterTransition } from '../transitions/custom-modal-enter';
@@ -145,6 +145,7 @@ import {
   ],
   providers: [
     Network,
+    GooglePlacesService,
     ApiService,
     ConfigService,
     ImgPickerService,

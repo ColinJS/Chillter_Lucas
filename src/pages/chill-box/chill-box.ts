@@ -91,7 +91,7 @@ export class ChillBox {
       }
     });
 
-    console.log(this.viewEvents);
+    //console.log(this.viewEvents);
 
   }
 
@@ -204,7 +204,7 @@ export class ChillBox {
 
           let willChange: boolean = events.length != this.events.length ? true : false;
 
-          console.log(willChange)
+          //console.log(willChange)
 
           if(!willChange){
             compareEventLoop:{
@@ -232,8 +232,8 @@ export class ChillBox {
           this.noEventSoon = true;
           this.events = [];
         }
-        console.log("Ref:")
-        console.log(ref);
+        //console.log("Ref:")
+        //console.log(ref);
         if (ref) {
             ref.complete();
           }
@@ -293,7 +293,7 @@ export class ChillBox {
   }
 
   doRefresh(refresher) {
-    console.log(refresher);
+    //console.log(refresher);
     this.getEvents(refresher);
   }
 

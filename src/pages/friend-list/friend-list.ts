@@ -224,15 +224,15 @@ export class FriendList {
             if(increment >= 5){call.unsubscribe();} // disable the observable after a certain amount of data returned
             data.length == 0 ? this.noContacts = true : this.noContacts = false;
             if (data != undefined) {
-              console.log("Contacts")
-              console.log(data);
+              //console.log("Contacts")
+              //console.log(data);
               this.noContacts = false;
               if(this.listsAreDifferent(data,this.phoneContacts)){
                 this.phoneContacts = data;
                 this.unsortPhoneContacts = this.phoneContacts;
               }
-              console.log("Contacts")
-              console.log(this.phoneContacts);
+              //console.log("Contacts")
+              //console.log(this.phoneContacts);
           }else{
             this.noContacts = true;
           }

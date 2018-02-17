@@ -20,7 +20,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { ChillDetail } from '../pages/chill-detail/chill-detail';
 import { ChillChatPage } from '../pages/chill-chat/chill-chat';
 import { ChillUtils } from '../pages/chill-utils/chill-utils';
-
+import { GooglePlacesService } from '../providers/google-places';
 @Component({
   templateUrl: 'app.html',
 })
@@ -36,7 +36,8 @@ export class ChillterApp {
     private api: ApiService,
     private oneSignal: OneSignal,
     private app: App,
-    private storage: StorageService
+    private storage: StorageService,
+    private googleService: GooglePlacesService
   ) {
     translate.setDefaultLang('fr');
     storage.getValue('lang_used').subscribe(

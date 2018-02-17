@@ -23,8 +23,7 @@ import { Calendar } from 'ionic-native';
 import { ChillChatPage } from '../chill-chat/chill-chat';
 import { MoreFriendsPage } from '../more-friends/more-friends';
 import { CacheService } from '../../providers/cache';
-
-// declare var google: any;
+import { GooglePlacesService } from '../../providers/google-places';
 
 @Component({
   selector: 'chill-detail',
@@ -139,7 +138,8 @@ export class ChillDetail {
     public sanitizer: DomSanitizer,
     private notif: Events,
     private imgPickerService: ImgPickerService,
-    private cache: CacheService
+    private cache: CacheService,
+    private googleService: GooglePlacesService
   ) {
 
     if (this.platform.is('ios')) {
@@ -289,7 +289,6 @@ export class ChillDetail {
     this.api.getEvent(this.eventId).subscribe(
       data => {
         if (data) {
-          console.log(data);
           this.chillCreatorId = data.chillerid;
           this.event = data;
           this.id = data.id;
@@ -310,7 +309,6 @@ export class ChillDetail {
           this.eventDate = new Date(data.date);
           this.endingDate = data.ending_date ? new Date(data.ending_date) : null ;
           this.haveEndingDate = !(this.endingDate == null || this.endingDate <= this.eventDate);
-          console.log(this.haveEndingDate);
           this.formatDate();
           this.getNames();
           this.color = data.color;
@@ -454,7 +452,7 @@ export class ChillDetail {
             }
 
           } else {
-            console.log("Weather API error check key in providers/config.ts getApiWeatherUrl()");
+            //console.log("Weather API error check key in providers/config.ts getApiWeatherUrl()");
             this.getSoonDate();
             return;
           }
@@ -706,36 +704,11 @@ export class ChillDetail {
     )
   }
 
-  // Autocomplete address
-  ngOnInit() {
-    // this.acService = new google.maps.places.AutocompleteService();
-    this.autocompleteAddress = [];
-  }
-
-
   // On each input change, get geocode, only if evt.length is >= 3
   autoAddress(evt) {
-    if (evt == '') {
-      this.autocompleteAddress = [];
-      return;
-    }
-
-    let self = this;
-    let config = {
-      types: ['geocode'],
-      input: evt
-    }
-
-    if (evt.length >= 3) {
-      this.acService.getPlacePredictions(config, function (predictions, status) {
-        self.autocompleteAddress = [];
-        if (predictions != null) {
-          predictions.forEach(function (prediction) {
-            self.autocompleteAddress.push(prediction);
-          });
-        }
-      });
-    }
+    this.googleService.getPrediction(evt).then((results)=>{
+      this.autocompleteAddress = results;
+    })
   }
 
   // When choosing an address from autocomplete, set it in the input

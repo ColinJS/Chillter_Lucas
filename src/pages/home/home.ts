@@ -152,8 +152,8 @@ export class Home {
       this.idList = idList;
     }
 
-    console.log(home);
-    console.log(slides);
+    //console.log(home);
+    //console.log(slides);
 
   }
 

@@ -11,7 +11,7 @@ export class ConfigService {
   masterUrl: string = 'http://chillter-app.publish-it.fr';
   constructor() {
     if (isDevMode()) { this.devMode = true; }
-    this.masterUrl = this.newServerUrl;
+    this.masterUrl = this.ourServerUrl;
   }
 
   getBaseUrl(): string {
@@ -28,7 +28,7 @@ export class ConfigService {
   }
 
   getApiUrl(): string {
-    let url = this.getBaseUrl() + '/api/index.php';
+    let url = this.getBaseUrl() + '/api';
 
     return this.devMode ? url : url + '/v0.1';
   }

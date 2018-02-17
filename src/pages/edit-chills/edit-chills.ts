@@ -19,8 +19,8 @@ import { AskFriends } from '../ask-friends/ask-friends';
 import { ChillUtils } from "../chill-utils/chill-utils";
 import { MoreFriendsPage } from '../more-friends/more-friends';
 import { StorageService } from '../../providers/storage';
+import { GooglePlacesService } from '../../providers/google-places';
 
-declare var google: any;
 
 @Component({
   selector: 'edit-chills',
@@ -99,7 +99,7 @@ export class EditChills {
   swipeToastDone: boolean = false;
 
   // Autocomplete address
-  autocompleteAddress: any;
+  autocompleteAddress: any = '';
   acService: any;
 
   pictChange: boolean = false;
@@ -118,7 +118,8 @@ export class EditChills {
     private sync: SyncService,
     private app: App,
     private storage: StorageService,
-    private imgPickerService: ImgPickerService
+    private imgPickerService: ImgPickerService,
+    private googleService: GooglePlacesService
   ) {
     translate.get(['chill-detail.day-sun',
       'chill-detail.day-mon',
@@ -173,34 +174,6 @@ export class EditChills {
 
   ionViewDidEnter(){
     document.getElementById("invite").style.height = document.getElementById("invite").offsetHeight.toString()+"px";
-    this.keyboardObservable = Keyboard.onKeyboardShow().subscribe(()=>{
-      this.focusKeyboard();
-    });
-  }
-
-  ionViewDidLeave(){
-    this.keyboardObservable.unsubscribe();
-  }
-
-    focusKeyboard(){
-
-    let activeElem = document.activeElement.parentElement
-    let yPosition = 0;
-    let el = activeElem;
-
-    while(el){
-      yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
-      if(el.tagName != 'ION-CONTENT'){
-        el = el.parentElement;
-      }else{
-        el = null
-      }
-    }
-
-    this.focusPosition = (yPosition);
-    console.log(this.focusPosition)
-    this.content.scrollToBottom(200);
-    window.scrollTo(0,this.focusPosition);
   }
 
   formatDate(startDate: boolean = true) {
@@ -939,55 +912,23 @@ export class EditChills {
     }
   }
 
-  // Autocomplete address
-  ngOnInit() {
-    if(this.sync.status){
-      this.acService = new google.maps.places.AutocompleteService();
-      this.autocompleteAddress = [];
-    }
-  }
-
   // On each input change, get geocode, only if evt.length is >= 3
   autoAddress(evt) {
-    if(this.sync.status){
-      if (evt == '') {
-        this.autocompleteAddress = [];
-        return;
-      }
-
-      let self = this;
-      let config = {
-        types: ['geocode'],
-        input: evt
-      }
-
-      if (evt.length >= 3) {
-        this.acService.getPlacePredictions(config, function (predictions, status) {
-          self.autocompleteAddress = [];
-          if (predictions != null) {
-            predictions.forEach(function (prediction) {
-              self.autocompleteAddress.push(prediction);
-            });
-          }
-        });
-      }
-    }
+    this.googleService.getPrediction(evt).then((results)=>{
+      this.autocompleteAddress = results;
+    })
   }
 
   // When choosing an address from autocomplete, set it in the input
   chooseAddress(address: any) {
-    if(this.sync.status){
       Keyboard.close();
       this.geoSpec = address.description;
       this.autocompleteAddress = [];
-    }
   }
 
   clearAutocomplete() {
-    if(this.sync.status){
       Keyboard.close();
       this.autocompleteAddress = [];
-    }
   }
 
   // Handle swipe
