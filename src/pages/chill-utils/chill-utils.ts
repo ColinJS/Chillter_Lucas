@@ -24,6 +24,8 @@ export class ChillUtils {
   chillUtilsDisplay: string = 'transports';
   chillUtilsDisplayTitles: string[] = ['transports','list','expenses'];
 
+  divWidth: string = 'fit-content';
+
   arraySeats: any[];
   title: string;
   slidesOptions: any;
@@ -162,6 +164,10 @@ export class ChillUtils {
   close(){
     //console.log("Dismiss");
     this.viewCtrl.dismiss(this.utilsObj);
+  }
+
+  ionViewDidEnter(){
+    this.divWidth = document.getElementById('proofImg').offsetHeight.toString()+"px";
   }
 
   getCar() {
