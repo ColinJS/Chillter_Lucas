@@ -167,10 +167,10 @@
 
       </div>
 
-      <div class="invite-com" text-justify (tap)="openChat()">
+      <div class="invite-com" text-justify>
         <div class="invite-com-title">
           <h1>Description</h1>
-          <ion-icon name="text"></ion-icon>
+          <!-- <ion-icon name="text"></ion-icon> (tap)="openChat()" -->
         </div>
         <ion-scroll scrollY="true" *ngIf="punchline" >
           {{ punchline }}

@@ -172,9 +172,12 @@ export class FriendList {
   }
 
   getPendingFriends(ref: any = false) {
+
+    let incr = 0;
     let call = this.api.getPendingFriends().subscribe(
       data => {
-        call.unsubscribe();
+        incr++
+        if(incr >= 3){call.unsubscribe();}
         if (data) {
           if(this.listsAreDifferent(data,this.pendingFriends)){
             this.pendingFriends = data;
@@ -196,9 +199,11 @@ export class FriendList {
   }
 
   getSentInvitation(ref: any = false) {
+    let incr = 0;
     let call = this.api.getSentInvitation().subscribe(
       data => {
-        call.unsubscribe();
+        incr++
+        if(incr >= 3){call.unsubscribe();}
         if (data) {
           if(this.listsAreDifferent(this.sentInvitation,data)){
             this.sentInvitation = data;

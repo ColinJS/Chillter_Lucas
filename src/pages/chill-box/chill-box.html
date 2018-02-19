@@ -41,7 +41,8 @@
     {{ 'chill-box.no-events-all' | translate }}
   </div>
 
-  <ion-card *ngFor="let event of viewEvents" class="card-round" (tap)="showDetailEvent(event.info.id)">
+  <ng-container *ngFor="let event of viewEvents">
+  <ion-card *ngIf="event.isTitle == undefined" class="card-round" (tap)="showDetailEvent(event.info.id)">
     <ion-item>
       <ion-avatar item-left>
         <div class="logo-container">
@@ -76,6 +77,10 @@
     <div *ngIf="event.info.banner" class="custom-chill-banner"><img src="{{event.info.banner}}"/></div>
     <img *ngIf="!event.info.banner" class="base-chill-banner" src="{{'assets/images/banner-'+event.info.chill.category+'.jpg'}}"/>
   </ion-card>
+  <div *ngIf="event.isTitle" class="chillbox-title">
+    {{ event.title | translate }}
+  </div>
+  </ng-container>
   <!--
   <ion-list>
     

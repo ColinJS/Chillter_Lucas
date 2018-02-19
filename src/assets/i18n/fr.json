@@ -96,7 +96,11 @@
     "invited-you": " vous à inviter : ",
     "event-cancelled": "annulé",
     "confirm": "Confirmation",
-    "hide-chill-message": "Voulez vous vraiment effacer ce Chill ?"
+    "hide-chill-message": "Voulez vous vraiment effacer ce Chill ?",
+    "next-week": "La semaine prochaine",
+    "next-month": "Le mois prochain",
+    "next-year": "L'an prochain",
+    "next": "A venir"
   },
   "chill-detail": {
     "invited-by": "Vous avez été invité par",
@@ -224,7 +228,8 @@
     "add-friends": "Ajouter Chillers",
     "no-friends": "Appuyez sur recherche pour inviter vos amis",
     "chillter": "Chillers",
-    "contact": "Contacts"
+    "contact": "Contacts",
+    "pending": "En attente ..."
   },
   "history": {
     "title": "Historique",

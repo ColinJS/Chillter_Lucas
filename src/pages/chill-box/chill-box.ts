@@ -84,9 +84,11 @@ export class ChillBox {
     this.viewEvents = this.events;
 
     this.viewEvents = this.events.filter((v) => {
-      if (v.info.name.toLowerCase().indexOf(this.searchWord.toLowerCase()) > -1 || this.searchWord == "") {
+      if (v.info && (v.info.name.toLowerCase().indexOf(this.searchWord.toLowerCase()) > -1 || this.searchWord == "")) {
         return true;
-      } else {
+      } else if(!v.info) {
+        return true;
+      }else{
         return false;
       }
     });
@@ -156,11 +158,16 @@ export class ChillBox {
 
     let noEvent = false;
     let noEventSoon = false;
+    let incr = 0;
 
     let call = this.api.getEvents(this.firstLoad).subscribe(
       data => {
+        
+        incr ++
+        if(incr >= 3){call.unsubscribe();}
+
         if (data) {
-          call.unsubscribe();
+
           let events = data.filter((d) => {
             let now = new Date();
             // Could be simplified later when all events will have coherent ending_date
@@ -173,9 +180,22 @@ export class ChillBox {
             return time > 0;
           });
 
-          events.forEach((index) => {
-            let now = new Date();
-            let nowPlusOne = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24);
+          let titleToAdd = [
+            {'index': null,'title': 'chill-box.next-week','enable': false},
+            {'index': null,'title': 'chill-box.next-month','enable': false},
+            {'index': null,'title': 'chill-box.next-year','enable': false},
+            {'index': null,'title': 'chill-box.next','enable': false}
+            ];
+
+          let now = new Date();
+          let nowPlusOne = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24);
+
+          let nextWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24*7);
+          let nextMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24*30);
+          let nextYear = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24*365);
+
+          events.forEach((index, ind) => {
+            console.log(ind)
             let d = new Date(index.date);
 
             index.info.logo ? index.type = "custom" : null;
@@ -184,7 +204,29 @@ export class ChillBox {
 
             index.soon = (d < nowPlusOne ? "today" : "later");
             index.soon = (d < now ? "ongoing" : index.soon);
+
+            
+            if(d > nowPlusOne && !titleToAdd[0].enable){
+              titleToAdd[0].enable = true;
+              titleToAdd[0].index = ind;
+            }else if(d >= nextWeek && !titleToAdd[1].enable){
+              titleToAdd[1].enable = true;
+              titleToAdd[1].index = ind;
+            }else if(d >= nextMonth && !titleToAdd[2].enable){
+              titleToAdd[2].enable = true;
+              titleToAdd[2].index = ind;
+            }else if(d >= nextYear && !titleToAdd[3].enable){
+              titleToAdd[3].enable = true;
+              titleToAdd[3].index = ind;
+            }
           })
+
+          console.log(titleToAdd)
+          for(let i = 0; i <= 3; i++){
+            if(titleToAdd[i].enable){
+              events.splice(titleToAdd[i].index+i,0,{'isTitle':true,'title': titleToAdd[i].title});
+            }
+          }
 
           // If data (all events) && events (coming event) == 0, show "never had any events"
           if (data.length == 0 && events.length == 0) {
@@ -216,10 +258,8 @@ export class ChillBox {
               }
             }
           }
-
-          console.log(willChange)
           if(willChange || this.firstLoad){
-            console.log("we change it");
+
             this.events = events;
             this.noEvent = noEvent;
             this.noEventSoon = noEventSoon;
@@ -242,7 +282,15 @@ export class ChillBox {
         if (res.status != 200) {
           console.log("Http request error :" + res.status);
         }
+        if (ref) {
+            ref.complete();
+          }
         
+    },
+    ()=>{
+      if (ref) {
+            ref.complete();
+          }
     });
   }
 
