@@ -9,9 +9,6 @@
 
 chill-utils {
   ion-header{
-    box-shadow: 0px 0px 1px 0px rgba(130,130,130,0.8);
-    border-radius: 0px 0px 16px 16px;
-    background: white;
   }
   ion-navbar{
     padding-top: 0!important;
@@ -19,7 +16,9 @@ chill-utils {
     height: 45px!important;
     padding-bottom: 0!important;
     .toolbar-background{
-      background: none!important;
+      box-shadow: 0px 0px 1px 0px rgba(130,130,130,0.8);
+      border-radius: 0px 0px 16px 16px;
+      background: white;
     }
   }
 
@@ -535,7 +534,7 @@ chill-utils {
     .image-border-unactive{
       border-radius: 50%;
       height: 100%;
-      width: fit-content;
+      width: calc((100vw - 32px) * (130 - (149 * 0.12)) / 300 / 2);
       >img{
         opacity: 0;
         height: 100%;
