@@ -105,7 +105,7 @@ export class ChillBox {
     let currentEvent;
 
     this.events.forEach((evt) => {
-      if (evt.info.id == eventId) {
+      if (!evt.isTitle && evt.info.id == eventId) {
         currentEvent = evt;
       }
     });
